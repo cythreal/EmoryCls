@@ -1,0 +1,97 @@
+% ------------------------- emory.cls Sample Document --------------------------
+% This is a sample document for emory.cls 
+% This document includes the contents likely to be included in a dissertation,
+% such as university required cover pages, table of contents, list of tables
+% and figures, chapters, floats (figures, tables, math equations, etc.), 
+% citations, footnotes, appendices, and indices. 
+% Compile this document using the emory.cls class file should sucessfully 
+% generate a .pdf file with the desired dissertation format.
+% ------------------------------------------------------------------------------
+%
+% ------ documentclass declaration ---------------------------------------------
+% \documentclass[options]{emory}
+% Options and default values:
+%%% 12     -- font size
+%%% letter -- paper size
+%%% 
+\documentclass{emory}
+
+% ------ include your own packages ---------------------------------------------
+\usepackage[version=3]{mhchem}
+
+
+% ------ title and author and the boss -----------------------------------------
+\title{A \Latex Class for the Dissertation Style of Emory University}
+\author{Luyao Zou}
+\advisor{You-know-who}
+\committee{Dr.\ Alfalfa, Dr.\ Banana, Dr.\ Calcium}
+\affiliation{Some random place in the world, Earth, Solar System, The Milky Way, 00000--0000}
+
+
+% ------ abstract --------------------------------------------------------------
+\begin{abstract}
+This is a \Latex class. It is supposed to follow the dissertation format
+requirement of Emory University, but nothing is guarenteed, and please tweak the
+code when necessary. 
+\end{abstract}
+
+% ------ start your awesome writing here ---------------------------------------
+\begin{document}
+
+\chapter{Introduction}
+Putting up a dissertation following all the requirements or restrictions of
+your university policy may drive you nuts. This is why \Latex is glorious. Unfortunately, Emory does not provide an ``official'' \Latex style package for
+its brilliant, hard-working Ph.D.\ candidates. I here try my best to offer a
+third-party \Latex class that hopefully covers most of the Emory policy, if not
+all.
+
+To report bugs and suggestions, please contact me at \url{zouluyao@hotmail.com}.
+To contribute, fork my github repo at \url{https://github.com/luyaozou/EmoryCls.git}
+  
+% ----- simple commands --------------------------------------------------------
+\chapter{This is gonna be a brilliant dissertation!}
+\section{Tell my childhood stories}
+\subsection{Born}
+My arrival to this planet is an entire oopsy. 
+
+\begin{figure}
+  \centering
+  \includegraphics{SampleFig.jpg}
+  \caption{Ahhh why am I here?}
+\end{figure}
+
+% ----- more control with more declaration -------------------------------------
+
+\chapter{This is why I am awesome}
+\section{I am serious}
+\subsection{No mumble jumble}
+The reason why I am awesome is because I do not use \verb!lipsum!. I write 
+serious stuff in this sample file.
+
+\begin{table}
+  \centering
+  \caption{More controls in the table.}
+  \begin{tabular}{l l}
+    \hline
+    Sample & Table \\
+    \hline
+  \end{tabular}
+\end{table}
+
+
+\chapter{Mathematical Environment}
+\begin{equation}
+  E = mc^2
+\end{equation}
+
+\begin{align}
+
+\end{align}
+
+Use \verb!\usepackage[version=3]{mhchem}! for your chemicals, like this:
+\verb!\ce{C2H5OH}! makes \ce{C2H5OH}.
+
+
+\bibliography{sample-bib}
+
+\end{document}
