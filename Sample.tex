@@ -6,14 +6,21 @@
 % citations, footnotes, appendices, and indices. 
 % Compile this document using the emory.cls class file should sucessfully 
 % generate a .pdf file with the desired dissertation format.
+%
+% The dissertation style instructions can be found at
+% http://www.gs.emory.edu/uploads/Academic%20Affairs/Submit%20Instructions.pdf
 % ------------------------------------------------------------------------------
 %
 % ------ documentclass declaration ---------------------------------------------
-% \documentclass[options]{emory}
-% Options and default values:
-%%% 12     -- font size
-%%% letter -- paper size
-%%% 
+% --- \documentclass[options]{emory}
+% --- Options and default values:
+% 
+% document type -- thesis, dissertation[default]
+% font size     -- 11pt, 12pt[default]
+% font family   -- garamond, georgia, times[default]
+% printing      -- singlesided, doublesided[default]
+% 
+% 
 \documentclass{emory}
 
 % ------ include your own packages ---------------------------------------------
@@ -22,10 +29,17 @@
 
 % ------ title and author and the boss -----------------------------------------
 \title{A \Latex Class for the Dissertation Style of Emory University}
-\author{Luyao Zou}
-\advisor{You-know-who}
-\committee{Dr.\ Alfalfa, Dr.\ Banana, Dr.\ Calcium}
+\author{Luyao Zou}                      % replace with your legal name
+\degree{Ph.D., Permenant Head Damage}   % replace with your degree, if necessary
+\previousdegree{B.S or something}       % replace with your previous degree
+\field{Your field of expertise}
+\advisor{Your dear advisor}
+\advisordegree{Ph.D.}                   % replace with your advisor's degree, if necessary
+\committee{Dr.\ Alfalfa}
+\committee{Dr.\ Banana}
+\committee{Dr.\ Cashew}
 \affiliation{Some random place in the world, Earth, Solar System, The Milky Way, 00000--0000}
+\year{2016}                             % replace the year, if necessary
 
 
 % ------ abstract --------------------------------------------------------------
@@ -34,6 +48,22 @@ This is a \Latex class. It is supposed to follow the dissertation format
 requirement of Emory University, but nothing is guarenteed, and please tweak the
 code when necessary. 
 \end{abstract}
+
+
+% ------ acknowledgments -------------------------------------------------------
+\begin{acknowledgments}
+I would like to thank all the documentations and anonymous people online that helped me learn
+the skills to write this class. 
+Special thank to the great example of 
+\begin{itemize}
+  \item The ACS package \verb|achemso| 
+  \item The thesis class originally written by Bruce Fast, and most recently
+        updated by Hongcheng Ni, from University of Colorado, Boulder. 
+        The webpage is at 
+        \url{http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files}
+\end{itemize}
+\end{acknowledgments}
+
 
 % ------ start your awesome writing here ---------------------------------------
 \begin{document}
@@ -88,7 +118,7 @@ serious stuff in this sample file.
 
 \end{align}
 
-Use \verb!\usepackage[version=3]{mhchem}! for your chemicals, like this:
+Use \verb|\usepackage[version=3]{mhchem}| for your chemicals, like this:
 \verb!\ce{C2H5OH}! makes \ce{C2H5OH}.
 
 
