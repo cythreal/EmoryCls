@@ -24,45 +24,46 @@
 \documentclass{emory}
 
 % ------ include your own packages ---------------------------------------------
+\usepackage{amsmath}
 \usepackage[version=3]{mhchem}
+\usepackage{verbatim}
+\usepackage{url}
 
 
 % ------ title and author and the boss -----------------------------------------
-\title{A \Latex Class for the Dissertation Style of Emory University}
+\title{A \LaTeX Class for the Dissertation Style of Emory University}
 \author{Luyao Zou}                      % replace with your legal name
 \degree{Ph.D., Permenant Head Damage}   % replace with your degree, if necessary
 \previousdegree{B.S or something}       % replace with your previous degree
 \field{Your field of expertise}
 \advisor{Your dear advisor}
-\advisordegree{Ph.D.}                   % replace with your advisor's degree, if necessary
+\advisordegree{Ph.D.}
 \committee{Dr.\ Alfalfa}
 \committee{Dr.\ Banana}
 \committee{Dr.\ Cashew}
-\affiliation{Some random place in the world, Earth, Solar System, The Milky Way, 00000--0000}
-\year{2016}                             % replace the year, if necessary
+\yr{2016}                             % replace the year, if necessary
 
 
 % ------ abstract --------------------------------------------------------------
-\begin{abstract}
-This is a \Latex class. It is supposed to follow the dissertation format
-requirement of Emory University, but nothing is guaranteed, and please tweak the
-code when necessary. 
-\end{abstract}
+%\begin{abstract}
+%This is a \LaTeX class. It is supposed to follow the dissertation format
+%requirement of Emory University, but nothing is guaranteed, and please tweak the
+%code when necessary. 
+%\end{abstract}
 
-
-% ------ acknowledgments -------------------------------------------------------
-\begin{acknowledgments}
-I would like to thank all the documentations and anonymous people online that helped me learn
-the skills to write this class. 
-Special thank to the great example of 
-\begin{itemize}
-  \item The ACS package \verb|achemso| 
-  \item The thesis class originally written by Bruce Fast, and most recently
-        updated by Hongcheng Ni, from University of Colorado, Boulder. 
-        The webpage is at 
-        \url{http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files}
-\end{itemize}
-\end{acknowledgments}
+% ------ acknowledgment -------------------------------------------------------
+%\begin{acknowledgment}
+%I would like to thank all the documentations and anonymous people online that helped me learn
+%the skills to write this class. 
+%Special thank to the great example of 
+%\begin{itemize}
+%  \item The ACS package \verb|achemso| 
+%  \item The thesis class originally written by Bruce Fast, and most recently
+%        updated by Hongcheng Ni, from University of Colorado, Boulder. 
+%        The webpage is at 
+%        \url{http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files}
+%\end{itemize}
+%\end{acknowledgment}
 
 
 % ------ start your awesome writing here ---------------------------------------
@@ -70,10 +71,10 @@ Special thank to the great example of
 
 \chapter{Introduction}
 Putting up a dissertation following all the requirements or restrictions of
-your university policy may drive you nuts. This is why \Latex is glorious. 
-Unfortunately, Emory does not provide an ``official'' \Latex style package for
+your university policy may drive you nuts. This is why \LaTeX is glorious. 
+Unfortunately, Emory does not provide an ``official'' \LaTeX style package for
 its brilliant, hard-working Ph.D.\ candidates. I here try my best to offer a
-third-party \Latex class that hopefully covers most of the Emory policy, if not
+third-party \LaTeX class that hopefully covers most of the Emory policy, if not
 all.
 
 To report bugs and suggestions, please contact me at \url{zouluyao@hotmail.com}.
@@ -115,9 +116,14 @@ serious stuff in this sample file.
   E = mc^2
 \end{equation}
 
+\begin{subequations}
 \begin{align}
-
+  \nabla\cdot\pmb{E}&=\frac{\rho}{\epsilon_0}\\
+  \nabla\cdot\pmb{B}&=0\\
+  \nabla\times\pmb{E}&=-\frac{\partial\pmb{B}}{\partial t}\\
+  \nabla\times\pmb{B}&=\mu_0\Big(\pmb{J}+\epsilon_0\frac{\partial\pmb{E}}{\partial t}\Big)
 \end{align}
+\end{subequations}
 
 Use \verb|\usepackage[version=3]{mhchem}| for your chemicals, like this:
 \verb|\ce{C2H5OH}| makes \ce{C2H5OH}.
