@@ -1,6 +1,6 @@
 %% Emory Dissertation Class
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{emory}[2016/08/01 LaTeX Emory dissertation class]
+\ProvidesClass{emory}[2016/08/01 LaTeX class for Emory dissertation]
 
 %% Load dependent packages
 \RequirePackage{ifthen}
@@ -41,14 +41,14 @@
 \DeclareOption{dissertation}{\setboolean{IfDissertation}{true}}
 
 \newcommand*{\th@PageGeometry}{%
-	\setlength{\topmargin}{-0.30in}
+	\setlength{\topmargin}{-0.20in}
 	\setlength{\headheight}{0.20in}
 	\setlength{\headsep}{0.0in}
 	\setlength{\topskip}{0.40in}	% first line, down from page number
 	\setlength{\footskip}{0pt}
 	\setlength{\oddsidemargin}{0.50in}
-	\setlength{\evensidemargin}{0.00in}
-	\setlength{\parindent}{0.40in}	% somewhere between 0.3" and 0.5"
+	\setlength{\evensidemargin}{0.50in}
+	\setlength{\parindent}{2em}
 	\setlength{\textheight}{9.10in}	% 9"-(topmargin+headsep+headheight)
 	\setlength{\textwidth}{7.0in}
 %	\setlength{\leftmargini}{3.5em}
@@ -70,15 +70,17 @@
 
 %% Process options and load class
 \ProcessOptions
-\LoadClass{report}
+\LoadClassWithOptions{report}
 
 %% Internal commands
 
 % double spacing
-\def\doublespacing{ \ifcase \@ptsize \relax
-  \def \baselinestretch {1.771}%	11pt
-  \or \def \baselinestretch {1.660}%	12pt
-  \fi \setspace@size}
+\newcommand*{\doublespacing}{%
+  \ifthenelse{\f@size = 11.}{%
+    \renewcommand{\baselinestretch}{1.771}}         %	11pt
+  {\renewcommand{\baselinestretch}{1.660}           %	12pt
+  }
+}
   
 
 %% Internal preamble commands -- provide warning messages
@@ -110,22 +112,23 @@
 \newcommand*{\th@year}{%
   \ClassWarning{emory}{Missing graduation year!}
 }
+\newcommand*{\th@abstract}{%
+  \ClassWarning{emory}{Missing abstract!}
+}
+\newcommand*{\th@acknowledgement}{%
+  \ClassWarning{emory}{Do you have anybody to say thank you?}
+}
 
-
-%\newenvironment*{abstract}{}{}
-
-
-%\newenvironment*{acknowledgement}{}{}
 
 
 %% Define special pages
 % Distribution Agreement
 \newcommand*{\th@DistributionAgreement}{%
   \thispagestyle{empty}
-  \vfill
-  \large\textbf{Distribution Agreement}\\
-  \normalsize
-  \vspace{2ex}
+  \vspace*{\fill}
+  \subsection*{Distribution Agreement}
+  
+  \noindent\normalsize
   In presenting this thesis or dissertation as a partial fulfillment of the requirements for an advanced
   degree from Emory University, I hereby grant to Emory University and its agents the non-exclusive
   license to archive, make accessible, and display my thesis or dissertation in whole or in part in all
@@ -133,104 +136,154 @@
   that I may select some access restrictions as part of the online submission of this thesis or
   dissertation. I retain all ownership rights to the copyright of the thesis or dissertation. I also retain
   the right to use in future works (such as articles or books) all or part of this thesis or dissertation.
-  \newline
+  
+  
   \vspace{1in}
-  Signature: \newline
+  \noindent Signature:
   \vspace{1em}
-  \begin{tabular}{l l}
-  \underline{\hspace{2.5in}}\hspace{1in} & \underline{\hspace{1.5in}}\\
-  \th@author & Date\\
+  
+  \noindent
+  \begin{tabular}{c c c}
+  \underline{\hspace{2.5in}} & \hspace{0.25in} & \underline{\hspace{1.5in}}\\
+  \th@author & \hspace{0.25in} & Date\\
   \end{tabular}
+  \vspace*{\fill}
   \clearpage
 }
 
 % Approval Sheet
 \newcommand*{\th@ApprovalSheet}{%
   \thispagestyle{empty}
+  \vspace*{\fill}
+  \noindent
   \begin{center}
-    \th@title
-    \vspace{1em}
-    by
-    \vspace{1em}
+    \large \th@title \normalsize
+    \vspace{3ex}
+    
+    By
+    \vspace{3ex}
+    
     \th@author
-    \vspace{1em}
+    
     \th@degree
-    \vspace{1ex}
+    \vspace{1em}
+    
     \th@field
-    \vspace{2ex}
-    \underline{\hspace{3in}}\hspace{2in}\newline
-    \th@advisor, \th@advisordegree\newline
+    \vspace{5ex}
+    
+    \underline{\hspace{4in}}
+    
+    \th@advisor, \th@advisordegree
+    
     Advisor
-    \underline{\hspace{3in}}\hspace{2in}\newline
-    \th@committee \newline
+    \vspace{3ex}
+    
+    \underline{\hspace{4in}}
+    
+    \th@committee
+    
     Committee Member
     \vspace{1in}
+    
     Accepted:
-    \underline{\hspace{4in}}\newline
-    Lisa A.\ Tedesco, Ph.D.\newline
-    Dean of the James T.\ Laney School of Graduate Studies\newline
-    \vspace{1em}
-    \underline{\hspace{2in}}\newline
+    \vspace{2ex}
+    
+    \underline{\hspace{4in}}
+    
+    Lisa A.\ Tedesco, Ph.D.
+    
+    Dean of the James T.\ Laney School of Graduate Studies
+    
+    \vspace{5ex}
+    \underline{\hspace{2in}}
+    
     Date
   \end{center}
+  \vspace*{\fill}
   \clearpage
 } 
 
 \newcommand*{\th@AbstractCoverPage}{%
   \thispagestyle{empty}
+  
   \begin{center}
-    \th@title
+    \large \th@title \normalsize
     \vspace{1in}
-    by
+    
+    By
     \vspace{1in}
+    
     \th@author
+    
     \th@previousdegree
     \vspace{1in}
+    
     Advisor: \th@advisor, \th@advisordegree
+    
     \vfill
-    An abstract of \newline
-    A \ifthenelse{\boolean{IfDissertation}}{dissertation}{thesis} submitted to the Faculty of the \newline
-    James T.\ Laney School of Graduate Studies of Emory University \newline
-    in partial fulfillment of the requirements for the degree of \newline
-    \th@degree \newline
-    in \th@field \newline
+    An abstract of \\
+    A \ifthenelse{\boolean{IfDissertation}}{dissertation}{thesis} submitted to the Faculty of the \\
+    James T.\ Laney School of Graduate Studies of Emory University \\
+    in partial fulfillment of the requirements for the degree of \\
+    \th@degree \\
+    in \th@field \\
     \th@year
-    \vfill
   \end{center}
+  \vspace{1.5in}
   \clearpage
 }
 
 \newcommand*{\th@AbstractPage}{%
-  \th@author
+  \begin{center}
+    Abstract
+    \vspace{2ex}
+    
+    \th@title
+    
+    By \th@author
+  \vspace{1in}
+  
+  \parbox{4.5in}{\th@abstract}
+  \end{center}
+  
   \clearpage
 }
 
 \newcommand*{\th@CoverPage}{%
   \begin{center}
-    \th@title
+    \large \th@title \normalsize
     \vspace{1in}
-    by
+    
+    By
     \vspace{1in}
-    \th@author\newline
-    \th@previousdegree\newline
+    
+    \th@author
+    
+    \th@previousdegree
     \vspace{1in}
-    Advisor: \th@advisor, \th@advisordegree\newline
+    
+    Advisor: \th@advisor, \th@advisordegree
+    
     \vfill
-    A \ifthenelse{\boolean{IfDissertation}}{dissertation}{thesis} submitted to the Faculty of the \newline
-    James T.\ Laney School of Graduate Studies of Emory University \newline
-    in partial fulfillment of the requirements for the degree of \newline
-    \th@degree \newline
-    in \th@field \newline
+    A \ifthenelse{\boolean{IfDissertation}}{dissertation}{thesis} submitted to the Faculty of the \\
+    James T.\ Laney School of Graduate Studies of Emory University \\
+    in partial fulfillment of the requirements for the degree of \\
+    \th@degree \\
+    in \th@field \\
     \th@year
-    \vfill
   \end{center}
+  \vspace{1.5in}
   \clearpage
 }
 
-\newcommand*{\th@Acknowledgement}{%
-  Acknowledgement
+\newcommand*{\th@AcknowledgementPage}{%
+  \subsection*{Acknowledgement}
+  
+  \th@acknowledgement
+  
   \clearpage
 }
+
 %% Make special pages
 \AtBeginDocument{
   \th@PageGeometry            % set page geometry
@@ -246,13 +299,18 @@
   \typeout{>>> Make Cover Page >>>}
   \th@CoverPage
   \typeout{>>> Make Acknowledgement Page >>>}
-  \th@Acknowledgement
+  \th@AcknowledgementPage
   \typeout{>>> Make Table of Contents >>>}
+  \renewcommand{\contentsname}{Table of Contents}
   \tableofcontents
+  \listoffigures
+  \listoftables
+  \clearpage
   \typeout{}
   \typeout{--------------------------------------}
   \typeout{}
   \typeout{Make Body}
+  \doublespacing
   \setcounter{page}{0}
   \pagenumbering{arabic}
 }
@@ -267,3 +325,5 @@
 \newcommand*{\advisordegree}[1]{\th@PassCmd{\th@advisordegree}{#1}}
 \newcommand*{\committee}[1]{\th@PassCmd{\th@committee}{#1}}
 \newcommand*{\yr}[1]{\th@PassCmd{\th@year}{#1}}
+\renewcommand*{\abstract}[1]{\th@PassCmd{\th@abstract}{#1}}
+\newcommand*{\acknowledgment}[1]{\th@PassCmd{\th@acknowledgement}{#1}}

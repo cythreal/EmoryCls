@@ -19,19 +19,18 @@
 % font size     -- 11pt, 12pt[default]
 % font family   -- garamond, georgia, times[default]
 % printing      -- singlesided, doublesided[default]
-% 
-% 
-\documentclass{emory}
+% toc           -- subsec[default], subsubsec (toc level on subsections)
+
+\documentclass[draft,12pt]{emory}
 
 % ------ include your own packages ---------------------------------------------
 \usepackage{amsmath}
 \usepackage[version=3]{mhchem}
-\usepackage{verbatim}
 \usepackage{url}
-
+\usepackage{graphicx}
 
 % ------ title and author and the boss -----------------------------------------
-\title{A \LaTeX Class for the Dissertation Style of Emory University}
+\title{A \LaTeX{} Class for the Dissertation Style of Emory University}
 \author{Luyao Zou}                      % replace with your legal name
 \degree{Ph.D., Permenant Head Damage}   % replace with your degree, if necessary
 \previousdegree{B.S or something}       % replace with your previous degree
@@ -45,62 +44,64 @@
 
 
 % ------ abstract --------------------------------------------------------------
-%\begin{abstract}
-%This is a \LaTeX class. It is supposed to follow the dissertation format
-%requirement of Emory University, but nothing is guaranteed, and please tweak the
-%code when necessary. 
-%\end{abstract}
+\abstract{%
+This is a \LaTeX{} class. It is supposed to follow the dissertation format
+requirement of Emory University, but nothing is guaranteed, and please tweak the
+code when necessary. 
+}
 
 % ------ acknowledgment -------------------------------------------------------
-%\begin{acknowledgment}
-%I would like to thank all the documentations and anonymous people online that helped me learn
-%the skills to write this class. 
-%Special thank to the great example of 
+\acknowledgment{%
+I would like to thank all the documentations and anonymous people online that
+helped me learn the skills to write this class. 
+Special thank to the great example of 
 %\begin{itemize}
-%  \item The ACS package \verb|achemso| 
-%  \item The thesis class originally written by Bruce Fast, and most recently
-%        updated by Hongcheng Ni, from University of Colorado, Boulder. 
-%        The webpage is at 
-%        \url{http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files}
+%  \item The ACS package \verb|achemso|
+%  \item The thesis class originally written by Bruce Fast, and most recently updated by Hongcheng Ni, from University of Colorado, Boulder. 
+        %The webpage is at 
+        %\url{
+        %http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files
+        %}
+  %\item \href{https://latex-project.org/guides/clsguide.pdf}{LaTeX2e for class and package writers}
+  %\item \href{http://texdoc.net/texmf-dist/doc/latex/base/ifthen.pdf}{\verb|ifthen| package document}
 %\end{itemize}
-%\end{acknowledgment}
-
+}
 
 % ------ start your awesome writing here ---------------------------------------
 \begin{document}
 
 \chapter{Introduction}
 Putting up a dissertation following all the requirements or restrictions of
-your university policy may drive you nuts. This is why \LaTeX is glorious. 
-Unfortunately, Emory does not provide an ``official'' \LaTeX style package for
-its brilliant, hard-working Ph.D.\ candidates. I here try my best to offer a
-third-party \LaTeX class that hopefully covers most of the Emory policy, if not
+your university policy may drive you nuts. This is why \LaTeX{} is glorious. 
+Unfortunately, Emory does not provide an ``official'' \LaTeX{} style package for
+her brilliant, hard-working Ph.D.\ candidates. I here try my best to offer a
+third-party \LaTeX{} class that hopefully covers most of the Emory policy, if not
 all.
 
-To report bugs and suggestions, please contact me at \url{zouluyao@hotmail.com}.
-To contribute, fork my github repo at \url{https://github.com/luyaozou/EmoryCls.git}
+To report bugs and suggestions, please contact me on GitHub. To contribute, 
+please fork my github repo at \url{https://github.com/luyaozou/EmoryCls.git}
   
-% ----- simple commands --------------------------------------------------------
-\chapter{This is gonna be a brilliant dissertation!}
-\section{Tell my childhood stories}
+\section{This is gonna be a brilliant dissertation!}
 \subsection{Born}
 My arrival to this planet is an entire oopsy. 
 
-\begin{figure}
-  \centering
-  \includegraphics{SampleFig.jpg}
-  \caption{Ahhh why am I here?}
-\end{figure}
 
-% ----- more control with more declaration -------------------------------------
-
-\chapter{This is why I am awesome}
-\section{I am serious}
-\subsection{No mumble jumble}
+\subsection{This is why I am awesome. I am serious}
+\subsubsection{No mumble jumble}
 The reason why I am awesome is because I do not use \verb|lipsum|. I write 
 serious stuff in this sample file.
 
-\begin{table}
+% ----- more control with more declaration -------------------------------------
+\chapter{Real Stuff}
+Test output result for common \LaTeX{} commands, floats, enviroments.
+
+\begin{figure}[htp!]
+  \centering
+  \includegraphics[width=\textwidth]{LaTeXLogo.png}
+  \caption{Ahhh why am I here?}
+\end{figure}
+
+\begin{table}[htp!]
   \centering
   \caption{More controls in the table.}
   \begin{tabular}{l l}
@@ -110,8 +111,6 @@ serious stuff in this sample file.
   \end{tabular}
 \end{table}
 
-
-\chapter{Mathematical Environment}
 \begin{equation}
   E = mc^2
 \end{equation}
