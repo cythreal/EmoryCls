@@ -85,6 +85,25 @@
 
 %% Internal preamble commands -- provide warning messages
 \newcommand*{\th@PassCmd}[2]{\gdef#1{#2}}
+
+\newcount\th@committee@count
+
+%% Define preamble commands
+\renewcommand*{\title}[1]{\th@PassCmd{\th@title}{#1}}
+\renewcommand*{\author}[1]{\th@PassCmd{\th@author}{#1}}
+\newcommand*{\degree}[1]{\th@PassCmd{\th@degree}{#1}}
+\newcommand*{\previousdegree}[1]{\th@PassCmd{\th@previousdegree}{#1}}
+\newcommand*{\field}[1]{\th@PassCmd{\th@field}{#1}}
+\newcommand*{\advisor}[1]{\th@PassCmd{\th@advisor}{#1}}
+\newcommand*{\advisordegree}[1]{\th@PassCmd{\th@advisordegree}{#1}}
+\newcommand*{\yr}[1]{\th@PassCmd{\th@year}{#1}}
+\renewcommand*{\abstract}[1]{\th@PassCmd{\th@abstract}{#1}}
+\newcommand*{\acknowledgment}[1]{\th@PassCmd{\th@acknowledgement}{#1}}
+\newcommand*{\committee}[1]{%
+  \global\advance\th@committee@count\@ne\relax
+  \expandafter\gdef\csname th@committee\@roman\th@committee@count \endcsname{#1}%
+}
+
 \newcommand*{\th@title}{%
   \ClassWarning{emory}{Missing title!}
 }
@@ -106,9 +125,9 @@
 \newcommand*{\th@advisordegree}{%
   \ClassWarning{emory}{Missing advisor's degree!}
 }
-\newcommand*{\th@committee}{%
-  \ClassWarning{emory}{Missing committee!}
-}
+%\newcommand*{\th@committee}{%
+%  \ClassWarning{emory}{Missing committee!}
+%}
 \newcommand*{\th@year}{%
   \ClassWarning{emory}{Missing graduation year!}
 }
@@ -178,11 +197,21 @@
     Advisor
     \vspace{3ex}
     
-    \underline{\hspace{4in}}
+    \newcount\@tmp
+    \@tmp\z@\relax
     
-    \th@committee
+    \loop
+      \advance\@tmp\@ne\relax
+      \underline{\hspace{4in}}  
+
+      \@nameuse{th@committee\@roman\@tmp}
+
+      Committee Member
+      \vspace{3ex}
+      
+      \ifnum\@tmp<\th@committee@count\relax
+    \repeat
     
-    Committee Member
     \vspace{1in}
     
     Accepted:
@@ -314,16 +343,3 @@
   \setcounter{page}{0}
   \pagenumbering{arabic}
 }
-  
-%% Define preamble commands
-\renewcommand*{\title}[1]{\th@PassCmd{\th@title}{#1}}
-\renewcommand*{\author}[1]{\th@PassCmd{\th@author}{#1}}
-\newcommand*{\degree}[1]{\th@PassCmd{\th@degree}{#1}}
-\newcommand*{\previousdegree}[1]{\th@PassCmd{\th@previousdegree}{#1}}
-\newcommand*{\field}[1]{\th@PassCmd{\th@field}{#1}}
-\newcommand*{\advisor}[1]{\th@PassCmd{\th@advisor}{#1}}
-\newcommand*{\advisordegree}[1]{\th@PassCmd{\th@advisordegree}{#1}}
-\newcommand*{\committee}[1]{\th@PassCmd{\th@committee}{#1}}
-\newcommand*{\yr}[1]{\th@PassCmd{\th@year}{#1}}
-\renewcommand*{\abstract}[1]{\th@PassCmd{\th@abstract}{#1}}
-\newcommand*{\acknowledgment}[1]{\th@PassCmd{\th@acknowledgement}{#1}}
