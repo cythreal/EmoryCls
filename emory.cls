@@ -29,6 +29,8 @@
 %% Custom options
 \newboolean{IfDoubleSided}
 \newboolean{IfDissertation}
+% The dean! If Dean Tedesco resigns oneday, replace this with the name of the new dean
+\newcommand*{\th@Dean}{Lisa A.\ Tedesco, Ph.D}
 
 % Set default values
 \setboolean{IfDoubleSided}{true}
@@ -85,8 +87,10 @@
 
 %% Internal preamble commands -- provide warning messages
 \newcommand*{\th@PassCmd}[2]{\gdef#1{#2}}
-
+\newcount\th@advisor@count
 \newcount\th@committee@count
+\newcount\@tmp
+\newcount\@half
 
 %% Define preamble commands
 \renewcommand*{\title}[1]{\th@PassCmd{\th@title}{#1}}
@@ -94,14 +98,19 @@
 \newcommand*{\degree}[1]{\th@PassCmd{\th@degree}{#1}}
 \newcommand*{\previousdegree}[1]{\th@PassCmd{\th@previousdegree}{#1}}
 \newcommand*{\field}[1]{\th@PassCmd{\th@field}{#1}}
-\newcommand*{\advisor}[1]{\th@PassCmd{\th@advisor}{#1}}
+%\newcommand*{\advisor}[1]{\th@PassCmd{\th@advisor}{#1}}
 \newcommand*{\advisordegree}[1]{\th@PassCmd{\th@advisordegree}{#1}}
 \newcommand*{\yr}[1]{\th@PassCmd{\th@year}{#1}}
 \renewcommand*{\abstract}[1]{\th@PassCmd{\th@abstract}{#1}}
 \newcommand*{\acknowledgment}[1]{\th@PassCmd{\th@acknowledgement}{#1}}
-\newcommand*{\committee}[1]{%
+
+\newcommand*{\advisor}[2]{%
+  \global\advance\th@advisor@count\@ne\relax
+  \expandafter\gdef\csname th@advisor\@roman\th@advisor@count \endcsname{#1, #2}\relax
+}
+\newcommand*{\committee}[2]{%
   \global\advance\th@committee@count\@ne\relax
-  \expandafter\gdef\csname th@committee\@roman\th@committee@count \endcsname{#1}%
+  \expandafter\gdef\csname th@committee\@roman\th@committee@count \endcsname{#1, #2}\relax
 }
 
 \newcommand*{\th@title}{%
@@ -119,15 +128,6 @@
 \newcommand*{\th@field}{%
   \ClassWarning{emory}{Missing field of study!}
 }
-\newcommand*{\th@advisor}{%
-  \ClassWarning{emory}{Missing advisor name!}
-}
-\newcommand*{\th@advisordegree}{%
-  \ClassWarning{emory}{Missing advisor's degree!}
-}
-%\newcommand*{\th@committee}{%
-%  \ClassWarning{emory}{Missing committee!}
-%}
 \newcommand*{\th@year}{%
   \ClassWarning{emory}{Missing graduation year!}
 }
@@ -185,41 +185,90 @@
     \th@author
     
     \th@degree
-    \vspace{1em}
+    \vspace{1ex}
     
     \th@field
     \vspace{5ex}
     
-    \underline{\hspace{4in}}
-    
-    \th@advisor, \th@advisordegree
-    
-    Advisor
-    \vspace{3ex}
-    
-    \newcount\@tmp
     \@tmp\z@\relax
     
     \loop
       \advance\@tmp\@ne\relax
-      \underline{\hspace{4in}}  
-
-      \@nameuse{th@committee\@roman\@tmp}
-
-      Committee Member
+      \underline{\hspace{4in}}
+    
+      \@nameuse{th@advisor\@roman\@tmp}
+      
+      Advisor
       \vspace{3ex}
       
-      \ifnum\@tmp<\th@committee@count\relax
+      \ifnum\@tmp<\th@advisor@count\relax
     \repeat
     
-    \vspace{1in}
+    \vspace{1ex}
+    
+    \@tmp\z@\relax
+    \ifnum\th@committee@count<4
+      % less than 3 committee, one column layout
+      \loop
+        \advance\@tmp\@ne\relax
+        \underline{\hspace{4in}}
+        
+        \@nameuse{th@committee\@roman\@tmp}
+        
+        Committee Member
+        \vspace{3ex}
+        
+        \ifnum\@tmp<\th@committee@count\relax
+      \repeat
+    \else
+      % more than 3 committee, two column layout
+      \@half=\th@committee@count
+      \ifodd\th@committee@count
+        \divide\@half by\tw@
+        \advance\@half\@ne
+      \else
+        \divide\@half by\tw@
+      \fi
+      
+      \parbox[t][][c]{2.5in}{%
+        \centering
+        \loop
+          \advance\@tmp\@ne\relax
+          \underline{\hspace{2.4in}}
+          
+          \@nameuse{th@committee\@roman\@tmp}
+          
+          Committee Member
+          \vspace{3ex}
+          
+          \ifnum\@tmp<\@half\relax
+        \repeat
+      }
+      \parbox[t][][c]{2.5in}{%
+        \@tmp=\@half
+        \centering
+        \loop
+          \advance\@tmp\@ne\relax
+          \underline{\hspace{2.4in}}
+          
+          \@nameuse{th@committee\@roman\@tmp}
+          
+          Committee Member
+          \vspace{3ex}
+          
+          \ifnum\@tmp<\th@committee@count\relax
+        \repeat
+      }
+    \fi
+    
+    \vspace*{\fill}
     
     Accepted:
     \vspace{2ex}
     
     \underline{\hspace{4in}}
     
-    Lisa A.\ Tedesco, Ph.D.
+    \th@Dean
     
     Dean of the James T.\ Laney School of Graduate Studies
     
@@ -247,7 +296,20 @@
     \th@previousdegree
     \vspace{1in}
     
-    Advisor: \th@advisor, \th@advisordegree
+    \ifnum\th@advisor@count=\@ne
+      Advisor: \@nameuse{th@advisor\@roman\@ne}
+    \else
+      Advisor:
+
+      \newcount\@tmp
+      \@tmp\z@
+      \loop
+        \advance\@tmp\@ne\relax
+        \@nameuse{th@advisor\@roman\@tmp}
+        
+        \ifnum\@tmp<\th@advisor@count
+      \repeat          
+    \fi
     
     \vfill
     An abstract of \\
@@ -291,7 +353,20 @@
     \th@previousdegree
     \vspace{1in}
     
-    Advisor: \th@advisor, \th@advisordegree
+    \ifnum\th@advisor@count=\@ne
+      Advisor: \@nameuse{th@advisor\@roman\@ne}
+    \else
+      Advisor:
+
+      \newcount\@tmp
+      \@tmp\z@
+      \loop
+        \advance\@tmp\@ne\relax
+        \@nameuse{th@advisor\@roman\@tmp}
+        
+        \ifnum\@tmp<\th@advisor@count
+      \repeat          
+    \fi
     
     \vfill
     A \ifthenelse{\boolean{IfDissertation}}{dissertation}{thesis} submitted to the Faculty of the \\
@@ -338,7 +413,7 @@
   \typeout{}
   \typeout{--------------------------------------}
   \typeout{}
-  \typeout{Make Body}
+  \typeout{>>> Make Body >>>}
   \doublespacing
   \setcounter{page}{0}
   \pagenumbering{arabic}
