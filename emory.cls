@@ -4,27 +4,25 @@
 
 %% Load dependent packages
 \RequirePackage{ifthen}
-%\RequirePackage{geometry}
-%\RequirePackage{fancyhdr}
 
 %% Declare options can be passed on to report.cls
 \DeclareOption{11pt}{\PassOptionsToClass{11pt}{report}}
 \DeclareOption{12pt}{\PassOptionsToClass{12pt}{report}}
 \DeclareOption{draft}{\PassOptionsToClass{draft}{report}}
 \DeclareOption{final}{\PassOptionsToClass{final}{report}}
-\DeclareOption{letter}{\PassOptionsToClass{letter}{report}}
+%\DeclareOption{letter}{\PassOptionsToClass{letter}{report}}
 
 %% Disable options
-\DeclareOption{a4paper}{\ClassWarning{emory}{Page size 'a4' not allowed.}}
-\DeclareOption{a5paper}{\ClassWarning{emory}{Page size 'a5' not allowed.}}
-\DeclareOption{b5paper}{\ClassWarning{emory}{Page size 'b5' not allowed.}}
-\DeclareOption{legalpaper}{\ClassWarning{emory}{Page size 'legal' not allowed.}}
-\DeclareOption{executivepaper}{\ClassWarning{emory}{Page size 'executive' not allowed.}}
-\DeclareOption{10pt}{\ClassWarning{emory}{Font size '10pt' not allowed.}}
-\DeclareOption{twocolumn}{\ClassWarning{emory}{Two columns style not allowed.}}
-\DeclareOption{notitlepage}{\ClassWarning{emory}{'notitlepage' not allowed.}}
-\DeclareOption{landscape}{\ClassWarning{emory}{Landscape layout not allowed.}}
-\DeclareOption{twoside}{\ClassWarning{emory}{Uneven side margins not allowed.}}
+\DeclareOption{a4paper}{\OptionNotUsed}%\ClassWarning{emory}{Page size 'a4' not allowed.}}
+\DeclareOption{a5paper}{\OptionNotUsed}%\ClassWarning{emory}{Page size 'a5' not allowed.}}
+\DeclareOption{b5paper}{\OptionNotUsed}%\ClassWarning{emory}{Page size 'b5' not allowed.}}
+\DeclareOption{legalpaper}{\OptionNotUsed}%\ClassWarning{emory}{Page size 'legal' not allowed.}}
+\DeclareOption{executivepaper}{\OptionNotUsed}%\ClassWarning{emory}{Page size 'executive' not allowed.}}
+\DeclareOption{10pt}{\OptionNotUsed}%\ClassWarning{emory}{Font size '10pt' not allowed.}}
+\DeclareOption{twocolumn}{\OptionNotUsed}%\ClassWarning{emory}{Two columns style not allowed.}}
+\DeclareOption{notitlepage}{\OptionNotUsed}%\ClassWarning{emory}{'notitlepage' not allowed.}}
+\DeclareOption{landscape}{\OptionNotUsed}%\ClassWarning{emory}{Landscape layout not allowed.}}
+\DeclareOption{twoside}{\OptionNotUsed}%\ClassWarning{emory}{Uneven side margins not allowed.}}
 
 %% Custom options
 \newboolean{IfDoubleSided}
@@ -41,33 +39,22 @@
 \DeclareOption{singlesided}{\setboolean{IfDoubleSided}{false}}
 \DeclareOption{thesis}{\setboolean{IfDissertation}{false}}
 \DeclareOption{dissertation}{\setboolean{IfDissertation}{true}}
+\DeclareOption{footnote}{\setboolean{IfFootnote}{false}}
 
-\newcommand*{\th@PageGeometry}{%
-	\setlength{\topmargin}{-0.20in}
-	\setlength{\headheight}{0.20in}
-	\setlength{\headsep}{0.0in}
-	\setlength{\topskip}{0.40in}	% first line, down from page number
-	\setlength{\footskip}{0pt}
-	\setlength{\oddsidemargin}{0.50in}
-	\setlength{\evensidemargin}{0.50in}
-	\setlength{\parindent}{2em}
-	\setlength{\textheight}{9.10in}	% 9"-(topmargin+headsep+headheight)
-	\setlength{\textwidth}{7.0in}
-%	\setlength{\leftmargini}{3.5em}
-%	\setlength{\leftmarginii}{2.2em}
-%	\setlength{\leftmarginiii}{2.2em}
-%	\setlength{\leftmarginiv}{2.2em}
-%	\setlength{\leftmarginv}{2.2em}
-%	\setlength{\leftmarginvi}{2.2em}
-	\setlength{\leftmargin}{3.5em}
-%	\setlength{\labelsep}{.5em}
-%	\setlength{\labelwidth}{1.5em}
-	\pagenumbering{arabic}
-%	\pagestyle{myheadings}
-%	\markright{}
-	\normalsize
-	\normalfont
-%	\doublespacing	% footnotes and floats still singlespaced
+\newcommand*{\@SetPageGeometry}{%
+  \PassOptionsToPackage{%
+    paper=letterpaper,
+    total={7in, 9in},
+    textwidth=7in,
+    textheight=9in,
+    includemp=false,
+    lmargin=1.5in,
+    rmargin=1in,
+    top=1in,
+    bottom=1in,
+    vcentering=true,
+    }{geometry}
+  \RequirePackage{geometry}
 }
 
 %% Process options and load class
@@ -173,7 +160,7 @@
 % Approval Sheet
 \newcommand*{\th@ApprovalSheet}{%
   \thispagestyle{empty}
-  \vspace*{\fill}
+%  \vspace*{\fill}
   \noindent
   \begin{center}
     \large \th@title \normalsize
@@ -390,8 +377,8 @@
 
 %% Make special pages
 \AtBeginDocument{
-  \th@PageGeometry            % set page geometry
-	\pagenumbering{gobble}     % suppress page numbering 
+  \@SetPageGeometry          % set page geometry
+  \pagenumbering{gobble}     % suppress page numbering 
   \typeout{>>> Make Distribution Agreement >>>}
   \th@DistributionAgreement
   \typeout{>>> Make Approval Sheet >>>}
