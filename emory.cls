@@ -41,22 +41,6 @@
 \DeclareOption{dissertation}{\setboolean{IfDissertation}{true}}
 \DeclareOption{footnote}{\setboolean{IfFootnote}{false}}
 
-\newcommand*{\@SetPageGeometry}{%
-  \PassOptionsToPackage{%
-    paper=letterpaper,
-    total={7in, 9in},
-    textwidth=7in,
-    textheight=9in,
-    includemp=false,
-    lmargin=1.5in,
-    rmargin=1in,
-    top=1in,
-    bottom=1in,
-    vcentering=true,
-    }{geometry}
-  \RequirePackage{geometry}
-}
-
 %% Process options and load class
 \ProcessOptions
 \LoadClassWithOptions{report}
@@ -135,13 +119,16 @@
   \subsection*{Distribution Agreement}
   
   \noindent\normalsize
-  In presenting this thesis or dissertation as a partial fulfillment of the requirements for an advanced
-  degree from Emory University, I hereby grant to Emory University and its agents the non-exclusive
-  license to archive, make accessible, and display my thesis or dissertation in whole or in part in all
-  forms of media, now or hereafter known, including display on the world wide web. I understand
-  that I may select some access restrictions as part of the online submission of this thesis or
-  dissertation. I retain all ownership rights to the copyright of the thesis or dissertation. I also retain
-  the right to use in future works (such as articles or books) all or part of this thesis or dissertation.
+  In presenting this thesis or dissertation as a partial fulfillment of the 
+  requirements for an advanced degree from Emory University, I hereby grant to 
+  Emory University and its agents the non-exclusive license to archive, make 
+  accessible, and display my thesis or dissertation in whole or in part in all 
+  forms of media, now or hereafter known, including display on the world wide 
+  web.  I understand that I may select some access restrictions as part of the 
+  online submission of this thesis or dissertation.  I retain all ownership 
+  rights to the copyright of the thesis or dissertation.  I also retain the 
+  right to use in future works (such as articles or books) all or part of this 
+  thesis or dissertation.
   
   
   \vspace{1in}
@@ -375,9 +362,25 @@
   \clearpage
 }
 
+
+\RequirePackage{geometry}
+\AtEndOfPackage{%
+  \geometry{%
+    paper=letterpaper,
+    total={6in, 9in},
+    textwidth=6in,
+    textheight=9in,
+    includemp=false,
+    lmargin=1.5in,
+    rmargin=1.0in,
+    top=1in,
+    bottom=1in,
+    vcentering=true,
+  }
+}
+
 %% Make special pages
 \AtBeginDocument{
-  \@SetPageGeometry          % set page geometry
   \pagenumbering{gobble}     % suppress page numbering 
   \typeout{>>> Make Distribution Agreement >>>}
   \th@DistributionAgreement
