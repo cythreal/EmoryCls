@@ -1,65 +1,52 @@
-%% Emory Dissertation Class
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{emory}[2016/08/01 LaTeX class for Emory dissertation]
+%%% --- Emory Dissertation Class ---
+% This class provides style settings suitable for the dissertation 
+% of the Laney Graduate School of Emory University, specially for
+% STEM fields of study
+%%% --------------------------------
 
-%% Load dependent packages
+% ----- Class declaration
+\ProvidesClass{emory}[2016/08/01 LaTeX class for Emory dissertation]
+\NeedsTeXFormat{LaTeX2e}
 \RequirePackage{ifthen}
 
-%% Declare options can be passed on to report.cls
-\DeclareOption{11pt}{\PassOptionsToClass{11pt}{report}}
-\DeclareOption{12pt}{\PassOptionsToClass{12pt}{report}}
-\DeclareOption{draft}{\PassOptionsToClass{draft}{report}}
-\DeclareOption{final}{\PassOptionsToClass{final}{report}}
-%\DeclareOption{letter}{\PassOptionsToClass{letter}{report}}
+% ----- Declare options can be passed on to book.cls
+\DeclareOption{draft}{\PassOptionsToClass{draft}{book}}
+\DeclareOption{final}{\PassOptionsToClass{final}{book}}
+\DeclareOption*{\OptionNotUsed \ClassWarning{emory}{'\CurrentOption' not allowed.}}
 
-%% Disable options
-\DeclareOption{a4paper}{\OptionNotUsed}%\ClassWarning{emory}{Page size 'a4' not allowed.}}
-\DeclareOption{a5paper}{\OptionNotUsed}%\ClassWarning{emory}{Page size 'a5' not allowed.}}
-\DeclareOption{b5paper}{\OptionNotUsed}%\ClassWarning{emory}{Page size 'b5' not allowed.}}
-\DeclareOption{legalpaper}{\OptionNotUsed}%\ClassWarning{emory}{Page size 'legal' not allowed.}}
-\DeclareOption{executivepaper}{\OptionNotUsed}%\ClassWarning{emory}{Page size 'executive' not allowed.}}
-\DeclareOption{10pt}{\OptionNotUsed}%\ClassWarning{emory}{Font size '10pt' not allowed.}}
-\DeclareOption{twocolumn}{\OptionNotUsed}%\ClassWarning{emory}{Two columns style not allowed.}}
-\DeclareOption{notitlepage}{\OptionNotUsed}%\ClassWarning{emory}{'notitlepage' not allowed.}}
-\DeclareOption{landscape}{\OptionNotUsed}%\ClassWarning{emory}{Landscape layout not allowed.}}
-\DeclareOption{twoside}{\OptionNotUsed}%\ClassWarning{emory}{Uneven side margins not allowed.}}
-
-%% Custom options
+% ----- Declare customized options
 \newboolean{IfDoubleSided}
 \newboolean{IfDissertation}
-% The dean! If Dean Tedesco resigns oneday, replace this with the name of the new dean
-\newcommand*{\th@Dean}{Lisa A.\ Tedesco, Ph.D}
-
-% Set default values
 \setboolean{IfDoubleSided}{true}
 \setboolean{IfDissertation}{true}
 
-
-\DeclareOption{doublesided}{\setboolean{IfDoubleSided}{true}}
-\DeclareOption{singlesided}{\setboolean{IfDoubleSided}{false}}
+\DeclareOption{twoside}{\setboolean{IfDoubleSided}{true}}
+\DeclareOption{oneside}{\setboolean{IfDoubleSided}{false}}
 \DeclareOption{thesis}{\setboolean{IfDissertation}{false}}
 \DeclareOption{dissertation}{\setboolean{IfDissertation}{true}}
 \DeclareOption{footnote}{\setboolean{IfFootnote}{false}}
 
-%% Process options and load class
+  
+% ----- Process options
 \ProcessOptions
-\LoadClassWithOptions{report}
+\LoadClass[12pt]{book}
+
+
+%% Custom options
+% The dean! If Dean Tedesco resigns oneday, replace this with the name of the new dean
+\newcommand*{\th@Dean}{Lisa A.\ Tedesco, Ph.D}
+
+% Set default values
+
 
 %% Internal commands
 
-% double spacing
-\newcommand*{\doublespacing}{%
-  \ifthenelse{\f@size = 11.}{%
-    \renewcommand{\baselinestretch}{1.771}}         %	11pt
-  {\renewcommand{\baselinestretch}{1.660}           %	12pt
-  }
-}
-  
 
 %% Internal preamble commands -- provide warning messages
 \newcommand*{\th@PassCmd}[2]{\gdef#1{#2}}
 \newcount\th@advisor@count
 \newcount\th@committee@count
+\newcount\th@prevdegree@count
 \newcount\@tmp
 \newcount\@half
 
@@ -72,7 +59,7 @@
 %\newcommand*{\advisor}[1]{\th@PassCmd{\th@advisor}{#1}}
 \newcommand*{\advisordegree}[1]{\th@PassCmd{\th@advisordegree}{#1}}
 \newcommand*{\yr}[1]{\th@PassCmd{\th@year}{#1}}
-\renewcommand*{\abstract}[1]{\th@PassCmd{\th@abstract}{#1}}
+\newcommand*{\abstract}[1]{\th@PassCmd{\th@abstract}{#1}}
 \newcommand*{\acknowledgment}[1]{\th@PassCmd{\th@acknowledgement}{#1}}
 
 \newcommand*{\advisor}[2]{%
@@ -377,7 +364,7 @@
 
 
 % Setup page geometry
-\RequirePackage{geometry}
+\RequirePackage[onecolumn]{geometry}
 \AtEndOfPackage{%
   \geometry{%
     paper=letterpaper,
@@ -393,9 +380,6 @@
   }
 }
 
-% Setup line style
-\doublespacing
-\renewcommand{\arraystretch}{0.67}
 
 %% Make special pages
 \AtBeginDocument{
@@ -422,11 +406,12 @@
   \typeout{--------------------------------------}
   \typeout{}
   \typeout{>>> Make Body >>>}
-  \doublespacing
   \setcounter{page}{0}
   \pagenumbering{arabic}
 }
 
+\renewcommand{\arraystretch}{1}
+\linespread{1.655}
 
 \AtEndDocument{
 \bibliographystyle{unsrt}

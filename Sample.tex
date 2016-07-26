@@ -16,12 +16,11 @@
 % --- Options and default values:
 % 
 % document type -- thesis, dissertation[default]
-% font size     -- 11pt, 12pt[default]
 % font family   -- garamond, georgia, times[default]
 % printing      -- singlesided, doublesided[default]
 % toc           -- subsec[default], subsubsec (toc level on subsections)
 
-\documentclass[draft,12pt]{emory}
+\documentclass[draft,double,twocolumn]{emory}
 
 % ------ include your own packages ---------------------------------------------
 \usepackage{amsmath}
@@ -32,8 +31,8 @@
 % ------ title and author and the boss -----------------------------------------
 \title{A \LaTeX{} Class for the Dissertation Style of Emory University}
 \author{Luyao Zou}                      % replace with your legal name
-\degree{Ph.D., Permenant Head Damage}   % replace with your degree, if necessary
-\prevdegree{B.S., Boiled Salmon}    % replace with your previous degree
+\degree{Ph.D.}   % replace with your degree, if necessary
+\prevdegree{B.S.}    % replace with your previous degree
 \field{Your field of expertise}
 % \advisor{Name}{Degree}, same for committee.
 % Repeat command for multiple inputs. Please sort with alphabatical order
@@ -131,7 +130,8 @@ degrees are given on the basis of candidacy, they are not automatic.
 your field is the subject-matter name of your program: English, Chemistry, 
 Health Services Research and Health Policy, Educational Studies, Business, etc.  
 The field does not include the word “program,” and does not include any sub-field
-you specialize in.  For example, your field is not ``19th Century American Literature,'' ``Finance Program,'' ``Neurology Department,'' ``African Studies'' or any other
+you specialize in.  For example, your field is not ``19th Century American Literature,''
+``Finance Program,'' ``Neurology Department,'' ``African Studies'' or any other
 sub-field or entity.
 \item \verb|\advisor{Advisor Name}{Advisor Degree}| sets up the name and degree of your 
 adivsor. If your committee had co-chairs, refer to each of them as Advisor,
