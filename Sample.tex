@@ -33,7 +33,7 @@
 \title{A \LaTeX{} Class for the Dissertation Style of Emory University}
 \author{Luyao Zou}                      % replace with your legal name
 \degree{Ph.D., Permenant Head Damage}   % replace with your degree, if necessary
-\previousdegree{B.S., Boiled Salmon}    % replace with your previous degree
+\prevdegree{B.S., Boiled Salmon}    % replace with your previous degree
 \field{Your field of expertise}
 % \advisor{Name}{Degree}, same for committee.
 % Repeat command for multiple inputs. Please sort with alphabatical order
@@ -75,63 +75,233 @@ Special thank to the great example of
 \begin{document}
 
 \chapter{Introduction}
-Putting up a dissertation following all the requirements or restrictions of
-your university policy may drive you nuts. This is why \LaTeX{} is glorious. 
-Unfortunately, Emory does not provide an ``official'' \LaTeX{} style package for
-her brilliant, hard-working Ph.D.\ candidates. I here try my best to offer a
-third-party \LaTeX{} class that hopefully covers most of the Emory policy, if not
-all.
+%Putting up a dissertation following all the requirements or restrictions of
+%your university policy may drive you nuts. This is why \LaTeX{} is glorious. 
+%Unfortunately, Emory does not provide an ``official'' \LaTeX{} style package for
+%her brilliant, hard-working Ph.D.\ candidates. I here try my best to offer a
+%third-party \LaTeX{} class that hopefully covers most of the Emory policy, if not
+%all.
+This is a \LaTeX{} class designed for dissertation writing under the style and
+format policy of the Laney Graduate School at Emory University. This class is
+intended to reduce the effort for Emory graduate students in formating, thus 
+to focus more on the writing. 
 
 To report bugs and suggestions, please contact me on GitHub. To contribute, 
 please fork my github repo at \url{https://github.com/luyaozou/EmoryCls.git}
-  
-\section{This is gonna be a brilliant dissertation!}
-\subsection{Born}
-My arrival to this planet is an entire oopsy. 
+
+\chapter{Usage}
+\section{Load the class and compilation}
+The Emory class can be loaded by declaring
+\verb|\documentclass{emory}| in the \LaTeX{} preamble. The class file
+\verb|emory.cls| needs to be in the same directory of the \LaTeX{} file to be 
+compiled. 
+
+Alternatively, you may copy \verb|emory.cls| into your local \TeX{} package 
+directory, similar to \verb|C:\MiKTeX\tex\latex\emory\| in Windows systems, or\\
+\verb|/usr/share/texmf-texlive/tex/latex/emory/| in Mac and Linux systems. After
+creating an \verb|emory| folder and putting the class file in it, run
+\verb|texhash| to update the \TeX{} package registery. Remember, you may need
+root permission to complete these operations. 
+
+Use \verb|pdflatex| instead of \verb|latex| as the compilation driver. This
+is because certain packages, such as \verb|url|, relies on pdf driver. 
 
 
-\subsection{This is why I am awesome. I am serious}
-\subsubsection{No mumble jumble}
-The reason why I am awesome is because I do not use \verb|lipsum|. I write 
-serious stuff in this sample file.
+\section{Set document options}\label{sec:options}
+The options of this class can be set in the \LaTeX{} preamble. They are 
+self-explanotary in the \verb|sample.tex| file. 
 
-% ----- more control with more declaration -------------------------------------
-\chapter{Real Stuff}
-Test output result for common \LaTeX{} commands, floats, enviroments.
+\begin{itemize}
+\item \verb|\title{Title}| sets up the title of the dissertation/thesis. The title 
+will be reprinted several times in the special pages.
+\item \verb|\author{Name}| sets up the name of the author. The name will be reprinted
+several times in the special pages. 
+\item \verb|\degree{Ph.D./Master}| sets up the degree you apply. It is either Doctor
+of Philosophy or Master of Arts/Science/or another area.  There are a number of 
+possible Master’s degree in some programs, particularly Music and Education.  
+If you are unsure, consult with your Director of Graduate Studies.
+\item \verb|\prevdegree{B.S.}| sets up your previous academic degree. List your 
+degree, the name of the university, and the year you received the degree.  
+For example, ``B.A., Yale University, 2004'' or ``M.Sc., University of Pennsylvania, 2003''.
+You can list several degrees, including master’s degrees from your current 
+program here at Emory.  Note that you can only list a master’s degree from your
+Emory program if you actually applied for and received it; even if master’s 
+degrees are given on the basis of candidacy, they are not automatic. 
+\item \verb|\field{Field of Expertise}| sets up your field of study. Generally, 
+your field is the subject-matter name of your program: English, Chemistry, 
+Health Services Research and Health Policy, Educational Studies, Business, etc.  
+The field does not include the word “program,” and does not include any sub-field
+you specialize in.  For example, your field is not ``19th Century American Literature,'' ``Finance Program,'' ``Neurology Department,'' ``African Studies'' or any other
+sub-field or entity.
+\item \verb|\advisor{Advisor Name}{Advisor Degree}| sets up the name and degree of your 
+adivsor. If your committee had co-chairs, refer to each of them as Advisor,
+repeat this command, and list them in alphabetical order. 
+\item \verb|\committee{Committee Member Name}{Committee Member Degree}|  sets up
+the name and degree of your committee member. Repeat this command for multiple 
+members. If the number of committee members exceeds 4, the class will change
+the signing sheet into a two column style instead of one column style.
+\item \verb|\yr{2016}| sets up the calendar year you receive your degree
+(not the academic year).
+\end{itemize}
+
+
+\section{Recommended packages}
+More external packages can be loaded via \verb|\usepackage[options]{package}|
+in the preamble. The use of packages is completely the choice of the author,
+and here are a few commonly used \LaTeX{} packages recommended to new \LaTeX{}
+users.
+
+All the packages listed here are standard \LaTeX{} packages that should come
+with any standard \LaTeX{} distribution. If you cannot find a certain package 
+in your local computer system, check out the CTAN archive \url{https://www.ctan.org/}.
+
+\begin{itemize}
+\item \verb|amsmath| provides AMS standard mathematical enviroments for equations and symbols.
+\item \verb|graphix| provides extended figure environment to treat various image formats.
+\item \verb|mhchem| provides easy typesetting of chemical formulae.
+\item \verb|longtable| provides extended table environment for extreme long tables
+across several pages.
+\item \verb|multirow| ``creates tabular cells spanning multiple rows'' in the table environment.
+\item \verb|subfigure| provides extended figure environment for subfigure captions. 
+\item \verb|verbatim| provides extended verbatim environment that allows customized 
+frames, position, and layout.
+\item \verb|url| generates hyperlinks for url in the final \verb|pdf| output.
+\end{itemize}
+
+
+\section{Use environments}\label{sec:env}
+The Emory class should be fully compatible with standard \LaTeX{} enviroments:
+\verb|figure|, \verb|table|, \verb|itemize|, \verb|enumerate|, and \verb|verbatim|.
+In addition to these standard enviroments, \verb|emory.cls| also defines two new
+enviroments: \verb|prose| and \verb|poetry|, for bulk quotation of different literature genre.
+
+Sample outputs of these enviroments are listed here. 
 
 \begin{figure}[htp!]
   \centering
   \includegraphics[width=\textwidth]{LaTeXLogo.png}
-  \caption{Ahhh why am I here?}
+  \caption{This is a figure enviroment.\label{fig}}
 \end{figure}
 
 \begin{table}[htp!]
   \centering
-  \caption{More controls in the table.}
+  \caption{This is a simple table. \label{table}}
   \begin{tabular}{l l}
     \hline
     Sample & Table \\
+    \hline 
+    row & 1 \\
+    row & 2 \\
     \hline
   \end{tabular}
 \end{table}
 
+Single mathematical equation (need \verb|amsmath| package)
 \begin{equation}
-  E = mc^2
+  E = mc^2 \label{math:single}
 \end{equation}
 
-\begin{subequations}
+Multiple mathematical subequations (need \verb|amsmath| package)
+\begin{subequations}\label{math:sub}
 \begin{align}
-  \nabla\cdot\pmb{E}&=\frac{\rho}{\epsilon_0}\\
-  \nabla\cdot\pmb{B}&=0\\
-  \nabla\times\pmb{E}&=-\frac{\partial\pmb{B}}{\partial t}\\
-  \nabla\times\pmb{B}&=\mu_0\Big(\pmb{J}+\epsilon_0\frac{\partial\pmb{E}}{\partial t}\Big)
+  \nabla\cdot\pmb{E}&=\frac{\rho}{\epsilon_0} \label{math:sub1}\\
+  \nabla\cdot\pmb{B}&=0 \label{math:sub2} \\
+  \nabla\times\pmb{E}&=-\frac{\partial\pmb{B}}{\partial t} \label{math:sub3}\\
+  \nabla\times\pmb{B}&=\mu_0\Big(\pmb{J}+\epsilon_0\frac{\partial\pmb{E}}{\partial t}\Big) \label{math:sub4}
 \end{align}
 \end{subequations}
+
+Poetry enviroment. Use \verb|\begin{poetry}{title}{poet}{year}} \end{poetry}|
+
+\begin{poetry}{Ode to the West Wind}{P.\ B.\ Shelley}{1792--1822}\label{poet}
+O wild West Wind, thou breath of Autumn’s being,
+
+Thou, from whose unseen presence the leaves dead
+
+Are driven, like ghosts from an enchanter fleeing,
+\end{poetry}
+
 
 Use \verb|\usepackage[version=3]{mhchem}| for your chemicals, like this:
 \verb|\ce{C2H5OH}| makes \ce{C2H5OH}.
 
 
-\bibliography{sample-bib}
+\section{Cross reference}
+One advantage of \LaTeX{} out of many is the convinience of cross reference in
+the text. Use \verb|\label{yourlabel}| to label the material, and \verb|\ref{yourlabel}|
+to reference it in some other places in your text. And you do not need to worry
+about numbering: \LaTeX{} does it automatically for you. For example, here
+I will reference the sample enviroments in the previous section (Section \ref{sec:env}):
+\begin{itemize}
+\item The label for Table~\ref{table} is \verb|\label{table}|.
+\item The label for Figure~\ref{fig} is \verb|\label{fig}|.
+\item The label for Equation~\ref{math:single} is \verb|\label{math:single}|
+\item The label for Equations~\ref{math:sub} is \verb|\label{math:sub}|. And then
+      you can reference to each subequation: \ref{math:sub1}, \ref{math:sub2}, 
+      \ref{math:sub3}, and \ref{math:sub4} via \verb|\label{math:sub1}|,
+      \verb|\label{math:sub2}|, \verb|\label{math:sub3}|, and \verb|\label{math:sub4}|,
+      respectively.
+\item The label for Quote~\ref{poet} is \verb|\label{poet}|.
+\end{itemize}
+
+\section{Citation and bibliography}
+Another great advantage of \LaTeX{} is its bibliography manager: {\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}
+
+Include all of you citations in a \verb|.bib| file, and specify it at the end
+of the document using command \verb|\bibliography{sample-bib}|, before \verb|\end{document}|.
+(Do not include the extension \verb|.bib|).
+
+Each bibliography item has a ``bibkey''. Cite this ``bibkey'' in your text
+using \verb|\cite{bibkey}| results in a correctly labeled citation.
+
+Two styles are available in this class: the name-date style, or the numeric-label 
+style. The style can be specified in the preamble (see Section~\ref{sec:options}).
+The citation formats of different resource types are automatically set up by the 
+class.
+
+Here are some examples of the numeric-label style.
+\begin{itemize}
+\item Cite an article \cite{bib-article}
+\item Cite a book \cite{bib-book}
+\item Cite a book chapter \cite{bib-chapter}
+\item Cite a conference proceeding \cite{bib-conference}
+\item Cite an online resource (url) \cite{bib-url}
+\item Cite a unpublished document \cite{bib-unpublished}
+\end{itemize}
+
+
+After update the bibliography file, you need to re-compile your document in the 
+following manner:
+\begin{enumerate}
+\item \verb|pdflatex sample|  updates the tex body, and writes new citation labels
+into the \verb|.aux| file
+\item \verb|bibtex sample|  reads the information from the \verb|.bib| file, 
+and writes it into the \verb|.aux| file with the correct citation format.
+\item \verb|pdflatex sample|  run this command again, which reads the bibliography
+items in the \verb|.aux| file, and insert them into the correct location in the 
+output document.
+\item \verb|pdflatex sample| run this command once again, which updates the 
+numbering of the citation markers. 
+\end{enumerate}
+Do not include the extension \verb|.tex| in the command line.
+
+\chapter{Random}
+\section{This is gonna be a brilliant dissertation!}
+\subsection{Born}
+My arrival to this planet is an entire oopsy. 
+
+
+\subsection{This is why I am awesome.}
+\subsubsection{No mumble jumble}
+The reason why I am awesome is because I do not use \verb|lipsum|. I write 
+serious stuff in this sample file.
+
+
+
+
+
+
+
+\bibliography{SampleBib}
 
 \end{document}

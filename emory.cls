@@ -67,7 +67,7 @@
 \renewcommand*{\title}[1]{\th@PassCmd{\th@title}{#1}}
 \renewcommand*{\author}[1]{\th@PassCmd{\th@author}{#1}}
 \newcommand*{\degree}[1]{\th@PassCmd{\th@degree}{#1}}
-\newcommand*{\previousdegree}[1]{\th@PassCmd{\th@previousdegree}{#1}}
+\newcommand*{\prevdegree}[1]{\th@PassCmd{\th@previousdegree}{#1}}
 \newcommand*{\field}[1]{\th@PassCmd{\th@field}{#1}}
 %\newcommand*{\advisor}[1]{\th@PassCmd{\th@advisor}{#1}}
 \newcommand*{\advisordegree}[1]{\th@PassCmd{\th@advisordegree}{#1}}
@@ -362,22 +362,40 @@
   \clearpage
 }
 
+% Setup new environments.
+\newenvironment*{poetry}[3]
+{\let\\\@centercr
+ \list{}{\itemsep \z@
+         \itemindent -1.5em%
+         \listparindent\itemindent
+         \rightmargin \leftmargin
+         \advance\leftmargin 1.5em}%
+    \item\relax
+    }
+{\endlist}
 
+
+
+% Setup page geometry
 \RequirePackage{geometry}
 \AtEndOfPackage{%
   \geometry{%
     paper=letterpaper,
-    total={6in, 9in},
+    total={6in, 8.5in},
     textwidth=6in,
-    textheight=9in,
+    textheight=8.5in,
     includemp=false,
     lmargin=1.5in,
     rmargin=1.0in,
-    top=1in,
+    top=1.5in,
     bottom=1in,
     vcentering=true,
   }
 }
+
+% Setup line style
+\doublespacing
+\renewcommand{\arraystretch}{0.67}
 
 %% Make special pages
 \AtBeginDocument{
@@ -407,4 +425,9 @@
   \doublespacing
   \setcounter{page}{0}
   \pagenumbering{arabic}
+}
+
+
+\AtEndDocument{
+\bibliographystyle{unsrt}
 }
