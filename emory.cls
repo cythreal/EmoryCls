@@ -418,18 +418,6 @@
   \clearpage
 }
 
-% Setup new environments.
-\newenvironment*{poetry}[3]
-{\let\\\@centercr
- \list{}{\itemsep \z@
-         \itemindent -1.5em%
-         \listparindent\itemindent
-         \rightmargin \leftmargin
-         \advance\leftmargin 1.5em}%
-    \item\relax
-    }
-{\endlist}
-
 
 \newcommand*{\set@geometry}{%
   % Setup page geometry
