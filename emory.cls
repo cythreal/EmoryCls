@@ -9,22 +9,20 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{ifthen}
 
-% ----- Declare options can be passed on to book.cls -----
-\DeclareOption{draft}{\PassOptionsToClass{draft}{book}}
-\DeclareOption{final}{\PassOptionsToClass{final}{book}}
+% ----- Declare options can be passed on to report.cls -----
+\DeclareOption{draft}{\PassOptionsToClass{draft}{report}}
+\DeclareOption{final}{\PassOptionsToClass{final}{report}}
 \DeclareOption*{\OptionNotUsed \ClassWarning{emory}{'\CurrentOption' not allowed.}}
 
 % ----- Process options -----
 \ProcessOptions
-\LoadClass[12pt]{book}
+\LoadClass[12pt]{report}
 
 % ----- Declare boolean switches
 % printing option. [true]: double sided printing, false: single sided printing
 \newboolean{If@print@double}
-\setboolean{If@print@double}{true}
 % document type. [true]: dissertation, false: thesis 
 \newboolean{If@doc@dissertation}
-\setboolean{If@doc@dissertation}{true}
 % document style. set by user input key. 
 \newboolean{If@major@chem}
 \newboolean{If@major@phys}
@@ -113,7 +111,7 @@
 %\newcommand*{\advisor}[1]{\th@PassCmd{\th@advisor}{#1}}
 \newcommand*{\advisordegree}[1]{\th@PassCmd{\th@advisordegree}{#1}}
 \newcommand*{\yr}[1]{\th@PassCmd{\th@year}{#1}}
-\newcommand*{\abstract}[1]{\th@PassCmd{\th@abstract}{#1}}
+\renewcommand*{\abstract}[1]{\th@PassCmd{\th@abstract}{#1}}
 \newcommand*{\acknowledgment}[1]{\th@PassCmd{\th@acknowledgement}{#1}}
 
 \newcommand*{\advisor}[2]{%
@@ -182,7 +180,8 @@
   \th@author & \hspace{0.25in} & Date\\
   \end{tabular}
   \vspace*{\fill}
-  \ifthenelse{\boolean{If@print@double}}{\clearpage\null\newpage}{\clearpage}
+  
+  \clearpage
 }
 
 % Approval Sheet
@@ -293,7 +292,7 @@
     Date
   \end{center}
   \vspace*{\fill}
-  \ifthenelse{\boolean{If@print@double}}{\clearpage\null\newpage}{\clearpage}
+  \clearpage
 } 
 
 \newcommand*{\th@AbstractCoverPage}{%
@@ -337,7 +336,7 @@
   \end{center}
   \vspace{1.5in}
   
-  \ifthenelse{\boolean{If@print@double}}{\clearpage\null\newpage}{\clearpage}
+  \clearpage
 }
 
 \newcommand*{\th@AbstractPage}{%
@@ -357,7 +356,7 @@
   \parbox{4.5in}{\th@abstract}
   \end{center}
   
-  \ifthenelse{\boolean{If@print@double}}{\clearpage\null\newpage}{\clearpage}
+  \clearpage
 }
 
 \newcommand*{\th@CoverPage}{%
@@ -400,7 +399,7 @@
     \th@year
   \end{center}
   \vspace{1.5in}
-  \ifthenelse{\boolean{If@print@double}}{\clearpage\null\newpage}{\clearpage}
+  \clearpage
 }
 
 \newcommand*{\th@AcknowledgementPage}{%
@@ -413,9 +412,8 @@
   
   \setcounter{page}{0}
   \th@acknowledgement
-  \thepage
   
-  \ifthenelse{\boolean{If@print@double}}{\clearpage\thepage\newpage}{\clearpage}
+  \clearpage
 }
 
 % Setup new environments.
@@ -431,30 +429,20 @@
 {\endlist}
 
 
-
-% Setup page geometry
-\ifthenelse{\boolean{If@print@double}}{%
-  \RequirePackage[onecolumn,twoside]{geometry}
-}{%
-  \RequirePackage[onecolumn]{geometry}
-}
-
-\AtEndOfPackage{%
-  \geometry{%
-    paper=letterpaper,
-    total={6in, 8.5in},
-    text={6in, 8.5in},
-    includemp=false,
-    hmargin={1.5in, 1in},
-    vmargin={1in, 1in},
-    vcentering=true,
-    landscape=false,
+\newcommand*{\set@geometry}{%
+  % Setup page geometry
+  \ifthenelse{\boolean{If@print@double}}{%
+    \RequirePackage[onecolumn,twoside,paper=letterpaper,text={6in,9in},left=1.5in,right=1in,vmargin=1in,vcentering=true,landscape=false]{geometry}
+  }{%
+    \RequirePackage[onecolumn,hcentering=false,paper=letterpaper,text={6in,9in},left=1.5in,right=1in,vmargin=1in,vcentering=true,landscape=false]{geometry}
   }
 }
 
 
 %% Make special pages
 \AtBeginDocument{
+  \set@geometry
+  \newgeometry{twoside=false,left=1.5in,right=1in,vmargin=1in}
   \pagenumbering{gobble}     % suppress page numbering 
   \typeout{>>> Make Distribution Agreement >>>}
   \th@DistributionAgreement
@@ -478,8 +466,9 @@
   \typeout{--------------------------------------}
   \typeout{}
   \typeout{>>> Make Body >>>}
-  \setcounter{page}{0}
   \pagenumbering{arabic}
+  \setcounter{page}{1}
+  \restoregeometry
 }
 
 \renewcommand{\arraystretch}{1}
