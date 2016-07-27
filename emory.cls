@@ -4,33 +4,87 @@
 % STEM fields of study
 %%% --------------------------------
 
-% ----- Class declaration
+% ----- Class declaration -----
 \ProvidesClass{emory}[2016/08/01 LaTeX class for Emory dissertation]
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{ifthen}
 
-% ----- Declare options can be passed on to book.cls
+% ----- Declare options can be passed on to book.cls -----
 \DeclareOption{draft}{\PassOptionsToClass{draft}{book}}
 \DeclareOption{final}{\PassOptionsToClass{final}{book}}
 \DeclareOption*{\OptionNotUsed \ClassWarning{emory}{'\CurrentOption' not allowed.}}
 
-% ----- Declare customized options
-\newboolean{IfDoubleSided}
-\newboolean{IfDissertation}
-\setboolean{IfDoubleSided}{true}
-\setboolean{IfDissertation}{true}
-
-\DeclareOption{twoside}{\setboolean{IfDoubleSided}{true}}
-\DeclareOption{oneside}{\setboolean{IfDoubleSided}{false}}
-\DeclareOption{thesis}{\setboolean{IfDissertation}{false}}
-\DeclareOption{dissertation}{\setboolean{IfDissertation}{true}}
-\DeclareOption{footnote}{\setboolean{IfFootnote}{false}}
-
-  
-% ----- Process options
+% ----- Process options -----
 \ProcessOptions
-\LoadClass[12pt]{book}
+\LoadClass[12pt,letterpaper]{book}
 
+% ----- Declare boolean switches
+% printing option. [true]: double sided printing, false: single sided printing
+\newboolean{If@print@double}
+\setboolean{If@print@double}{true}
+% document type. [true]: dissertation, false: thesis 
+\newboolean{If@doc@dissertation}
+\setboolean{If@doc@dissertation}{true}
+% document style. set by user input key. 
+\newboolean{If@major@chem}
+\newboolean{If@major@phys}
+\newboolean{If@major@math}
+\newboolean{If@major@bio}
+\newboolean{If@major@cs}
+
+% ----- Define key value pairs -----
+\RequirePackage{xkeyval}
+\define@boolkey[emory]{print}{doubleside}[true]{%
+  \setboolean{If@print@double}{#1}
+}
+\define@boolkey[emory]{doc}{dissertation}[true]{%
+  \setboolean{If@doc@dissertation}{#1}
+}
+\define@choicekey+[emory]{style}{major}[]{chem,phys,math,bio,cs}[]{%
+  \setboolean{If@major@#1}{true}
+}{%
+  \ClassWarning{emory}{Style corrently not supported}%
+}
+
+% ------ Load key values from user input ------
+\AtBeginDocument{
+\ifthenelse{\boolean{If@major@chem}}{%
+  \load@chem@package
+}{%
+  \typeout{chem disabled}
+}
+\ifthenelse{\boolean{If@major@phys}}{%
+  \load@phys@package
+}{}
+\ifthenelse{\boolean{If@major@math}}{%
+  \load@math@package
+}{}
+\ifthenelse{\boolean{If@major@bio}}{%
+  \load@bio@package
+}{}
+\ifthenelse{\boolean{If@major@cs}}{%
+  \load@cs@package
+}{}
+}
+
+% ------ Load packages shared by all majors -------
+\RequirePackage{amsmath}
+\RequirePackage{graphicx}
+
+% ------ Define major specific style and package ------
+\newcommand*{\load@math@package}{%
+  \RequirePackage{amsfonts}
+}
+\newcommand*{\load@chem@package}{%
+  \RequirePackage[version=3]{mhchem}
+}
+\newcommand*{\load@phys@package}{%
+  \RequirePackage[version=3]{mhchem}
+}
+\newcommand*{\load@bio@package}{%
+}
+\newcommand*{\load@cs@package}{%
+}
 
 %% Custom options
 % The dean! If Dean Tedesco resigns oneday, replace this with the name of the new dean
@@ -274,7 +328,7 @@
     
     \vfill
     An abstract of \\
-    A \ifthenelse{\boolean{IfDissertation}}{dissertation}{thesis} submitted to the Faculty of the \\
+    A \ifthenelse{\boolean{If@doc@dissertation}}{dissertation}{thesis} submitted to the Faculty of the \\
     James T.\ Laney School of Graduate Studies of Emory University \\
     in partial fulfillment of the requirements for the degree of \\
     \th@degree \\
@@ -330,7 +384,7 @@
     \fi
     
     \vfill
-    A \ifthenelse{\boolean{IfDissertation}}{dissertation}{thesis} submitted to the Faculty of the \\
+    A \ifthenelse{\boolean{If@doc@dissertation}}{dissertation}{thesis} submitted to the Faculty of the \\
     James T.\ Laney School of Graduate Studies of Emory University \\
     in partial fulfillment of the requirements for the degree of \\
     \th@degree \\
@@ -412,6 +466,7 @@
 
 \renewcommand{\arraystretch}{1}
 \linespread{1.655}
+
 
 \AtEndDocument{
 \bibliographystyle{unsrt}

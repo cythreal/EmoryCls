@@ -8,25 +8,31 @@
 % generate a .pdf file with the desired dissertation format.
 %
 % The dissertation style instructions can be found at
-% http://www.gs.emory.edu/uploads/Academic%20Affairs/Submit%20Instructions.pdf
-% ------------------------------------------------------------------------------
-%
 % ------ documentclass declaration ---------------------------------------------
 % --- \documentclass[options]{emory}
-% --- Options and default values:
-% 
-% document type -- thesis, dissertation[default]
-% font family   -- garamond, georgia, times[default]
-% printing      -- singlesided, doublesided[default]
-% toc           -- subsec[default], subsubsec (toc level on subsections)
+% --- Only [draft] or [final] is allowed. Other properties can be set by keys.
+\documentclass[draft]{emory}
 
-\documentclass[draft,double,twocolumn]{emory}
+% --- Set up other document properties. Available keys and values:
+% --- style: select style by major=<major>
+%            supported majors: chem, phys, math, bio, and cs 
+% --- print: doubleside = <boolean>
+%            true: double sided printing [default]
+%            false: single sided printing
+% --- doc: dissertation = <boolean>
+%          true: document is a dissertation [default]
+%          false: document is a thesis
+
+\typeout{I'm loading keys}
+\setkeys[emory]{style}{major=chem}
+\setkeys[emory]{print}{doubleside=true}
+\setkeys[emory]{doc}{dissertation=true}
+
+
 
 % ------ include your own packages ---------------------------------------------
-\usepackage{amsmath}
-\usepackage[version=3]{mhchem}
 \usepackage{url}
-\usepackage{graphicx}
+
 
 % ------ title and author and the boss -----------------------------------------
 \title{A \LaTeX{} Class for the Dissertation Style of Emory University}
