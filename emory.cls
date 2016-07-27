@@ -21,8 +21,10 @@
 % ----- Declare boolean switches
 % printing option. [true]: double sided printing, false: single sided printing
 \newboolean{If@print@double}
+\setboolean{If@print@double}{true}
 % document type. [true]: dissertation, false: thesis 
 \newboolean{If@doc@dissertation}
+\setboolean{If@doc@dissertation}{true}
 % document style. set by user input key. 
 \newboolean{If@major@chem}
 \newboolean{If@major@phys}
