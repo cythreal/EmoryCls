@@ -422,9 +422,9 @@
 \newcommand*{\set@geometry}{%
   % Setup page geometry
   \ifthenelse{\boolean{If@print@double}}{%
-    \RequirePackage[onecolumn,twoside,paper=letterpaper,text={6in,9in},left=1.5in,right=1in,vmargin=1in,vcentering=true,landscape=false]{geometry}
+    \RequirePackage[onecolumn,twoside,paper=letterpaper,total={6in,9in},left=1.5in,right=1in,vmargin=1in,vcentering=true,landscape=false]{geometry}
   }{%
-    \RequirePackage[onecolumn,hcentering=false,paper=letterpaper,text={6in,9in},left=1.5in,right=1in,vmargin=1in,vcentering=true,landscape=false]{geometry}
+    \RequirePackage[onecolumn,hcentering=false,paper=letterpaper,total={6in,9in},left=1.5in,right=1in,vmargin=1in,vcentering=true,landscape=false]{geometry}
   }
 }
 
