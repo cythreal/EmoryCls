@@ -16,7 +16,7 @@
 
 % ----- Process options -----
 \ProcessOptions
-\LoadClass[12pt,letterpaper]{book}
+\LoadClass[12pt]{book}
 
 % ----- Declare boolean switches
 % printing option. [true]: double sided printing, false: single sided printing
@@ -182,13 +182,13 @@
   \th@author & \hspace{0.25in} & Date\\
   \end{tabular}
   \vspace*{\fill}
-  \clearpage
+  \ifthenelse{\boolean{If@print@double}}{\clearpage\null\newpage}{\clearpage}
 }
 
 % Approval Sheet
 \newcommand*{\th@ApprovalSheet}{%
   \thispagestyle{empty}
-%  \vspace*{\fill}
+  \vspace*{\fill}
   \noindent
   \begin{center}
     \large \th@title \normalsize
@@ -293,12 +293,12 @@
     Date
   \end{center}
   \vspace*{\fill}
-  \clearpage
+  \ifthenelse{\boolean{If@print@double}}{\clearpage\null\newpage}{\clearpage}
 } 
 
 \newcommand*{\th@AbstractCoverPage}{%
   \thispagestyle{empty}
-  
+  \vspace*{\fill}
   \begin{center}
     \large \th@title \normalsize
     \vspace{1in}
@@ -336,26 +336,34 @@
     \th@year
   \end{center}
   \vspace{1.5in}
-  \clearpage
+  
+  \ifthenelse{\boolean{If@print@double}}{\clearpage\null\newpage}{\clearpage}
 }
 
 \newcommand*{\th@AbstractPage}{%
+  \thispagestyle{empty}
+
   \begin{center}
-    Abstract
+    \large
+    \textbf{Abstract}
     \vspace{2ex}
     
-    \th@title
+    \th@title\normalsize
     
+    \vspace{1ex}
     By \th@author
-  \vspace{1in}
+  \vspace{0.5in}
   
   \parbox{4.5in}{\th@abstract}
   \end{center}
   
-  \clearpage
+  \ifthenelse{\boolean{If@print@double}}{\clearpage\null\newpage}{\clearpage}
 }
 
 \newcommand*{\th@CoverPage}{%
+  \thispagestyle{empty}
+  \vspace*{\fill}
+
   \begin{center}
     \large \th@title \normalsize
     \vspace{1in}
@@ -392,15 +400,22 @@
     \th@year
   \end{center}
   \vspace{1.5in}
-  \clearpage
+  \ifthenelse{\boolean{If@print@double}}{\clearpage\null\newpage}{\clearpage}
 }
 
 \newcommand*{\th@AcknowledgementPage}{%
-  \subsection*{Acknowledgement}
+  \thispagestyle{empty}
+  \begin{center}
+    \large
+    Acknowledgement
+    \normalsize
+  \end{center}
   
+  \setcounter{page}{0}
   \th@acknowledgement
+  \thepage
   
-  \clearpage
+  \ifthenelse{\boolean{If@print@double}}{\clearpage\thepage\newpage}{\clearpage}
 }
 
 % Setup new environments.
@@ -418,19 +433,22 @@
 
 
 % Setup page geometry
-\RequirePackage[onecolumn]{geometry}
+\ifthenelse{\boolean{If@print@double}}{%
+  \RequirePackage[onecolumn,twoside]{geometry}
+}{%
+  \RequirePackage[onecolumn]{geometry}
+}
+
 \AtEndOfPackage{%
   \geometry{%
     paper=letterpaper,
     total={6in, 8.5in},
-    textwidth=6in,
-    textheight=8.5in,
+    text={6in, 8.5in},
     includemp=false,
-    lmargin=1.5in,
-    rmargin=1.0in,
-    top=1.5in,
-    bottom=1in,
+    hmargin={1.5in, 1in},
+    vmargin={1in, 1in},
     vcentering=true,
+    landscape=false,
   }
 }
 
@@ -465,7 +483,6 @@
 }
 
 \renewcommand{\arraystretch}{1}
-\linespread{1.655}
 
 
 \AtEndDocument{
