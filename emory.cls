@@ -1,10 +1,10 @@
-%%% --- Emory Dissertation Class ---
-% This class provides style settings suitable for the dissertation 
-% of the Laney Graduate School of Emory University, specially for
-% STEM fields of study
-%%% --------------------------------
+%%%%%%%%%%%%%%%%%%%%%% Emory Dissertation Class %%%%%%%%%%%%%%%%%%%%%
+% This class provides style settings suitable for the dissertation  %
+% of the Laney Graduate School of Emory University, specially for   %
+% STEM fields of study                                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% ----- Class declaration -----
+% ------------------------ Class declaration ----------------------
 \ProvidesClass{emory}[2016/08/01 LaTeX class for Emory dissertation]
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{ifthen}
@@ -45,9 +45,8 @@
 \AtBeginDocument{
 \ifthenelse{\boolean{If@major@chem}}{%
   \load@chem@package
-}{%
-  \typeout{chem disabled}
-}
+  \set@chem@style
+}{}
 \ifthenelse{\boolean{If@major@phys}}{%
   \load@phys@package
 }{}
@@ -65,8 +64,9 @@
 % ------ Load packages shared by all majors -------
 \RequirePackage{amsmath}
 \RequirePackage{graphicx}
+\RequirePackage{titlesec}
 
-% ------ Define major specific style and package ------
+% ------ Load major specific package ------
 \newcommand*{\load@math@package}{%
   \RequirePackage{amsfonts}
 }
@@ -81,21 +81,28 @@
 \newcommand*{\load@cs@package}{%
 }
 
-%% Custom options
-% The dean! If Dean Tedesco resigns oneday, replace this with the name of the new dean
-\newcommand*{\th@Dean}{Lisa A.\ Tedesco, Ph.D}
+% ------ Define major specific style sequences ------
+\newcommand*{\set@chem@style}{%
+  \cfg@chapter@arabic
+}
 
-% Set default values
+% ------ Configure styles for individual page elements -------
+\newcommand*{\cfg@chapter@arabic}{%
+  \titleformat{\chapter}[display]{\bfseries\Huge\itshape}{\thechapter}{0.5ex}{}
+}
 
 
-%% Internal commands
+
+% --------------  The dean! --------------------%
+\newcommand*{\th@Dean}{Lisa A.\ Tedesco, Ph.D}  %
+% ----------------------------------------------%
 
 
 %% Internal preamble commands -- provide warning messages
 \newcommand*{\th@PassCmd}[2]{\gdef#1{#2}}
 \newcount\th@advisor@count
 \newcount\th@committee@count
-\newcount\th@prevdegree@count
+\newcount\th@prevdeg@count
 \newcount\@tmp
 \newcount\@half
 
@@ -103,14 +110,14 @@
 \renewcommand*{\title}[1]{\th@PassCmd{\th@title}{#1}}
 \renewcommand*{\author}[1]{\th@PassCmd{\th@author}{#1}}
 \newcommand*{\degree}[1]{\th@PassCmd{\th@degree}{#1}}
-\newcommand*{\prevdegree}[1]{\th@PassCmd{\th@previousdegree}{#1}}
 \newcommand*{\field}[1]{\th@PassCmd{\th@field}{#1}}
-%\newcommand*{\advisor}[1]{\th@PassCmd{\th@advisor}{#1}}
-\newcommand*{\advisordegree}[1]{\th@PassCmd{\th@advisordegree}{#1}}
 \newcommand*{\yr}[1]{\th@PassCmd{\th@year}{#1}}
 \renewcommand*{\abstract}[1]{\th@PassCmd{\th@abstract}{#1}}
 \newcommand*{\acknowledgment}[1]{\th@PassCmd{\th@acknowledgement}{#1}}
-
+\newcommand*{\prevdegree}[1]{%
+  \global\advance\th@prevdeg@count\@ne\relax
+  \expandafter\gdef\csname th@prevdegree\@roman\th@prevdeg@count \endcsname{#1}\relax
+}
 \newcommand*{\advisor}[2]{%
   \global\advance\th@advisor@count\@ne\relax
   \expandafter\gdef\csname th@advisor\@roman\th@advisor@count \endcsname{#1, #2}\relax
@@ -129,7 +136,7 @@
 \newcommand*{\th@degree}{%
   \ClassWarning{emory}{Missing degree!}{Help}
 }
-\newcommand*{\th@previousdegree}{%
+\newcommand*{\th@prevdegree}{%
   \ClassWarning{emory}{Missing previous degree!}
 }
 \newcommand*{\th@field}{%
@@ -304,15 +311,27 @@
     
     \th@author
     
-    \th@previousdegree
+    \@tmp\z@\relax
+    \ifnum\th@prevdeg@count=\@ne
+      \@nameuse{th@prevdegree\@roman\@ne}
+    \else
+      \@tmp\z@
+      \loop
+        \advance\@tmp\@ne\relax
+        \@nameuse{th@prevdegree\@roman\@tmp}
+        
+        \ifnum\@tmp<\th@prevdeg@count
+      \repeat
+    \fi
+    
     \vspace{1in}
     
+    \@tmp\z@\relax
     \ifnum\th@advisor@count=\@ne
       Advisor: \@nameuse{th@advisor\@roman\@ne}
     \else
       Advisor:
 
-      \newcount\@tmp
       \@tmp\z@
       \loop
         \advance\@tmp\@ne\relax
@@ -369,16 +388,27 @@
     
     \th@author
     
-    \th@previousdegree
+    \@tmp\z@\relax
+    \ifnum\th@prevdeg@count=\@ne
+      \@nameuse{th@prevdegree\@roman\@ne}
+    \else
+      \@tmp\z@
+      \loop
+        \advance\@tmp\@ne\relax
+        \@nameuse{th@prevdegree\@roman\@tmp}
+        
+        \ifnum\@tmp<\th@prevdeg@count
+      \repeat
+    \fi
+    
     \vspace{1in}
     
+    \@tmp\z@\relax
     \ifnum\th@advisor@count=\@ne
       Advisor: \@nameuse{th@advisor\@roman\@ne}
     \else
       Advisor:
 
-      \newcount\@tmp
-      \@tmp\z@
       \loop
         \advance\@tmp\@ne\relax
         \@nameuse{th@advisor\@roman\@tmp}
