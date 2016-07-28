@@ -94,7 +94,7 @@
 % --- chapter with arabic numbering and "Chapter"
 \newcommand*{\cfg@chapter@chptname@arabic}{%
   \titleformat{\chapter}[block]{\bfseries\LARGE}{Chapter \thechapter}{2ex}{}
-  \titlespacing{\chapter}{0pt}{3ex}{4ex}
+  \titlespacing{\chapter}{0pt}{0pt}{4ex}
 }
 % --- chapter with arabic numbering, without "Chapter"
 \newcommand*{\cfg@chapter@nochptname@arabic}{%
@@ -135,12 +135,12 @@
   \renewcommand{\labelenumiv}{(\theenumiv).}
 }
 \newcommand*{\cfg@itemize@sep}{%
-%  \let\olditemize\itemize
-%  \renewcommand{\itemize}{\olditemize\setlength{\parsep}{1ex}}
-%  \let\oldenumerate\enumerate
-%  \renewcommand{\enumerate}{\oldenumerate\setlength{\parsep}{1ex}}
+  \let\olditemize\itemize
+  \renewcommand{\itemize}{\olditemize\setlength{\parsep}{0.2ex}}
+  \let\oldenumerate\enumerate
+  \renewcommand{\enumerate}{\oldenumerate\setlength{\parsep}{1ex}}
   \let\olditem\item
-  \renewcommand{\item}{\setlength{\itemsep}{1ex}\olditem}
+  \renewcommand{\item}{\setlength{\itemsep}{0.5ex}\olditem}
 }
 
 % --------------  The dean! --------------------%
@@ -502,6 +502,7 @@
   \RequirePackage{fancyhdr}
   % set page numbering on the right top
   \pagestyle{myheadings}
+  \addtolength{\headheight}{3pt}
   \rhead{\thepage}
   % get rid of page number footer on chapter pages
   \fancypagestyle{plain}{%
@@ -510,12 +511,15 @@
   }
 }
 
+\renewcommand*{\baselinestretch}{1.655}   % double space for 12pt font
+\renewcommand{\arraystretch}{1}
 
 %% Make special pages
 \AtBeginDocument{
   \set@geometry
   \newgeometry{twoside=false,left=1.5in,right=1in,vmargin=1in}
   \pagenumbering{gobble}     % suppress page numbering 
+ {\renewcommand{\baselinestretch}{1}
   \typeout{>>> Make Distribution Agreement >>>}
   \th@DistributionAgreement
   \typeout{>>> Make Approval Sheet >>>}
@@ -527,6 +531,7 @@
   \typeout{>>> Make Cover Page >>>}
   \th@CoverPage
   \typeout{>>> Make Acknowledgement Page >>>}
+ }
   \th@AcknowledgementPage
   \typeout{>>> Make Table of Contents >>>}
   \renewcommand{\contentsname}{Table of Contents}
@@ -545,9 +550,6 @@
   \restoregeometry
   \set@header
 }
-
-\renewcommand{\arraystretch}{1}
-
 
 \AtEndDocument{
 \bibliographystyle{unsrt}
