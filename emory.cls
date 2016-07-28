@@ -428,6 +428,22 @@
   }
 }
 
+\newcommand*{\set@header}{%
+  \RequirePackage{fancyhdr}
+  % set page numbering on the right top
+  \pagestyle{myheadings}
+  \ifthenelse{\boolean{If@print@double}}{%
+    \fancyhead[RO,LE]{\thepage}
+  }{%
+    \rhead{\thepage}
+  }
+  % get rid of page number footer on chapter pages
+  \fancypagestyle{plain}{%
+    \fancyfoot{}
+    \renewcommand{\headrulewidth}{0pt}
+  }
+}
+
 
 %% Make special pages
 \AtBeginDocument{
@@ -459,6 +475,7 @@
   \pagenumbering{arabic}
   \setcounter{page}{1}
   \restoregeometry
+  \set@header
 }
 
 \renewcommand{\arraystretch}{1}
