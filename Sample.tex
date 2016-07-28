@@ -29,7 +29,9 @@
 
 % ------ include your own packages ---------------------------------------------
 \usepackage{url}
-
+\usepackage{fancyvrb}
+\definecolor{verbcolor}{rgb}{0.1,0.15,0.65}
+\fvset{formatcom=\color{verbcolor}}
 
 % ------ title and author and the boss -----------------------------------------
 \title{A \LaTeX{} Class for the Dissertation Style of Emory University}
@@ -62,14 +64,14 @@ I would like to thank all the documentations and anonymous people online that
 helped me learn the skills to write this class. 
 Special thank to the great example of 
 %\begin{itemize}
-%  \item The ACS package \verb|achemso|
+%  \item The ACS package \Verb|achemso|
 %  \item The thesis class originally written by Bruce Fast, and most recently updated by Hongcheng Ni, from University of Colorado, Boulder. 
         %The webpage is at 
         %\url{
         %http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files
         %}
   %\item \href{https://latex-project.org/guides/clsguide.pdf}{LaTeX2e for class and package writers}
-  %\item \href{http://texdoc.net/texmf-dist/doc/latex/base/ifthen.pdf}{\verb|ifthen| package document}
+  %\item \href{http://texdoc.net/texmf-dist/doc/latex/base/ifthen.pdf}{\Verb|ifthen| package document}
 %\end{itemize}
 }
 
@@ -94,64 +96,85 @@ please fork my github repo at \url{https://github.com/luyaozou/EmoryCls.git}
 \chapter{Usage}
 \section{Load the class and compilation}
 The Emory class can be loaded by declaring
-\verb|\documentclass{emory}| in the \LaTeX{} preamble. The class file
-\verb|emory.cls| needs to be in the same directory of the \LaTeX{} file to be 
+\Verb|\documentclass{emory}| in the \LaTeX{} preamble. The class file
+\Verb|emory.cls| needs to be in the same directory of the \LaTeX{} file to be 
 compiled. 
 
-Alternatively, you may copy \verb|emory.cls| into your local \TeX{} package 
-directory, similar to \verb|C:\MiKTeX\tex\latex\emory\| in Windows systems, or\\
-\verb|/usr/share/texmf-texlive/tex/latex/emory/| in Mac and Linux systems. After
-creating an \verb|emory| folder and putting the class file in it, run
-\verb|texhash| to update the \TeX{} package registery. Remember, you may need
+Alternatively, you may copy \Verb|emory.cls| into your local \TeX{} package 
+directory, similar to \Verb|C:\MiKTeX\tex\latex\emory\| in Windows systems, or\\
+\Verb|/usr/share/texmf-texlive/tex/latex/emory/| in Mac and Linux systems. After
+creating an \Verb|emory| folder and putting the class file in it, run
+\Verb|texhash| to update the \TeX{} package registery. Remember, you may need
 root permission to complete these operations. 
 
-Use \verb|pdflatex| instead of \verb|latex| as the compilation driver. This
-is because certain packages, such as \verb|url|, relies on pdf driver. 
+Use \Verb|pdflatex| instead of \Verb|latex| as the compilation driver. This
+is because certain packages, such as \Verb|url|, relies on pdf driver. 
 
 
 \section{Set document options}\label{sec:options}
 The options of this class can be set in the \LaTeX{} preamble. They are 
-self-explanotary in the \verb|sample.tex| file. 
+self-explanotary in the \Verb|sample.tex| file. 
 
-The first set of options is the document class option and keys. Only \verb|[draft]|,
-\verb|[final]|, and \verb|[twoside]| are allowed in the \verb|\documentclass[options]{emory}| 
-command. \verb|[draft]| only draws the boarder of graphs without loading the images,
+\subsection{Document style options}
+The first set of options is the document class option and keys. Only \Verb|[draft]|,
+\Verb|[final]|, and \Verb|[twoside]| are allowed in the \Verb|\documentclass[options]{emory}| 
+command. \Verb|[draft]| only draws the boarder of graphs without loading the images,
 and will print solid black rectangles on any places that are outside the defined
 text area. This mode is useful for checking any element that exceed the boarder.
-\verb|[final]| produces the final document. \verb|[twoside]| turns on double sided
+\Verb|[final]| produces the final document. \Verb|[twoside]| turns on double sided
 printing. The default in the sample file is On in order to save trees. To turn
-off double sided printing, simply remove the \verb|twoside| option.
+off double sided printing, simply remove the \Verb|twoside| option.
 Please note that the special pages are \emph{ALWAYS} single side printing. 
 Therefore, if you have a double side printing document, remember to print out
 the special pages separately.
 
-Several keys--value pairs are available right after \verb|\documentclass| statement.
-Use \verb|setkeys[emory]{family}{key=value}| to assign values.
+Several keys--value pairs are available right after \Verb|\documentclass| statement.
+Use \Verb|setkeys[emory]{family}{key=value}| to assign values.
 
-\verb|\setkeys[emory]{style}{major=}| configures the text, paragraph, and 
+\Verb|\setkeys[emory]{style}{major=}| configures the text, paragraph, and 
 bibliography style based on the conventions
 from specfic majors, and load up commonly used packages for that major.
-The majors can be set by \verb|major=value|.
-Currently, chemistry style \verb|chem| is supported. 
+The majors can be set by \Verb|major=value|.
+Currently, chemistry style \Verb|chem| is supported. 
 
-
-\verb|\setkeys[emory]{doc}{dissertation=true/false}| configures the type of the 
+\Verb|\setkeys[emory]{doc}{dissertation=true/false}| configures the type of the 
 document. It only does one thing: print out either ``dissertation'' or ``theis''
 in the Approval Pages.
 
+Table~\ref{tbl:packages} lists packages loaded by \Verb|emory.cls|.
+\begin{table}[htp!]
+  \centering
+  \caption{Packages loaded by \protect\Verb|emory.cls|. \label{tbl:packages}}
+  \begin{tabular}{l l}
+    \hline
+    Major & Package \\
+    \hline
+    Shared & \protect\Verb|ifthen|, \protect\Verb|xkeyval|, \protect\Verb|amsmath|,
+             \protect\Verb|graphix|, \protect\Verb|titlesec|, 
+             \protect\Verb|titletoc|, \protect\Verb|color| \\
+    math & \protect\Verb|amsfonts|, \protect\Verb|amssymb| \\
+    phys & \protect\Verb|mhchem| \\
+    chem & \protect\Verb|mhchem| \\
+    bio & \\
+    cs & \protect\Verb|fancyvrb| \\
+    \hline
+  \end{tabular}
+\end{table}
 
+
+\subsection{Special page entries}
 The second set of preambles configures the information need for the special pages:
 
 \begin{itemize}
-\item \verb|\title{Title}| sets up the title of the dissertation/thesis. The title 
+\item \Verb|\title{Title}| sets up the title of the dissertation/thesis. The title 
 will be reprinted several times in the special pages.
-\item \verb|\author{Name}| sets up the name of the author. The name will be reprinted
+\item \Verb|\author{Name}| sets up the name of the author. The name will be reprinted
 several times in the special pages. 
-\item \verb|\degree{Ph.D./Master}| sets up the degree you apply. It is either Doctor
+\item \Verb|\degree{Ph.D./Master}| sets up the degree you apply. It is either Doctor
 of Philosophy or Master of Arts/Science/or another area.  There are a number of 
 possible Master’s degree in some programs, particularly Music and Education.  
 If you are unsure, consult with your Director of Graduate Studies.
-\item \verb|\prevdegree{B.S.}| sets up your previous academic degree. List your 
+\item \Verb|\prevdegree{B.S.}| sets up your previous academic degree. List your 
 degree, the name of the university, and the year you received the degree.  
 For example, ``B.A., Yale University, 2004'' or ``M.Sc., University of Pennsylvania, 2003''.
 You can list several degrees, including master’s degrees from your current 
@@ -159,27 +182,27 @@ program here at Emory, by repeating this command.
 Note that you can only list a master’s degree from your
 Emory program if you actually applied for and received it; even if master’s 
 degrees are given on the basis of candidacy, they are not automatic. 
-\item \verb|\field{Field of Expertise}| sets up your field of study. Generally, 
+\item \Verb|\field{Field of Expertise}| sets up your field of study. Generally, 
 your field is the subject-matter name of your program: English, Chemistry, 
 Health Services Research and Health Policy, Educational Studies, Business, etc.  
 The field does not include the word “program,” and does not include any sub-field
 you specialize in.  For example, your field is not ``19th Century American Literature,''
 ``Finance Program,'' ``Neurology Department,'' ``African Studies'' or any other
 sub-field or entity.
-\item \verb|\advisor{Advisor Name}{Advisor Degree}| sets up the name and degree of your 
+\item \Verb|\advisor{Advisor Name}{Advisor Degree}| sets up the name and degree of your 
 adivsor. If your committee had co-chairs, refer to each of them as Advisor,
 repeat this command, and list them in alphabetical order. 
-\item \verb|\committee{Committee Member Name}{Committee Member Degree}|  sets up
+\item \Verb|\committee{Committee Member Name}{Committee Member Degree}|  sets up
 the name and degree of your committee member. Repeat this command for multiple 
 members. If the number of committee members exceeds 4, the class will change
 the signing sheet into a two column style instead of one column style.
-\item \verb|\yr{2016}| sets up the calendar year you receive your degree
+\item \Verb|\yr{2016}| sets up the calendar year you receive your degree
 (not the academic year).
 \end{itemize}
 
 
 \section{Recommended packages}
-More external packages can be loaded via \verb|\usepackage[options]{package}|
+More external packages can be loaded via \Verb|\usepackage[options]{package}|
 in the preamble. The use of packages is completely the choice of the author,
 and here are a few commonly used \LaTeX{} packages recommended to new \LaTeX{}
 users.
@@ -189,29 +212,30 @@ with any standard \LaTeX{} distribution. If you cannot find a certain package
 in your local computer system, check out the CTAN archive \url{https://www.ctan.org/}.
 
 \begin{itemize}
-\item \verb|amsmath| provides AMS standard mathematical enviroments for equations and symbols.
-\item \verb|graphix| provides extended figure environment to treat various image formats.
-\item \verb|mhchem| provides easy typesetting of chemical formulae.
-\item \verb|longtable| provides extended table environment for extreme long tables
+\item \Verb|amsmath| provides AMS standard mathematical enviroments for equations and symbols.
+\item \Verb|graphix| provides extended figure environment to treat various image formats.
+\item \Verb|mhchem| provides easy typesetting of chemical formulae.
+\item \Verb|longtable| provides extended table environment for extreme long tables
 across several pages.
-\item \verb|multirow| ``creates tabular cells spanning multiple rows'' in the table environment.
-\item \verb|subfigure| provides extended figure environment for subfigure captions. 
-\item \verb|verbatim| provides extended verbatim environment that allows customized 
+\item \Verb|multirow| ``creates tabular cells spanning multiple rows'' in the table environment.
+\item \Verb|subfigure| provides extended figure environment for subfigure captions. 
+\item \Verb|verbatim| provides extended verbatim environment that allows customized 
 frames, position, and layout.
-\item \verb|url| generates hyperlinks for url in the final \verb|pdf| output.
+\item \Verb|url| generates hyperlinks for url in the final \Verb|pdf| output.
 \end{itemize}
 
 
 \section{Use environments}\label{sec:env}
 The Emory class should be fully compatible with standard \LaTeX{} enviroments:
-\verb|figure|, \verb|table|, \verb|quote|, \verb|itemize|, \verb|enumerate|,
-and \verb|verbatim|.
-%In addition to these standard enviroments, \verb|emory.cls| also defines two new
-%enviroments: \verb|prose| and \verb|poetry|, for bulk quotation of different literature genre.
+\Verb|figure|, \Verb|table|, \Verb|quote|, \Verb|itemize|, \Verb|enumerate|,
+and \Verb|verbatim|.
+%In addition to these standard enviroments, \Verb|emory.cls| also defines two new
+%enviroments: \Verb|prose| and \Verb|poetry|, for bulk quotation of different literature genre.
 
 Sample outputs of these enviroments are listed here. 
 
 \subsection{Figures}
+
 \begin{figure}[htp!]
   \centering
   \includegraphics[width=\textwidth]{LaTeXLogo.png}
@@ -219,6 +243,7 @@ Sample outputs of these enviroments are listed here.
 \end{figure}
 
 \subsection{Tables}
+
 \begin{table}[htp!]
   \centering
   \caption{This is a simple table. \label{table}}
@@ -233,12 +258,12 @@ Sample outputs of these enviroments are listed here.
 \end{table}
 
 \subsection{Mathematical equations}
-Single mathematical equation (need \verb|amsmath| package)
+Single mathematical equation (need \Verb|amsmath| package)
 \begin{equation}
   E = mc^2 \label{math:single}
 \end{equation}
 
-Multiple mathematical subequations (need \verb|amsmath| package)
+Multiple mathematical subequations (need \Verb|amsmath| package)
 \begin{subequations}\label{math:sub}
 \begin{align}
   \nabla\cdot\pmb{E}&=\frac{\rho}{\epsilon_0} \label{math:sub1}\\
@@ -249,7 +274,7 @@ Multiple mathematical subequations (need \verb|amsmath| package)
 \end{subequations}
 
 \subsection{Block quotes}
-Quote enviroment. Use \verb|\begin{quote} \end{quote}|
+Quote enviroment. Use \Verb|\begin{quote} \end{quote}|
 
 \begin{quote}\label{poet}
 O wild West Wind, thou breath of Autumn’s being,
@@ -260,8 +285,8 @@ Are driven, like ghosts from an enchanter fleeing,
 \end{quote}
 
 \subsection{Lists and enumerates}
-List and enumerate environment. Use \verb|\begin{itemize} \item bla \end{itemize}|
-and \verb|\begin{enumerate} \item bla \end{enumerate}|. List and enumerate environments
+List and enumerate environment. Use \Verb|\begin{itemize} \item bla \end{itemize}|
+and \Verb|\begin{enumerate} \item bla \end{enumerate}|. List and enumerate environments
 can be nested.
 
 A nested list structure:
@@ -273,7 +298,7 @@ A nested list structure:
       \item This is a nested nested list item.
       \begin{itemize}
         \item This is a nested nested nested list item. 
-        \item The bullets for 4 levels are defined in \verb|emory.cls|.
+        \item The bullets for 4 levels are defined in \Verb|emory.cls|.
         \item I would strongly doubt you will need more than 4 levels of nested lists.
       \end{itemize}
     \end{itemize}
@@ -289,45 +314,60 @@ A nested enumerate structure:
       \item This is a nested nested enumerate item.
       \begin{enumerate}
         \item This is a nested nested nested enumerate item. 
-        \item The numbering for 4 levels are defined in \verb|emory.cls|.
+        \item The numbering for 4 levels are defined in \Verb|emory.cls|.
         \item I would strongly doubt you will need more than 4 levels of nested lists.
       \end{enumerate}
     \end{enumerate}
   \end{enumerate}    
 \end{enumerate}
 
+\section{Verbatim}
 
-Use \verb|\usepackage[version=3]{mhchem}| for your chemicals, like this:
-\verb|\ce{C2H5OH}| makes \ce{C2H5OH}.
+Use \Verb|\verb?<code>?| to typeset inline code  (\Verb|?| can be replaced by
+other paired special characters),
+or  \Verb|\begin{verbatim} <code> \end{verbatim}| to typeset block codes.
+Package \Verb|fancyvrb| offers inline \Verb|\Verb??| and \Verb|Verbatim| environment with more enhanced
+options (notice the ``V'' is capitalized).
+
+\begin{Verbatim}
+# a block of code
+print 'Hello world'
+def foo(bar):
+    renturn bar
+\end{Verbatim}
+
+
+Use \Verb|\usepackage[version=3]{mhchem}| for your chemicals, like this:
+\Verb|\ce{C2H5OH}| makes \ce{C2H5OH}.
 
 
 \section{Cross reference}
 One advantage of \LaTeX{} out of many is the convinience of cross reference in
-the text. Use \verb|\label{yourlabel}| to label the material, and \verb|\ref{yourlabel}|
+the text. Use \Verb|\label{yourlabel}| to label the material, and \Verb|\ref{yourlabel}|
 to reference it in some other places in your text. And you do not need to worry
 about numbering: \LaTeX{} does it automatically for you. For example, here
 I will reference the sample enviroments in the previous section (Section \ref{sec:env}):
 \begin{itemize}
-\item The label for Table~\ref{table} is \verb|\label{table}|.
-\item The label for Figure~\ref{fig} is \verb|\label{fig}|.
-\item The label for Equation~\ref{math:single} is \verb|\label{math:single}|
-\item The label for Equations~\ref{math:sub} is \verb|\label{math:sub}|. And then
+\item The label for Table~\ref{table} is \Verb|\label{table}|.
+\item The label for Figure~\ref{fig} is \Verb|\label{fig}|.
+\item The label for Equation~\ref{math:single} is \Verb|\label{math:single}|
+\item The label for Equations~\ref{math:sub} is \Verb|\label{math:sub}|. And then
       you can reference to each subequation: \ref{math:sub1}, \ref{math:sub2}, 
-      \ref{math:sub3}, and \ref{math:sub4} via \verb|\label{math:sub1}|,
-      \verb|\label{math:sub2}|, \verb|\label{math:sub3}|, and \verb|\label{math:sub4}|,
+      \ref{math:sub3}, and \ref{math:sub4} via \Verb|\label{math:sub1}|,
+      \Verb|\label{math:sub2}|, \Verb|\label{math:sub3}|, and \Verb|\label{math:sub4}|,
       respectively.
-\item The label for Quote~\ref{poet} is \verb|\label{poet}|.
+\item The label for Quote~\ref{poet} is \Verb|\label{poet}|.
 \end{itemize}
 
 \section{Citation and bibliography}
 Another great advantage of \LaTeX{} is its bibliography manager: {\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}
 
-Include all of you citations in a \verb|.bib| file, and specify it at the end
-of the document using command \verb|\bibliography{sample-bib}|, before \verb|\end{document}|.
-(Do not include the extension \verb|.bib|).
+Include all of you citations in a \Verb|.bib| file, and specify it at the end
+of the document using command \Verb|\bibliography{sample-bib}|, before \Verb|\end{document}|.
+(Do not include the extension \Verb|.bib|).
 
 Each bibliography item has a ``bibkey''. Cite this ``bibkey'' in your text
-using \verb|\cite{bibkey}| results in a correctly labeled citation.
+using \Verb|\cite{bibkey}| results in a correctly labeled citation.
 
 Two styles are available in this class: the name-date style, or the numeric-label 
 style. The style can be specified in the preamble (see Section~\ref{sec:options}).
@@ -348,17 +388,17 @@ Here are some examples of the numeric-label style.
 After update the bibliography file, you need to re-compile your document in the 
 following manner:
 \begin{enumerate}
-\item \verb|pdflatex sample|  updates the tex body, and writes new citation labels
-into the \verb|.aux| file
-\item \verb|bibtex sample|  reads the information from the \verb|.bib| file, 
-and writes it into the \verb|.aux| file with the correct citation format.
-\item \verb|pdflatex sample|  run this command again, which reads the bibliography
-items in the \verb|.aux| file, and insert them into the correct location in the 
+\item \Verb|pdflatex sample|  updates the tex body, and writes new citation labels
+into the \Verb|.aux| file
+\item \Verb|bibtex sample|  reads the information from the \Verb|.bib| file, 
+and writes it into the \Verb|.aux| file with the correct citation format.
+\item \Verb|pdflatex sample|  run this command again, which reads the bibliography
+items in the \Verb|.aux| file, and insert them into the correct location in the 
 output document.
-\item \verb|pdflatex sample| run this command once again, which updates the 
+\item \Verb|pdflatex sample| run this command once again, which updates the 
 numbering of the citation markers. 
 \end{enumerate}
-Do not include the extension \verb|.tex| in the command line.
+Do not include the extension \Verb|.tex| in the command line.
 
 \chapter{Random}
 \section{This is gonna be a brilliant dissertation!}
@@ -368,7 +408,7 @@ My arrival to this planet is an entire oopsy.
 
 \subsection{This is why I am awesome.}
 \subsubsection{No mumble jumble}
-The reason why I am awesome is because I do not use \verb|lipsum|. I write 
+The reason why I am awesome is because I do not use \Verb|lipsum|. I write 
 serious stuff in this sample file.
 
 

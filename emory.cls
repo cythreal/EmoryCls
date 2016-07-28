@@ -66,6 +66,7 @@
 \RequirePackage{graphicx}
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
+\RequirePackage{color}
 
 % ------ Load major specific package ------
 \newcommand*{\load@math@package}{%
@@ -81,6 +82,7 @@
 \newcommand*{\load@bio@package}{%
 }
 \newcommand*{\load@cs@package}{%
+  \RequirePackage{fancyvrb}
 }
 
 % ------ Define major specific style sequences ------
@@ -90,6 +92,7 @@
   \cfg@itemize@bullet
   \cfg@itemize@sep
   \cfg@toc
+  \cfg@table
 }
 
 % ------ Configure styles for individual page elements -------
@@ -148,6 +151,9 @@
   \dottedcontents{chapter}[1.5em]{\bfseries\large\addvspace{1ex}}{1em}{0.75pc}
   \dottedcontents{section}[3.5em]{\normalsize}{2em}{0.75pc}
   \dottedcontents{subsection}[6.5em]{\normalsize}{3em}{0.75pc}
+}
+\newcommand*{\cfg@table}{%
+  \setlength{\arrayrulewidth}{0.5pt}
 }
 
 % --------------  The dean! --------------------%
