@@ -83,14 +83,40 @@
 
 % ------ Define major specific style sequences ------
 \newcommand*{\set@chem@style}{%
-  \cfg@chapter@arabic
+  \cfg@chapter@chptname@arabic
+  \cfg@section@arabic
 }
 
 % ------ Configure styles for individual page elements -------
-\newcommand*{\cfg@chapter@arabic}{%
-  \titleformat{\chapter}[display]{\bfseries\Huge\itshape}{\thechapter}{0.5ex}{}
+% --- chapter with arabic numbering and "Chapter"
+\newcommand*{\cfg@chapter@chptname@arabic}{%
+  \titleformat{\chapter}[block]{\bfseries\LARGE}{Chapter \thechapter}{2ex}{}
+  \titlespacing{\chapter}{0pt}{3ex}{4ex}
 }
-
+% --- chapter with arabic numbering, without "Chapter"
+\newcommand*{\cfg@chapter@nochptname@arabic}{%
+  \titleformat{\chapter}[block]{\bfseries\LARGE}{\thechapter}{2ex}{}
+  \titlespacing{\chapter}{0pt}{3ex}{4ex}
+}
+% --- chapter with roman numbering and "Chapter"
+\newcommand*{\cfg@chapter@chptname@roman}{%
+  \titleformat{\chapter}[block]{\bfseries\LARGE}{Chapter \@Roman{\thechapter}}{2ex}{}
+  \titlespacing{\chapter}{0pt}{3ex}{4ex}
+}
+% --- chapter with arabic numbering, without "Chapter"
+\newcommand*{\cfg@chapter@nochptname@roman}{%
+  \titleformat{\chapter}[block]{\bfseries\LARGE}{\@Roman{\thechapter}}{2ex}{}
+  \titlespacing{\chapter}{0pt}{3ex}{4ex}
+}
+% --- section/subsections with arabic numbering
+\newcommand*{\cfg@section@arabic}{%
+  \titleformat{\section}[block]{\bfseries\Large}{\thesection}{2ex}{}
+  \titlespacing{\section}{0pt}{4ex}{3ex}
+  \titleformat{\subsection}[block]{\bfseries\large}{\thesubsection}{2ex}{}
+  \titlespacing{\section}{0pt}{3ex}{2ex}
+  \titleformat{\subsubsection}[block]{\bfseries\normalsize}{}{2ex}{}
+  \titlespacing{\subsubsection}{0pt}{2ex}{2ex}
+}
 
 
 % --------------  The dean! --------------------%
