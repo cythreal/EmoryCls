@@ -69,6 +69,7 @@
 % ------ Load major specific package ------
 \newcommand*{\load@math@package}{%
   \RequirePackage{amsfonts}
+  \RequirePackage{amssymb}
 }
 \newcommand*{\load@chem@package}{%
   \RequirePackage[version=3]{mhchem}
@@ -85,6 +86,7 @@
 \newcommand*{\set@chem@style}{%
   \cfg@chapter@chptname@arabic
   \cfg@section@arabic
+  \cfg@itemize
 }
 
 % ------ Configure styles for individual page elements -------
@@ -116,6 +118,20 @@
   \titlespacing{\section}{0pt}{3ex}{2ex}
   \titleformat{\subsubsection}[block]{\bfseries\normalsize}{}{2ex}{}
   \titlespacing{\subsubsection}{0pt}{2ex}{2ex}
+}
+% --- configure lists and enumerates 
+\newcommand*{\cfg@itemize}{%
+  \renewcommand{\labelitemi}{$\bullet$}
+  \renewcommand{\labelitemii}{--}
+  \renewcommand{\labelitemiii}{$\ast$}
+  \renewcommand{\labelitemiv}{$\circ$}
+  \renewcommand{\theenumii}{\arabic{enumii}}
+  \renewcommand{\theenumiii}{\roman{enumiii}}
+  \renewcommand{\theenumiv}{\alph{enumiv}}
+  \renewcommand{\labelenumi}{\theenumi}
+  \renewcommand{\labelenumii}{(\theenumii)}
+  \renewcommand{\labelenumiii}{(\theenumiii)}
+  \renewcommand{\labelenumiv}{(\theenumiv)}
 }
 
 
@@ -507,7 +523,9 @@
   \typeout{>>> Make Table of Contents >>>}
   \renewcommand{\contentsname}{Table of Contents}
   \tableofcontents
+  \clearpage
   \listoffigures
+  \clearpage
   \listoftables
   \clearpage
   \typeout{}

@@ -204,18 +204,21 @@ frames, position, and layout.
 
 \section{Use environments}\label{sec:env}
 The Emory class should be fully compatible with standard \LaTeX{} enviroments:
-\verb|figure|, \verb|table|, \verb|itemize|, \verb|enumerate|, and \verb|verbatim|.
+\verb|figure|, \verb|table|, \verb|quote|, \verb|itemize|, \verb|enumerate|,
+and \verb|verbatim|.
 %In addition to these standard enviroments, \verb|emory.cls| also defines two new
 %enviroments: \verb|prose| and \verb|poetry|, for bulk quotation of different literature genre.
 
 Sample outputs of these enviroments are listed here. 
 
+\subsection{Figures}
 \begin{figure}[htp!]
   \centering
   \includegraphics[width=\textwidth]{LaTeXLogo.png}
   \caption{This is a figure enviroment.\label{fig}}
 \end{figure}
 
+\subsection{Tables}
 \begin{table}[htp!]
   \centering
   \caption{This is a simple table. \label{table}}
@@ -229,6 +232,7 @@ Sample outputs of these enviroments are listed here.
   \end{tabular}
 \end{table}
 
+\subsection{Mathematical equations}
 Single mathematical equation (need \verb|amsmath| package)
 \begin{equation}
   E = mc^2 \label{math:single}
@@ -244,7 +248,8 @@ Multiple mathematical subequations (need \verb|amsmath| package)
 \end{align}
 \end{subequations}
 
-Poetry enviroment. Use \verb|\begin{poetry}{title}{poet}{year}} \end{poetry}|
+\subsection{Block quotes}
+Quote enviroment. Use \verb|\begin{quote} \end{quote}|
 
 \begin{quote}\label{poet}
 O wild West Wind, thou breath of Autumn’s being,
@@ -253,6 +258,43 @@ Thou, from whose unseen presence the leaves dead
 
 Are driven, like ghosts from an enchanter fleeing,
 \end{quote}
+
+\subsection{Lists and enumerates}
+List and enumerate environment. Use \verb|\begin{itemize} \item \end{itemize}|
+and \verb|\begin{enumerate} \item \end{enumerate}|. List and enumerate environments
+can be nested.
+
+A nested list structure:
+\begin{itemize}
+  \item This is a list item.
+  \begin{itemize}
+    \item This is a nested list item.
+    \begin{itemize}
+      \item This is a nested nested list item.
+      \begin{itemize}
+        \item This is a nested nested nested list item. 
+        \item The bullets for 4 levels are defined in \verb|emory.cls|.
+        \item I would strongly doubt you will need more than 4 levels of nested lists.
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}    
+\end{itemize}
+
+A nested enumerate structure:
+\begin{enumerate}
+  \item This is a enumerate item.
+  \begin{enumerate}
+    \item This is a nested enumerate item.
+    \begin{enumerate}
+      \item This is a nested nested enumerate item.
+      \begin{enumerate}
+        \item This is a nested nested nested enumerate item. 
+        \item The numbering for 4 levels are defined in \verb|emory.cls|.
+        \item I would strongly doubt you will need more than 4 levels of nested lists.
+      \end{enumerate}
+    \end{enumerate}
+  \end{enumerate}    
+\end{enumerate}
 
 
 Use \verb|\usepackage[version=3]{mhchem}| for your chemicals, like this:
