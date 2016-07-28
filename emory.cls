@@ -86,7 +86,8 @@
 \newcommand*{\set@chem@style}{%
   \cfg@chapter@chptname@arabic
   \cfg@section@arabic
-  \cfg@itemize
+  \cfg@itemize@bullet
+  \cfg@itemize@sep
 }
 
 % ------ Configure styles for individual page elements -------
@@ -120,7 +121,7 @@
   \titlespacing{\subsubsection}{0pt}{2ex}{2ex}
 }
 % --- configure lists and enumerates 
-\newcommand*{\cfg@itemize}{%
+\newcommand*{\cfg@itemize@bullet}{%
   \renewcommand{\labelitemi}{$\bullet$}
   \renewcommand{\labelitemii}{--}
   \renewcommand{\labelitemiii}{$\ast$}
@@ -128,12 +129,19 @@
   \renewcommand{\theenumii}{\arabic{enumii}}
   \renewcommand{\theenumiii}{\roman{enumiii}}
   \renewcommand{\theenumiv}{\alph{enumiv}}
-  \renewcommand{\labelenumi}{\theenumi}
-  \renewcommand{\labelenumii}{(\theenumii)}
-  \renewcommand{\labelenumiii}{(\theenumiii)}
-  \renewcommand{\labelenumiv}{(\theenumiv)}
+  \renewcommand{\labelenumi}{\theenumi.}
+  \renewcommand{\labelenumii}{(\theenumii).}
+  \renewcommand{\labelenumiii}{(\theenumiii).}
+  \renewcommand{\labelenumiv}{(\theenumiv).}
 }
-
+\newcommand*{\cfg@itemize@sep}{%
+%  \let\olditemize\itemize
+%  \renewcommand{\itemize}{\olditemize\setlength{\parsep}{1ex}}
+%  \let\oldenumerate\enumerate
+%  \renewcommand{\enumerate}{\oldenumerate\setlength{\parsep}{1ex}}
+  \let\olditem\item
+  \renewcommand{\item}{\setlength{\itemsep}{1ex}\olditem}
+}
 
 % --------------  The dean! --------------------%
 \newcommand*{\th@Dean}{Lisa A.\ Tedesco, Ph.D}  %
