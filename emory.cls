@@ -65,6 +65,7 @@
 \RequirePackage{amsmath}
 \RequirePackage{graphicx}
 \RequirePackage{titlesec}
+\RequirePackage{titletoc}
 
 % ------ Load major specific package ------
 \newcommand*{\load@math@package}{%
@@ -88,6 +89,7 @@
   \cfg@section@arabic
   \cfg@itemize@bullet
   \cfg@itemize@sep
+  \cfg@toc
 }
 
 % ------ Configure styles for individual page elements -------
@@ -141,6 +143,11 @@
   \renewcommand{\enumerate}{\oldenumerate\setlength{\parsep}{1ex}}
   \let\olditem\item
   \renewcommand{\item}{\setlength{\itemsep}{0.5ex}\olditem}
+}
+\newcommand*{\cfg@toc}{%
+  \dottedcontents{chapter}[1.5em]{\bfseries\large\addvspace{1ex}}{1em}{0.75pc}
+  \dottedcontents{section}[3.5em]{\normalsize}{2em}{0.75pc}
+  \dottedcontents{subsection}[6.5em]{\normalsize}{3em}{0.75pc}
 }
 
 % --------------  The dean! --------------------%
@@ -519,6 +526,7 @@
   \set@geometry
   \newgeometry{twoside=false,left=1.5in,right=1in,vmargin=1in}
   \pagenumbering{gobble}     % suppress page numbering 
+  
  {\renewcommand{\baselinestretch}{1}
   \typeout{>>> Make Distribution Agreement >>>}
   \th@DistributionAgreement
@@ -530,9 +538,12 @@
   \th@AbstractPage
   \typeout{>>> Make Cover Page >>>}
   \th@CoverPage
-  \typeout{>>> Make Acknowledgement Page >>>}
  }
+  \typeout{>>> Make Acknowledgement Page >>>}
   \th@AcknowledgementPage
+  
+  \begingroup
+  \setlength{\parskip}{-7.25pt}
   \typeout{>>> Make Table of Contents >>>}
   \renewcommand{\contentsname}{Table of Contents}
   \tableofcontents
@@ -541,6 +552,8 @@
   \clearpage
   \listoftables
   \clearpage
+  \endgroup
+  
   \typeout{}
   \typeout{--------------------------------------}
   \typeout{}
