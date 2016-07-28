@@ -12,6 +12,7 @@
 % ----- Declare options can be passed on to report.cls -----
 \DeclareOption{draft}{\PassOptionsToClass{draft}{report}}
 \DeclareOption{final}{\PassOptionsToClass{final}{report}}
+\DeclareOption{twoside}{\PassOptionsToClass{twoside}{report}}
 \DeclareOption*{\OptionNotUsed \ClassWarning{emory}{'\CurrentOption' not allowed.}}
 
 % ----- Process options -----
@@ -19,9 +20,6 @@
 \LoadClass[12pt]{report}
 
 % ----- Declare boolean switches
-% printing option. [true]: double sided printing, false: single sided printing
-\newboolean{If@print@double}
-\setboolean{If@print@double}{true}
 % document type. [true]: dissertation, false: thesis 
 \newboolean{If@doc@dissertation}
 \setboolean{If@doc@dissertation}{true}
@@ -34,9 +32,6 @@
 
 % ----- Define key value pairs -----
 \RequirePackage{xkeyval}
-\define@boolkey[emory]{print}{doubleside}[true]{%
-  \setboolean{If@print@double}{#1}
-}
 \define@boolkey[emory]{doc}{dissertation}[true]{%
   \setboolean{If@doc@dissertation}{#1}
 }
@@ -420,23 +415,14 @@
 
 
 \newcommand*{\set@geometry}{%
-  % Setup page geometry
-  \ifthenelse{\boolean{If@print@double}}{%
-    \RequirePackage[onecolumn,twoside,paper=letterpaper,total={6in,9in},left=1.5in,right=1in,vmargin=1in,vcentering=true,landscape=false]{geometry}
-  }{%
-    \RequirePackage[onecolumn,hcentering=false,paper=letterpaper,total={6in,9in},left=1.5in,right=1in,vmargin=1in,vcentering=true,landscape=false]{geometry}
-  }
+  \RequirePackage[onecolumn,paper=letterpaper,total={6in,9in},left=1.5in,right=1in,vmargin=1in,vcentering=true,landscape=false]{geometry}
 }
 
 \newcommand*{\set@header}{%
   \RequirePackage{fancyhdr}
   % set page numbering on the right top
   \pagestyle{myheadings}
-  \ifthenelse{\boolean{If@print@double}}{%
-    \fancyhead[RO,LE]{\thepage}
-  }{%
-    \rhead{\thepage}
-  }
+  \rhead{\thepage}
   % get rid of page number footer on chapter pages
   \fancypagestyle{plain}{%
     \fancyfoot{}

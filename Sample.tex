@@ -10,22 +10,19 @@
 % The dissertation style instructions can be found at
 % ------ documentclass declaration ---------------------------------------------
 % --- \documentclass[options]{emory}
-% --- Only [draft] or [final] is allowed. Other properties can be set by keys.
-\documentclass[draft]{emory}
+% --- Only [draft], [final], and [twoside] are allowed.
+% --- Other properties can be set by keys.
+\documentclass[draft,twoside]{emory}
 
 % --- Set up other document properties. Available keys and values:
 % --- style: select style by major=<major>
 %            supported majors: chem, phys, math, bio, and cs 
-% --- print: doubleside = <boolean>
-%            true: double sided printing [default]
-%            false: single sided printing
 % --- doc: dissertation = <boolean>
 %          true: document is a dissertation [default]
 %          false: document is a thesis
 
 \typeout{I'm loading keys}
 \setkeys[emory]{style}{major=chem}
-\setkeys[emory]{print}{doubleside=true}
 \setkeys[emory]{doc}{dissertation=true}
 
 
@@ -116,12 +113,17 @@ is because certain packages, such as \verb|url|, relies on pdf driver.
 The options of this class can be set in the \LaTeX{} preamble. They are 
 self-explanotary in the \verb|sample.tex| file. 
 
-The first set of options is the document class option and keys. Only \verb|[draft]|
-and \verb|[final]| are allowed in the \verb|\documentclass[options]{emory}| 
+The first set of options is the document class option and keys. Only \verb|[draft]|,
+\verb|[final]|, and \verb|[twoside]| are allowed in the \verb|\documentclass[options]{emory}| 
 command. \verb|[draft]| only draws the boarder of graphs without loading the images,
 and will print solid black rectangles on any places that are outside the defined
 text area. This mode is useful for checking any element that exceed the boarder.
-\verb|[final]| produces the final document. 
+\verb|[final]| produces the final document. \verb|[twoside]| turns on double sided
+printing. The default in the sample file is On in order to save trees. To turn
+off double sided printing, simply remove the \verb|twoside| option.
+Please note that the special pages are \emph{ALWAYS} single side printing. 
+Therefore, if you have a double side printing document, remember to print out
+the special pages separately.
 
 Several keys--value pairs are available right after \verb|\documentclass| statement.
 Use \verb|setkeys[emory]{family}{key=value}| to assign values.
@@ -132,13 +134,6 @@ from specfic majors, and load up commonly used packages for that major.
 The majors can be set by \verb|major=value|.
 Currently, chemistry style \verb|chem| is supported. 
 
-\verb|\setkeys[emory]{print}{doubleside=true/false}| configures the printing.
-One side printing and two side pringting are both supported. 
-The default value is two side printing to save our forests.
-To switch on one side printing, set the boolean value to \verb|doubleside=false|.
-Please note that the special pages are \emph{ALWAYS} single side printing. 
-Therefore, if you have a double side printing document, remember to print out
-the special pages separately.
 
 \verb|\setkeys[emory]{doc}{dissertation=true/false}| configures the type of the 
 document. It only does one thing: print out either ``dissertation'' or ``theis''
