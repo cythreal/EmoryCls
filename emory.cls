@@ -78,12 +78,12 @@
   \ClassWarning{emory}{Undefined biblabel}%
 }
 
-\define@boolkey[emory]{bib}{articletitle}[true]{%
-  \setboolean{If@bib@article@title}{#1}
+\define@key[emory]{bib}{articletitle}[true]{%
+  \newcommand*{\@bib@article@title}{#1}
 }
 
-\define@boolkey[emory]{bib}{doi}[false]{%
-  \setboolean{If@bib@doi}{#1}
+\define@key[emory]{bib}{doi}[false]{%
+  \newcommand*{\@bib@doi}{#1}
 }
 
 \define@boolkey[emory]{bib}{superscript}[true]{%
@@ -102,17 +102,17 @@
 \RequirePackage{color}
 \RequirePackage[sort&compress]{natbib}
 
-\newcommand*\@activate@biblabel{}
-\let\@activate@biblabel\AtEndOfClass
-\AtEndOfClass{\let\@activate@biblabel\@firstofone}
+%\newcommand*\@activate@biblabel{}
+%\let\@activate@biblabel\AtEndOfClass
+%\AtEndOfClass{\let\@activate@biblabel\@firstofone}
 
+\AtBeginDocument{
 \ifcase\@bib@format@num
   \setcitestyle{numbers}
 \or
   \setcitestyle{authoryear}
 \fi
 
-\AtBeginDocument{
 \ifcase\@bib@bracket@num
   \setcitestyle{round}
 \or
@@ -127,18 +127,37 @@
 }{}
 }
 
-\RequirePackage{natmove}
-\IfFileExists{mciteplus.sty}{%
-  \RequirePackage{mciteplus}
-  \providecommand*{\@mciteNatbibCiteCmdList}{}%
-  \edef\@tempa{\noexpand\in@{citenum}{\@mciteNatbibCiteCmdList}}%
-  \@tempa
-  \ifin@
-  \else
-    \edef\@mciteNatbibCiteCmdList{\@mciteNatbibCiteCmdList,citenum}%
+% ----- write controling file
+\newcommand*{\@bib@ctrl@name}{\jobname-blx.bib}
+\newwrite\@bib@ctrl@file
+\AtBeginDocument{%
+  \if@filesw
+    \expandafter\@bib@write@ctrl
   \fi
-  \def\@mciteSubRef[##1]##2{\plainref{\@mcitereflabelprefix:##1:##2}}
-}{}
+}
+\newcommand*\@bib@write@ctrl{%
+  \immediate\openout\@bib@ctrl@file=\@bib@ctrl@name\relax
+  \edef\@tempa##1##2{%
+    \space\space##1\space = "##2",^^J%
+  }%
+  \immediate\write\@bib@ctrl@file{%
+    @Control\string{%
+      emory-ctrl,^^J%
+      \@tempa{ctrl-article-title\space}{\@bib@article@title}
+      \@tempa{ctrl-maxauthor\space\space\space}{\@bib@max@author}%
+      \@tempa{ctrl-doi\space\space\space}{\@bib@doi}
+%      \@tempa{ctrl-etal-firstonly}{%
+%        \ifacs@etal@truncate no\else yes\fi
+%      }%
+    \string}^^J%
+  }%
+%  \immediate\write\@auxout{%
+%    \string\citation\string{achemso-control\string}%
+%  }%
+  \AtEndDocument{%
+    \immediate\closeout\@bib@ctrl@file\relax
+  }%
+}
 
 % ------ Load major specific package ------
 \newcommand*{\load@math@package}{%

@@ -25,7 +25,7 @@ ENTRY
     ctrl-chapter-title
     ctrl-doi
     ctrl-etal-firstonly
-    ctrl-etal-number
+    ctrl-maxauthor
     ctrl-use-title
     doi
     edition
@@ -281,7 +281,7 @@ FUNCTION { yes.no.to.bool } {
     }
     {
       "l" change.case$
-      "yes" =
+      "true" =
         { #1 }
         { #0 }
       if$
@@ -737,7 +737,7 @@ FUNCTION { control } {
   ctrl-chapter-title  yes.no.to.bool 'ctrl.chapter.title.bool  :=
   ctrl-doi            yes.no.to.bool 'ctrl.doi.bool            :=
   ctrl-etal-firstonly yes.no.to.bool 'ctrl.etal.firstonly.bool :=
-  ctrl-etal-number    str.to.int     'ctrl.etal.number.int     :=
+  ctrl-maxauthor      str.to.int     'ctrl.etal.number.int     :=
   ctrl-use-title empty$
     'skip$
     { ctrl-use-title yes.no.to.bool 'ctrl.article.title.bool  := }
