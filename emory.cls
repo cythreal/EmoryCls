@@ -29,7 +29,7 @@
 \newboolean{If@bib@doi}
 \newboolean{If@bib@superscript}
 \newcount\@bib@bracket@num
-\newcount\@bib@format
+\newcount\@bib@format@num
 
 % ----- Define key value pairs -----
 \RequirePackage{xkeyval}
@@ -39,7 +39,6 @@
 
 \define@choicekey+[emory]{style}{major}[\val\nr]{chem,phys,math,bio,cs}[]{%
   \ifcase\nr\relax
-    \typeout{0, chem}
     \load@chem@package
     \set@chem@style
   \or
@@ -62,28 +61,19 @@
     \setboolean{If@bib@eof}{true}
   \else
     \setboolean{If@bib@eof}{false}
+  \fi
 }{%
   \ClassWarning{emory}{Undefined location code}%
 }
 
 \define@choicekey+[emory]{bib}{format}[\val\nr]{numeric,authoryear}[]{%
-  \ifcase\nr\relax
-    \@bib@format=\z@
-  \or
-    \@bib@format=\@ne
-  \fi
+  \@bib@format@num=\nr
 }{%
   \ClassWarning{emory}{Undefined citation format}%
 }
 
 \define@choicekey+[emory]{bib}{bracket}[\val\nr]{round,square,none}[]{%
-  \ifcase\nr\relax
-    \@bib@bracket@num=\z@
-  \or
-    \@bib@bracket@num=\@ne
-  \or
-    \@bib@bracket@num=\tw@
-  \fi
+  \@bib@bracket@num=\nr
 }{%
   \ClassWarning{emory}{Undefined biblabel}%
 }
@@ -116,7 +106,7 @@
 \let\@activate@biblabel\AtEndOfClass
 \AtEndOfClass{\let\@activate@biblabel\@firstofone}
 
-\ifcase\@bib@format
+\ifcase\@bib@format@num
   \setcitestyle{numbers}
 \or
   \setcitestyle{authoryear}
