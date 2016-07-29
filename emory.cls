@@ -23,42 +23,85 @@
 % document type. [true]: dissertation, false: thesis 
 \newboolean{If@doc@dissertation}
 \setboolean{If@doc@dissertation}{true}
-% document style. set by user input key. 
-\newboolean{If@major@chem}
-\newboolean{If@major@phys}
-\newboolean{If@major@math}
-\newboolean{If@major@bio}
-\newboolean{If@major@cs}
+% bibliography style. Set by user defined keys.
+\newboolean{If@bib@eof}
+\newboolean{If@bib@article@title}
+\newboolean{If@bib@doi}
+\newboolean{If@bib@superscript}
+\newcount\@bib@bracket@num
+\newcount\@bib@format
 
 % ----- Define key value pairs -----
 \RequirePackage{xkeyval}
 \define@boolkey[emory]{doc}{dissertation}[true]{%
   \setboolean{If@doc@dissertation}{#1}
 }
-\define@choicekey+[emory]{style}{major}[]{chem,phys,math,bio,cs}[]{%
-  \setboolean{If@major@#1}{true}
+
+\define@choicekey+[emory]{style}{major}[\val\nr]{chem,phys,math,bio,cs}[]{%
+  \ifcase\nr\relax
+    \typeout{0, chem}
+    \load@chem@package
+    \set@chem@style
+  \or
+    \load@phys@package
+  \or
+    \load@math@package
+  \or
+    \load@bio@package
+  \or
+    \load@cs@package
+  \fi
 }{%
   \ClassWarning{emory}{Style corrently not supported}%
 }
 
-% ------ Load key values from user input ------
-\AtBeginDocument{
-\ifthenelse{\boolean{If@major@chem}}{%
-  \load@chem@package
-  \set@chem@style
-}{}
-\ifthenelse{\boolean{If@major@phys}}{%
-  \load@phys@package
-}{}
-\ifthenelse{\boolean{If@major@math}}{%
-  \load@math@package
-}{}
-\ifthenelse{\boolean{If@major@bio}}{%
-  \load@bio@package
-}{}
-\ifthenelse{\boolean{If@major@cs}}{%
-  \load@cs@package
-}{}
+% ------ Define key value pairs for bibliography control -----
+% ------ Steal from achemso ----- start hack ------
+\define@choicekey+[emory]{bib}{location}[\val\nr]{eof,eoc}[]{%
+  \ifnum\nr=\z@
+    \setboolean{If@bib@eof}{true}
+  \else
+    \setboolean{If@bib@eof}{false}
+}{%
+  \ClassWarning{emory}{Undefined location code}%
+}
+
+\define@choicekey+[emory]{bib}{format}[\val\nr]{numeric,authoryear}[]{%
+  \ifcase\nr\relax
+    \@bib@format=\z@
+  \or
+    \@bib@format=\@ne
+  \fi
+}{%
+  \ClassWarning{emory}{Undefined citation format}%
+}
+
+\define@choicekey+[emory]{bib}{bracket}[\val\nr]{round,square,none}[]{%
+  \ifcase\nr\relax
+    \@bib@bracket@num=\z@
+  \or
+    \@bib@bracket@num=\@ne
+  \or
+    \@bib@bracket@num=\tw@
+  \fi
+}{%
+  \ClassWarning{emory}{Undefined biblabel}%
+}
+
+\define@boolkey[emory]{bib}{articletitle}[true]{%
+  \setboolean{If@bib@article@title}{#1}
+}
+
+\define@boolkey[emory]{bib}{doi}[false]{%
+  \setboolean{If@bib@doi}{#1}
+}
+
+\define@boolkey[emory]{bib}{superscript}[true]{%
+  \setboolean{If@bib@superscript}{#1}
+}
+
+\define@key[emory]{bib}{maxauthor}[15]{%
+  \newcommand*{\@bib@max@author}{#1}
 }
 
 % ------ Load packages shared by all majors -------
@@ -67,6 +110,42 @@
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
 \RequirePackage{color}
+\RequirePackage[sort&compress]{natbib}
+
+\newcommand*\@activate@biblabel{}
+\let\@activate@biblabel\AtEndOfClass
+\AtEndOfClass{\let\@activate@biblabel\@firstofone}
+
+\ifcase\@bib@format
+  \setcitestyle{numbers}
+\or
+  \setcitestyle{authoryear}
+\fi
+
+\ifcase\@bib@bracket@num
+  \setcitestyle{round}
+\or
+  \setcitestyle{square}
+\or
+  \setcitestyle{open={}, close={}}
+\fi
+
+\ifthenelse{\boolean{If@bib@superscript}}{%
+  \setcitestyle{super}
+}{}
+
+\RequirePackage{natmove}
+\IfFileExists{mciteplus.sty}{%
+  \RequirePackage{mciteplus}
+  \providecommand*{\@mciteNatbibCiteCmdList}{}%
+  \edef\@tempa{\noexpand\in@{citenum}{\@mciteNatbibCiteCmdList}}%
+  \@tempa
+  \ifin@
+  \else
+    \edef\@mciteNatbibCiteCmdList{\@mciteNatbibCiteCmdList,citenum}%
+  \fi
+  \def\@mciteSubRef[##1]##2{\plainref{\@mcitereflabelprefix:##1:##2}}
+}{}
 
 % ------ Load major specific package ------
 \newcommand*{\load@math@package}{%
@@ -571,5 +650,5 @@
 }
 
 \AtEndDocument{
-\bibliographystyle{unsrt}
+\bibliographystyle{emory}
 }
