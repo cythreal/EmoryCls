@@ -112,17 +112,20 @@
   \setcitestyle{authoryear}
 \fi
 
+\AtBeginDocument{
 \ifcase\@bib@bracket@num
   \setcitestyle{round}
 \or
   \setcitestyle{square}
 \or
-  \setcitestyle{open={}, close={}}
+  \setcitestyle{open={}}
+  \setcitestyle{close={}}
 \fi
 
 \ifthenelse{\boolean{If@bib@superscript}}{%
   \setcitestyle{super}
 }{}
+}
 
 \RequirePackage{natmove}
 \IfFileExists{mciteplus.sty}{%
