@@ -1,0 +1,29 @@
+\documentclass{test}
+
+\setkeys[emory]{bib}{location=eof}
+\setkeys[emory]{bib}{format=numeric}
+\setkeys[emory]{bib}{bracket=square}
+\setkeys[emory]{bib}{articletitle=true}
+\setkeys[emory]{bib}{doi=false}
+\setkeys[emory]{bib}{superscript=false}
+\setkeys[emory]{bib}{maxauthor=3}
+
+\usepackage{lipsum}
+
+\begin{document}
+
+\chapter{chapter1}
+
+\section{setction1}
+
+\lipsum[1] \cite{bib-conference}
+
+\lipsum[2] \cite{bib-article}
+
+\chapter{chapter2}
+
+\lipsum[3]
+
+\bibliographystyle{plain}
+\bibliography{SampleBib}
+\end{document}
