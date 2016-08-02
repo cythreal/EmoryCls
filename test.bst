@@ -67,6 +67,15 @@ INTEGERS {  % ctrl & counter
 STRINGS {
   current.name.str
   names.str
+  ctrl.article.title
+}
+
+
+STRINGS {
+  name.format.last.first
+  name.format.last.initial
+  name.format.first.last
+  name.format.initial.last
 }
 
 
@@ -103,57 +112,57 @@ FUNCTION { xor } {
 }
 
 
-FUNCTION { str.to.int.aux.ii } {
-  {
-    duplicate$
-    empty$ not
-  }
-    {
-      swap$
-      #10 multiply 'str.conversion.int :=
-      duplicate$
-      #1 #1 substring$
-      chr.to.value
-      str.conversion.int +
-      swap$
-      #2 global.max$ substring$
-    }
-  while$
-  pop$
-}
+%FUNCTION { str.to.int.aux.ii } {
+%  {
+%    duplicate$
+%    empty$ not
+%  }
+%    {
+%      swap$
+%      #10 multiply 'str.conversion.int :=
+%      duplicate$
+%      #1 #1 substring$
+%      chr.to.value
+%      str.conversion.int +
+%      swap$
+%      #2 global.max$ substring$
+%    }
+%  while$
+%  pop$
+%}
 
-FUNCTION { str.to.int.aux.i } {
-  duplicate$
-  #1 #1 substring$
-  "-" =
-   {
-      #1 swap$
-      #2 global.max$ substring$
-    }
-    {
-      #0 swap$
-    }
-  if$
-  #0
-  swap$
-  str.to.int.aux.ii
-  swap$
-    { #0 swap$ - }
-    { }
-  if$
-}
+%FUNCTION { str.to.int.aux.i } {
+%  duplicate$
+%  #1 #1 substring$
+%  "-" =
+%   {
+%      #1 swap$
+%      #2 global.max$ substring$
+%    }
+%    {
+%      #0 swap$
+%    }
+%  if$
+%  #0
+%  swap$
+%  str.to.int.aux.ii
+%  swap$
+%    { #0 swap$ - }
+%    { }
+%  if$
+%}
 
 
-FUNCTION { str.to.int } {
-  duplicate$
-  empty$
-    {
-      pop$
-      #0
-    }
-    { str.to.int.aux.i }
-  if$
-}
+%FUNCTION { str.to.int } {
+%  duplicate$
+%  empty$
+%    {
+%      pop$
+%      #0
+%    }
+%    { str.to.int.aux.i }
+%  if$
+%}
 
 
 % --- initialize internal variables ---
@@ -183,12 +192,25 @@ FUNCTION { initialize.name.separator } {
 
 
 FUNCTION { initialize.control } {
-  ctrl-trunc-author-bool "false" =
-    'skip$
-    { 
-      ctrl-maxauthor str.to.int 'ctrl.maxauthor.number.int  :=
-    }
-  if$
+%  ctrl-trunc-author-bool top$
+%  ctrl-trunc-author-bool "false" =
+%    'skip$
+%    { 
+%      ctrl-maxauthor str.to.int 'ctrl.maxauthor.number.int  :=
+%    }
+%  if$
+%  "true" 'ctrl.article.title :=
+%  ctrl.article.title write$
+  #1 'ctrl.maxauthor.number.int :=
+%  ctrl.maxauthor.number.int write$
+}
+
+
+FUNCTION { initialize.name.format } {
+  "{vv~}{ll}{, jj}{, ff}" 'name.format.last.first :=
+  "{vv~}{ll}{, jj}{, f~}" 'name.format.last.initial :=
+  "{ff}{vv~}{ll}{, jj}" 'name.format.first.last :=
+  "{f.~}{vv~}{ll}{, jj}" 'name.format.initial.last :=
 }
 
 
@@ -235,31 +257,32 @@ FUNCTION { calculate.names } {
 FUNCTION { format.names.loop } {
   { remaining.names.int #0 > }
     {
-      names.str current.name.int "{vv~}{ll,}{~f.}{,~jj}" format.name$
-      duplicate$
+      names.str current.name.int "{vv~}{ll}{, jj}{, ff}" format.name$
       'current.name.str :=
-      current.name.int #1 >
-        {
-          duplicate$
-          "others," =
-            {
+%      current.name.int #1 >
+%        {
+%          duplicate$
+%          "others," =
+%            {
 %              bbl.etal
 %              add.space
 %              remaining.names.int #1 - 'remaining.names.int :=
-            }
-            {
-              swap$
-              names.separate.comma.bool
-                { ", " * }
-                { "; " * }
-              if$
-              swap$
-              *
-            }
-          if$
-        }
-        { }
-      if$
+%            }
+%            {
+%              swap$
+%              names.separate.comma.bool
+%                { ", " * }
+%                { "; " * }
+%              if$
+%              swap$
+%              *
+%            }
+%          if$
+%        }
+%        { }
+%      if$
+      current.name.str "; " * 
+      write$
       remaining.names.int #1 - 'remaining.names.int :=
       current.name.int #1 + 'current.name.int :=
     }
@@ -304,14 +327,14 @@ FUNCTION { format.names } {
   'names.str :=
   #1 'current.name.int :=
   names.str num.names$ 'total.names.int :=
-  total.names.int ctrl.maxauthor.number.int >
-    {
+%  total.names.int ctrl.maxauthor.number.int >
+%    {
 %      format.names.truncation
-    }
-    { 
+%    }
+%    { 
       format.names.all
-    }
-  if$
+%    }
+%  if$
 }
 
 
@@ -336,32 +359,41 @@ FUNCTION { format.title } {
 
 FUNCTION { begin.bibitem } {
   newline$
-  "\bibitem[" write$
-  label write$
-  "[" swap$ * "]" * write$
+  "\bibitem" write$
   "{" cite$ * "}" * write$
   newline$
 }
 
 
 FUNCTION { write.author } {
-  author empty$
-    'skip$
-    {
-      author names.separate.semicolon format.names
-      output
-      write$
-      next.punct.space 'next.punct.int :=
-    }
-  if$
+%  author #1 "{vv~}{ll}{, jj}{, ff}" format.name$ write$
+   author names.separate.semicolon format.names
+%   output
+%   write$
+%   next.punct.space 'next.punct.int :=
+}
+
+
+FUNCTION { end.bibitem } {
+  newline$
 }
 
 
 % --- define each entry type ---
 
+FUNCTION { control } {
+  begin.bibitem
+  ctrl-article-title duplicate$
+  'ctrl.article.title :=
+  write$
+  end.bibitem
+}
+
+
 FUNCTION { article } {
   begin.bibitem
   write.author
+  ctrl.article.title write$
   %format.title.article
   %format.journal
   %format.year.article
@@ -480,15 +512,15 @@ READ
 
 EXECUTE { initialize.control }
 
-EXECUTE { initialize.count.entries }
+%EXECUTE { initialize.count.entries }
 
 EXECUTE { initialize.name.separator }
 
-EXECUTE { initialize.tracker }
+%EXECUTE { initialize.tracker }
 
-ITERATE { calculate.names }
+%ITERATE { calculate.names }
 
-ITERATE { count.entries }
+%ITERATE { count.entries }
 
 EXECUTE { begin.bbl }
 

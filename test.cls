@@ -93,6 +93,7 @@
       \@tempa{ctrl-article-title\space}{\@bib@article@title}
       \@tempa{ctrl-maxauthor\space\space\space}{\@bib@max@author}%
       \@tempa{ctrl-doi\space\space\space}{\@bib@doi}
+      \@tempa{ctrl-trunc-author-bool}{false}
 %      \@tempa{ctrl-etal-firstonly}{%
 %        \ifacs@etal@truncate no\else yes\fi
 %      }%
