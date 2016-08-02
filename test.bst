@@ -35,7 +35,9 @@ ENTRY
     label
   }
 
-  
+
+% --- declare internal variables ---
+
 INTEGERS {  % punctuation symbol tracker
   next.punct.comma
   next.punct.period
@@ -43,6 +45,7 @@ INTEGERS {  % punctuation symbol tracker
   next.punct.space
   next.punct.int
 }
+
 
 INTEGERS {  % name
   current.name.int
@@ -54,10 +57,116 @@ INTEGERS {  % name
   total.names.int
 }
 
+
+INTEGERS {  % ctrl & counter
+  entries.int
+  ctrl.maxauthor.number.int
+}
+
+
 STRINGS {
   current.name.str
   names.str
 }
+
+
+% --- declare intergal basic function ---
+
+FUNCTION { and } {
+    { }
+    {
+      pop$
+      #0
+    }
+  if$
+}
+
+FUNCTION { not } {
+    { #0 }
+    { #1 }
+  if$
+}
+
+FUNCTION { or } {
+    {
+      pop$
+      #1
+    }
+    { }
+  if$
+}
+
+FUNCTION { xor } {
+    { not }
+    { }
+  if$
+}
+
+
+FUNCTION { str.to.int.aux.ii } {
+  {
+    duplicate$
+    empty$ not
+  }
+    {
+      swap$
+      #10 multiply 'str.conversion.int :=
+      duplicate$
+      #1 #1 substring$
+      chr.to.value
+      str.conversion.int +
+      swap$
+      #2 global.max$ substring$
+    }
+  while$
+  pop$
+}
+
+FUNCTION { str.to.int.aux.i } {
+  duplicate$
+  #1 #1 substring$
+  "-" =
+   {
+      #1 swap$
+      #2 global.max$ substring$
+    }
+    {
+      #0 swap$
+    }
+  if$
+  #0
+  swap$
+  str.to.int.aux.ii
+  swap$
+    { #0 swap$ - }
+    { }
+  if$
+}
+
+
+FUNCTION { str.to.int } {
+  duplicate$
+  empty$
+    {
+      pop$
+      #0
+    }
+    { str.to.int.aux.i }
+  if$
+}
+
+
+% --- initialize internal variables ---
+
+FUNCTION { initialize.count.entries } {
+  #0 'entries.int  :=
+}
+
+
+FUNCTION { count.entries } {
+  entries.int #1 + 'entries.int  :=
+}
+
 
 FUNCTION { initialize.tracker } {
   #0 'next.punct.comma     :=
@@ -67,8 +176,13 @@ FUNCTION { initialize.tracker } {
 }
 
 
+FUNCTION { initialize.name.separator } {
+  #1 'names.separate.comma     :=
+  #0 'names.separate.semicolon :=
+}
+
+
 FUNCTION { initialize.control } {
-  
   ctrl-trunc-author-bool "false" =
     'skip$
     { 
@@ -77,26 +191,155 @@ FUNCTION { initialize.control } {
   if$
 }
 
-FUNCTION { article } {
-  begin.bibitem
-  write.author
-  format.title.article
-  format.journal
-  format.year.article
-  format.volume.article
-  format.pages.article
-  format.note
+
+FUNCTION { output } {
+  swap$
+  duplicate$ empty$
+    { pop$ }
+    {
+      next.punct.int next.punct.space =
+        { " " * }
+        {
+          next.punct.int next.punct.comma =
+            { ", " * }
+            {
+              next.punct.int next.punct.semicolon =
+                { ", " * }
+                { add.period$ }
+              if$
+            }
+          if$
+        }
+      if$
+      write$
+    }
+  if$
+  next.punct.comma 'next.punct.int :=
 }
 
-FUNCTION { default.type } { misc }
 
+FUNCTION { calculate.names } {
+%  calculate.short.names
+%  short.names
+  year empty$
+    { "()" }
+    { "(" year * ")" * }
+  if$
+  *
+  'label :=
+}
+
+
+% --- format name strings ---
+
+FUNCTION { format.names.loop } {
+  { remaining.names.int #0 > }
+    {
+      names.str current.name.int "{vv~}{ll,}{~f.}{,~jj}" format.name$
+      duplicate$
+      'current.name.str :=
+      current.name.int #1 >
+        {
+          duplicate$
+          "others," =
+            {
+%              bbl.etal
+%              add.space
+%              remaining.names.int #1 - 'remaining.names.int :=
+            }
+            {
+              swap$
+              names.separate.comma.bool
+                { ", " * }
+                { "; " * }
+              if$
+              swap$
+              *
+            }
+          if$
+        }
+        { }
+      if$
+      remaining.names.int #1 - 'remaining.names.int :=
+      current.name.int #1 + 'current.name.int :=
+    }
+  while$
+}
+
+
+%FUNCTION { format.names.etal } {
+%  ctrl.etal.firstonly.bool
+%    { #1 'remaining.names.int := }
+%    { ctrl.etal.number.int 'remaining.names.int := }
+%  if$
+%  format.names.loop
+%  current.name.str "others," =
+%    'skip$
+%    {
+%      add.space
+%      bbl.etal
+%      add.space
+%      *
+%    }
+%  if$
+%}
+
+
+%FUNCTION { format.names.truncation } {
+%  ctrl.maxauthor.number.int #0 =
+%    { format.names.all }
+%    { format.names.etal }
+%  if$
+%}
+
+
+FUNCTION { format.names.all } {
+  total.names.int 'remaining.names.int :=
+  format.names.loop
+}
+
+
+FUNCTION { format.names } {
+  'names.separate.comma.bool :=
+  'names.str :=
+  #1 'current.name.int :=
+  names.str num.names$ 'total.names.int :=
+  total.names.int ctrl.maxauthor.number.int >
+    {
+%      format.names.truncation
+    }
+    { 
+      format.names.all
+    }
+  if$
+}
+
+
+% --- format title string ---
+FUNCTION { format.title } {
+  'skip$
+}
+
+
+% --- format journal ---
+
+
+% --- format year ---
+
+% --- format page ---
+
+
+% --- format note ---
+
+
+% --- declare string output functions ---
 
 FUNCTION { begin.bibitem } {
   newline$
-  "\bibitem{" write$
+  "\bibitem[" write$
   label write$
-  "}{" write$
-  cite$ write$
+  "[" swap$ * "]" * write$
+  "{" cite$ * "}" * write$
   newline$
 }
 
@@ -113,95 +356,90 @@ FUNCTION { write.author } {
   if$
 }
 
-FUNCTION { format.names } {
-  'names.separate.comma.bool :=
-  'names.str :=
-  #1 'current.name.int :=
-  names.str num.names$ 'total.names.int :=
-  total.names.int ctrl.maxauthor.number.int >
-    {
-      format.names.truncation
-    }
-    { 
-      format.names.all
-    }
-  if$
+
+% --- define each entry type ---
+
+FUNCTION { article } {
+  begin.bibitem
+  write.author
+  %format.title.article
+  %format.journal
+  %format.year.article
+  %format.volume.article
+  %format.pages.article
+  %format.note
+  end.bibitem
 }
 
 
-FUNCTION { format.names.truncation } {
-  ctrl.maxauthor.number.int #0 =
-    { format.names.all }
-    { format.names.etal }
-  if$
+FUNCTION { book } {
+  'skip$
 }
 
 
-FUNCTION { format.names.all } {
-  total.names.int 'remaining.names.int :=
-  format.names.loop
+FUNCTION { booklet } {
+  'skip$
 }
 
 
-FUNCTION { format.names.loop } {
-  { remaining.names.int #0 > }
-    {
-      names.str current.name.int "{vv~}{ll,}{~f.}{,~jj}" format.name$
-      duplicate$
-      'current.name.str :=
-      current.name.int #1 >
-        {
-          duplicate$
-          "others," =
-            {
-              bbl.etal
-              add.space
-              remaining.names.int #1 - 'remaining.names.int :=
-            }
-            {
-              swap$
-              names.separate.comma.bool
-                { add.comma }
-                { add.semicolon }
-              if$
-              swap$
-              *
-            }
-          if$
-        }
-        { }
-      if$
-      remaining.names.int #1 - 'remaining.names.int :=
-      current.name.int #1 + 'current.name.int :=
-    }
-  while$
+FUNCTION { conference } {
+  'skip$
 }
 
 
-FUNCTION { output } {
-  swap$
-  duplicate$ empty$
-    { pop$ }
-    {
-      next.punct.int next.punct.space =
-        { add.space }
-        {
-          next.punct.int next.punct.comma =
-            { add.comma }
-            {
-              next.punct.int next.punct.semicolon =
-                { add.semicolon }
-                { add.period }
-              if$
-            }
-          if$
-        }
-      if$
-      write$
-    }
-  if$
-  next.punct.comma 'next.punct.int :=
+FUNCTION { inbook } {
+  'skip$
 }
+
+
+FUNCTION { incollection } {
+  'skip$
+}
+
+
+FUNCTION { inproceedings } {
+  begin.bibitem
+  write.author
+  end.bibitem
+}
+
+
+FUNCTION { manual } {
+  'skip$
+}
+
+
+FUNCTION { masterthesis } {
+  'skip$
+}
+
+
+FUNCTION { misc } {
+  'skip$
+}
+
+
+FUNCTION { phdthesis } {
+  'skip$
+}
+
+
+FUNCTION { proceedings } {
+  'skip$
+}
+
+
+FUNCTION { techreport } {
+  'skip$
+}
+
+
+FUNCTION { unpublished } {
+  'skip$
+}
+
+
+FUNCTION { default.type } { article }
 
 
 FUNCTION { begin.bbl } {
@@ -240,7 +478,7 @@ MACRO { dec } { "Dec." }
 
 READ
 
-EXECUTE { initialize.control.values }
+EXECUTE { initialize.control }
 
 EXECUTE { initialize.count.entries }
 
