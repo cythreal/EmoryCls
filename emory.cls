@@ -639,3 +639,5 @@
 %\AtEndDocument{
 %\bibliographystyle{emory}
 %}
+
+\newcommand*{\BibTeX}{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em\TeX}

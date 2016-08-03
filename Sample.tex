@@ -74,19 +74,36 @@ code when necessary.
 \begin{acknowledgement}%
 
 I would like to thank all the documentations and anonymous people online that
-helped me learn the skills to write this class. 
-Special thank to the great example of 
+helped me learn the \LaTeX{} skills to write this class. 
 
+An imcomplete list of references and code examples I consulted during the development
+of this class:
 \begin{itemize}
-  \item The ACS package \Verb|achemso|
+  \item The Amecican Chemical Society journal package \Verb|achemso|:
+  
+        \url{https://www.ctan.org/pkg/achemso?lang=en}
+  \item \LaTeXe{} for class and package writers:
+        
+        \url{https://www.ctan.org/pkg/clsguide}
+  \item Peter Flynn (2007), ``Rolling your own Document Class: Using \LaTeX{} to keep away from the Dark Side'', Proceedings of the Practical \TeX{} 2006 Conference, TUGboad, Vol 28.
+        
+        \url{https://tug.org/pracjourn/2006-4/flynn/}
+  \item Jim Hefferon (2005), ``Minutes in Less Than Hours: Using \LaTeX{} Resources'', TPJ No.~04: 
+        \url{https://tug.org/pracjourn/2005-4/hefferon/} 
+  \item Oren Patashnik (1988), ``Designing \BibTeX{} Styles'':
+        \url{http://www.pctex.com/files/managed/a/a3/btxhak.pdf}
   \item The thesis class originally written by Bruce Fast, and most recently updated by Hongcheng Ni, from University of Colorado, Boulder. 
-        The webpage is at 
-        \url{
-        http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files
-        }
-  \item LaTeX2e for class and package writers \url{https://latex-project.org/guides/clsguide.pdf}
-  \item \Verb|ifthen| package document \url{http://texdoc.net/texmf-dist/doc/latex/base/ifthen.pdf}
+        
+        \url{http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files}
+  \item Kate L.\ Turabian, \textit{A Manual for Writers of Research Papers, Theses, and 
+  Dissertations}, 8\textsuperscript{th}ed, ed.\ Wayne C.\ Booth, Gregory G.\ Colomb, Joseph M.\ Williams, and the University of Chicago Press Editorial Staff,  Chicago IL: University of Chicago Press, 2007.
+  \item \Verb|ifthen| package: \url{http://texdoc.net/texmf-dist/doc/latex/base/ifthen}
+  \item \Verb|geometry| package: \url{https://www.ctan.org/pkg/geometry?lang=en}
+  \item \Verb|xkeyval| package: \url{https://www.ctan.org/pkg/xkeyval?lang=en}
 \end{itemize}
+
+Special thank to Dr.~Ulf Nilsson at the Laney Graduate School of Emory University
+for the general advice of the style.
 
 \end{acknowledgement}
 
@@ -103,7 +120,7 @@ Special thank to the great example of
 This is a \LaTeX{} class designed for dissertation writing under the style and
 format policy of the Laney Graduate School at Emory University.\cite{emory-style}
 This class is
-intended to reduce the effort for Emory graduate students in formating, thus 
+intended to reduce the effort in formating for Emory graduate students, thus 
 to focus more on the writing. 
 
 To report bugs and suggestions, please contact me on GitHub. To contribute, 
@@ -113,7 +130,7 @@ please fork my github repo at \url{https://github.com/luyaozou/EmoryCls.git}
 \section{Load the class and compilation}
 The Emory class can be loaded by declaring
 \Verb|\documentclass{emory}| in the \LaTeX{} preamble. The class file
-\Verb|emory.cls| needs to be in the same directory of the \LaTeX{} file to be 
+\Verb|emory.cls| needs to be in the same directory of the \LaTeX{} file(s) to be 
 compiled. 
 
 Alternatively, you may copy \Verb|emory.cls| into your local \TeX{} package 
@@ -134,15 +151,16 @@ self-explanotary in the \Verb|sample.tex| file.
 \subsection{Document style options}
 The first set of options is the document class option and keys. Only \Verb|[draft]|,
 \Verb|[final]|, and \Verb|[twoside]| are allowed in the \Verb|\documentclass[options]{emory}| 
-command. \Verb|[draft]| only draws the boarder of graphs without loading the images,
-and will print solid black rectangles on any places that are outside the defined
-text area. This mode is useful for checking any element that exceed the boarder.
+command. \Verb|[draft]| only draws the boarder of graphs without actually loading the images,
+and prints solid black rectangles on any places that are outside the defined
+text area. This mode is useful for checking any element that exceeds the boarder,
+which is fatal to the submission of the thesis/dissertation.
 \Verb|[final]| produces the final document. \Verb|[twoside]| turns on double sided
-printing. The default in the sample file is On in order to save trees. To turn
-off double sided printing, simply remove the \Verb|twoside| option.
+printing. The default in the sample file is \Verb|[twoside]| in order to save trees. To turn
+off double sided printing, simply remove the \Verb|[twoside]| option.
 Please note that the special pages are \emph{ALWAYS} single side printing. 
-Therefore, if you have a double side printing document, remember to print out
-the special pages separately.
+Therefore, if you have a double side printing document, \emph{remember to print out
+the special pages separately}.
 
 Several keys--value pairs are available right after \Verb|\documentclass| statement.
 Use \Verb|setkeys[emory]{family}{key=value}| to assign values.
@@ -151,12 +169,17 @@ Use \Verb|setkeys[emory]{family}{key=value}| to assign values.
 bibliography style based on the conventions
 from specfic majors, and load up commonly used packages for that major.
 The majors can be set by \Verb|major=value|.
-Currently, chemistry style \Verb|chem| is supported. 
+Currently, chemistry style \Verb|chem| is supported. More major specific styles
+settings will be added in the future after sufficient commminication with 
+the scholars in these particular specialties. 
 
 \Verb|\setkeys[emory]{doc}{dissertation=true/false}| configures the type of the 
 document. It only does one thing: print out either ``dissertation'' or ``theis''
 in the Approval Pages.
 
+The \Verb|emory| class relies on several standard \LaTeX{} packages. Meanwhile, 
+packages commonly used in special areas are also loaded when selecting the 
+corresponding \Verb|major|. 
 Table~\ref{tbl:packages} lists packages loaded by \Verb|emory.cls|.
 \begin{table}[htp!]
   \centering
@@ -186,28 +209,28 @@ The second set of preambles configures the information need for the special page
 will be reprinted several times in the special pages.
 \item \Verb|\author{Name}| sets up the name of the author. The name will be reprinted
 several times in the special pages. 
-\item \Verb|\degree{Ph.D./Master}| sets up the degree you apply. It is either Doctor
+\item \Verb|\degree{Ph.D./Master}| sets up the degree you apply. ``It is either Doctor
 of Philosophy or Master of Arts/Science/or another area.  There are a number of 
-possible Master’s degree in some programs, particularly Music and Education.  
-If you are unsure, consult with your Director of Graduate Studies.
-\item \Verb|\prevdegree{B.S.}| sets up your previous academic degree. List your 
+possible Master's degree in some programs, particularly Music and Education.  
+If you are unsure, consult with your Director of Graduate Studies.''\cite{emory-style}
+\item \Verb|\prevdegree{B.S.}| sets up your previous academic degree. ``List your 
 degree, the name of the university, and the year you received the degree.  
-For example, ``B.A., Yale University, 2004'' or ``M.Sc., University of Pennsylvania, 2003''.
-You can list several degrees, including master’s degrees from your current 
+For example, `B.A., Yale University, 2004' or `M.Sc., University of Pennsylvania, 2003'.
+You can list several degrees, including master's degrees from your current 
 program here at Emory, by repeating this command.
-Note that you can only list a master’s degree from your
-Emory program if you actually applied for and received it; even if master’s 
-degrees are given on the basis of candidacy, they are not automatic. 
-\item \Verb|\field{Field of Expertise}| sets up your field of study. Generally, 
+Note that you can only list a master's degree from your
+Emory program if you actually applied for and received it; even if master's 
+degrees are given on the basis of candidacy, they are not automatic.''\cite{emory-style} 
+\item \Verb|\field{Field of Expertise}| sets up your field of study. ``Generally, 
 your field is the subject-matter name of your program: English, Chemistry, 
 Health Services Research and Health Policy, Educational Studies, Business, etc.  
-The field does not include the word “program,” and does not include any sub-field
-you specialize in.  For example, your field is not ``19th Century American Literature,''
-``Finance Program,'' ``Neurology Department,'' ``African Studies'' or any other
-sub-field or entity.
+The field does not include the word `program,' and does not include any sub-field
+you specialize in.  For example, your field is not `19th Century American Literature,'
+`Finance Program,' `Neurology Department,' `African Studies' or any other
+sub-field or entity.''\cite{emory-style}
 \item \Verb|\advisor{Advisor Name}{Advisor Degree}| sets up the name and degree of your 
-adivsor. If your committee had co-chairs, refer to each of them as Advisor,
-repeat this command, and list them in alphabetical order. 
+adivsor. ``If your committee had co-chairs, refer to each of them as Advisor,
+repeat this command, and list them in alphabetical order.''\cite{emory-style} 
 \item \Verb|\committee{Committee Member Name}{Committee Member Degree}|  sets up
 the name and degree of your committee member. Repeat this command for multiple 
 members. If the number of committee members exceeds 4, the class will change
@@ -293,7 +316,7 @@ Multiple mathematical subequations (need \Verb|amsmath| package)
 Quote enviroment. Use \Verb|\begin{quote} \end{quote}|
 
 \begin{quote}\label{poet}
-O wild West Wind, thou breath of Autumn’s being,
+O wild West Wind, thou breath of Autumn's being,
 
 Thou, from whose unseen presence the leaves dead
 
@@ -376,7 +399,7 @@ I will reference the sample enviroments in the previous section (Section \ref{se
 \end{itemize}
 
 \section{Citation and bibliography}
-Another great advantage of \LaTeX{} is its bibliography manager: {\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}
+Another great advantage of \LaTeX{} is its bibliography manager: \BibTeX{}.
 
 Include all of you citations in a \Verb|.bib| file, and specify it at the end
 of the document using command \Verb|\bibliography{sample-bib}|, before \Verb|\end{document}|.
@@ -385,10 +408,17 @@ of the document using command \Verb|\bibliography{sample-bib}|, before \Verb|\en
 Each bibliography item has a ``bibkey''. Cite this ``bibkey'' in your text
 using \Verb|\cite{bibkey}| results in a correctly labeled citation.
 
-Two styles are available in this class: the name-date style, or the numeric-label 
-style. The style can be specified in the preamble (see Section~\ref{sec:options}).
-The citation formats of different resource types are automatically set up by the 
-class.
+%Two styles are available in this class: the name-date style, or the numeric-label 
+%style. The style can be specified in the preamble (see Section~\ref{sec:options}).
+%The citation formats of different resource types are automatically set up by the 
+%class.
+
+The number of bibliography style combinations is almost infinite. A \BibTeX{} 
+style file \Verb|.bst| specially designed for the Emory class will be ideal, 
+but requires significant amount of effort. This specialized \BibTeX{}
+style file that understands the user input class options is still under development. 
+Currently, a work round is to include your own \BibTeX{} style files, mostly likely
+standard style files from CTAN. 
 
 Here are some examples of the numeric-label style.
 \begin{itemize}
@@ -415,20 +445,6 @@ output document.
 numbering of the citation markers. 
 \end{enumerate}
 Do not include the extension \Verb|.tex| in the command line.
-
-\chapter{Random}
-\section{This is gonna be a brilliant dissertation!}
-\subsection{Born}
-My arrival to this planet is an entire oopsy. 
-
-
-\subsection{This is why I am awesome.}
-\subsubsection{No mumble jumble}
-The reason why I am awesome is because I do not use \Verb|lipsum|. I write 
-serious stuff in this sample file.
-
-
-
 
 
 % choose your own bibliography style 
