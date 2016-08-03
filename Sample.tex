@@ -12,7 +12,7 @@
 % --- \documentclass[options]{emory}
 % --- Only [draft], [final], and [twoside] are allowed.
 % --- Other properties can be set by keys.
-\documentclass[draft]{emory}
+\documentclass[draft, twoside]{emory}
 
 % --- Set up other document properties. Available keys and values:
 % --- style: select style by major=<major>
@@ -58,32 +58,39 @@
 \yr{2016}                               % replace the year, if necessary
 
 
+% ------ start your awesome writing here ---------------------------------------
+\begin{document}
+
 % ------ abstract --------------------------------------------------------------
-\abstract{%
+\begin{abstract}
+
 This is a \LaTeX{} class. It is supposed to follow the dissertation format
 requirement of Emory University, but nothing is guaranteed, and please tweak the
 code when necessary. 
-}
 
-% ------ acknowledgment -------------------------------------------------------
-\acknowledgment{%
+\end{abstract}
+
+% ------ acknowledgement -------------------------------------------------------
+\begin{acknowledgement}%
+
 I would like to thank all the documentations and anonymous people online that
 helped me learn the skills to write this class. 
 Special thank to the great example of 
-%\begin{itemize}
-%  \item The ACS package \Verb|achemso|
-%  \item The thesis class originally written by Bruce Fast, and most recently updated by Hongcheng Ni, from University of Colorado, Boulder. 
-        %The webpage is at 
-        %\url{
-        %http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files
-        %}
-  %\item \href{https://latex-project.org/guides/clsguide.pdf}{LaTeX2e for class and package writers}
-  %\item \href{http://texdoc.net/texmf-dist/doc/latex/base/ifthen.pdf}{\Verb|ifthen| package document}
-%\end{itemize}
-}
 
-% ------ start your awesome writing here ---------------------------------------
-\begin{document}
+\begin{itemize}
+  \item The ACS package \Verb|achemso|
+  \item The thesis class originally written by Bruce Fast, and most recently updated by Hongcheng Ni, from University of Colorado, Boulder. 
+        The webpage is at 
+        \url{
+        http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files
+        }
+  \item LaTeX2e for class and package writers \url{https://latex-project.org/guides/clsguide.pdf}
+  \item \Verb|ifthen| package document \url{http://texdoc.net/texmf-dist/doc/latex/base/ifthen.pdf}
+\end{itemize}
+
+\end{acknowledgement}
+
+\maketoc
 
 \chapter{Introduction}
 %Putting up a dissertation following all the requirements or restrictions of
@@ -92,8 +99,10 @@ Special thank to the great example of
 %her brilliant, hard-working Ph.D.\ candidates. I here try my best to offer a
 %third-party \LaTeX{} class that hopefully covers most of the Emory policy, if not
 %all.
+
 This is a \LaTeX{} class designed for dissertation writing under the style and
-format policy of the Laney Graduate School at Emory University. This class is
+format policy of the Laney Graduate School at Emory University.\cite{emory-style}
+This class is
 intended to reduce the effort for Emory graduate students in formating, thus 
 to focus more on the writing. 
 
@@ -422,8 +431,8 @@ serious stuff in this sample file.
 
 
 
-
-
+% choose your own bibliography style 
+\bibliographystyle{plain}
 \bibliography{SampleBib}
 
 \end{document}
