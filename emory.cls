@@ -102,6 +102,11 @@
 \RequirePackage{color}
 \RequirePackage[sort&compress]{natbib}
 
+% double space for 12pt font
+\renewcommand*{\baselinestretch}{1.655}
+\renewcommand{\arraystretch}{1}
+
+%% ------ Configure bibtex options ------
 %\newcommand*\@activate@biblabel{}
 %\let\@activate@biblabel\AtEndOfClass
 %\AtEndOfClass{\let\@activate@biblabel\@firstofone}
@@ -127,7 +132,7 @@
 }{}
 }
 
-% ----- write controling file
+% ----- write bib control file ------
 \newcommand*{\@bib@ctrl@name}{\jobname-blx.bib}
 \newwrite\@bib@ctrl@file
 \AtBeginDocument{%
@@ -266,8 +271,6 @@
 \newcommand*{\degree}[1]{\th@PassCmd{\th@degree}{#1}}
 \newcommand*{\field}[1]{\th@PassCmd{\th@field}{#1}}
 \newcommand*{\yr}[1]{\th@PassCmd{\th@year}{#1}}
-\renewcommand*{\abstract}[1]{\th@PassCmd{\th@abstract}{#1}}
-\newcommand*{\acknowledgment}[1]{\th@PassCmd{\th@acknowledgement}{#1}}
 \newcommand*{\prevdegree}[1]{%
   \global\advance\th@prevdeg@count\@ne\relax
   \expandafter\gdef\csname th@prevdegree\@roman\th@prevdeg@count \endcsname{#1}\relax
@@ -281,34 +284,8 @@
   \expandafter\gdef\csname th@committee\@roman\th@committee@count \endcsname{#1, #2}\relax
 }
 
-\newcommand*{\th@title}{%
-  \ClassWarning{emory}{Missing title!}
-}
-\newcommand*{\th@author}{%
-  \ClassWarning{emory}{Missing author name!}
-}
-\newcommand*{\th@degree}{%
-  \ClassWarning{emory}{Missing degree!}{Help}
-}
-\newcommand*{\th@prevdegree}{%
-  \ClassWarning{emory}{Missing previous degree!}
-}
-\newcommand*{\th@field}{%
-  \ClassWarning{emory}{Missing field of study!}
-}
-\newcommand*{\th@year}{%
-  \ClassWarning{emory}{Missing graduation year!}
-}
-\newcommand*{\th@abstract}{%
-  \ClassWarning{emory}{Missing abstract!}
-}
-\newcommand*{\th@acknowledgement}{%
-  \ClassWarning{emory}{Do you have anybody to say thank you?}
-}
+%% ----- Define special pages ------
 
-
-
-%% Define special pages
 % Distribution Agreement
 \newcommand*{\th@DistributionAgreement}{%
   \thispagestyle{empty}
@@ -509,26 +486,6 @@
   \clearpage
 }
 
-\newcommand*{\th@AbstractPage}{%
-  \thispagestyle{empty}
-
-  \begin{center}
-    \large
-    \textbf{Abstract}
-    \vspace{2ex}
-    
-    \th@title\normalsize
-    
-    \vspace{1ex}
-    By \th@author
-  \vspace{0.5in}
-  
-  \parbox{4.5in}{\th@abstract}
-  \end{center}
-  
-  \clearpage
-}
-
 \newcommand*{\th@CoverPage}{%
   \thispagestyle{empty}
   \vspace*{\fill}
@@ -583,20 +540,45 @@
   \clearpage
 }
 
-\newcommand*{\th@AcknowledgementPage}{%
+\renewenvironment{abstract}{%
+  \typeout{>>> Make Abstract Cover Page >>>}
   \thispagestyle{empty}
+
   \begin{center}
     \large
-    Acknowledgement
-    \normalsize
+    \textbf{Abstract}
+    \vspace{3ex}
+    
+    \th@title\normalsize
+    
+    \vspace{2ex}
+    By \th@author
+  \vspace{0.5in}
+  
+  \begin{minipage}[t]{4.5in}
+}{%
+  \end{minipage}
   \end{center}
+  \clearpage
+  \typeout{>>> Make Cover Page >>>}
+  \th@CoverPage
+}
+
+\newenvironment{acknowledgement}{%
+  \typeout{>>> Make Acknowledgement Page >>>}
   
-  \setcounter{page}{0}
-  \th@acknowledgement
+  \thispagestyle{empty}
   
+  \begin{center}
+    \large
+    \textbf{Acknowledgement}
+  \end{center}
+}{%
   \clearpage
 }
 
+
+%% ------ set up page geometry and header ------
 
 \newcommand*{\set@geometry}{%
   \RequirePackage[onecolumn,paper=letterpaper,total={6in,9in},left=1.5in,right=1in,vmargin=1in,vcentering=true,landscape=false]{geometry}
@@ -615,32 +597,27 @@
   }
 }
 
-\renewcommand*{\baselinestretch}{1.655}   % double space for 12pt font
-\renewcommand{\arraystretch}{1}
 
 %% Make special pages
-\AtBeginDocument{
+\AtBeginDocument{%
   \set@geometry
+  \set@header
   \newgeometry{twoside=false,left=1.5in,right=1in,vmargin=1in}
   \pagenumbering{gobble}     % suppress page numbering 
-  
- {\renewcommand{\baselinestretch}{1}
+  \th@special@page
+}
+
+\newcommand*\th@special@page{%
+ \renewcommand{\baselinestretch}{1}
   \typeout{>>> Make Distribution Agreement >>>}
   \th@DistributionAgreement
   \typeout{>>> Make Approval Sheet >>>}
   \th@ApprovalSheet
-  \typeout{>>> Make Abstract Cover Page >>>}
-  \th@AbstractCoverPage
-  \typeout{>>> Make Abstract Page >>>}
-  \th@AbstractPage
-  \typeout{>>> Make Cover Page >>>}
-  \th@CoverPage
- }
-  \typeout{>>> Make Acknowledgement Page >>>}
-  \th@AcknowledgementPage
-  
+}
+
+\newcommand*{\maketoc}{\th@t@c}
+\newcommand*\th@t@c{%
   \begingroup
-  \setlength{\parskip}{-7.25pt}
   \typeout{>>> Make Table of Contents >>>}
   \renewcommand{\contentsname}{Table of Contents}
   \tableofcontents
@@ -650,7 +627,6 @@
   \listoftables
   \clearpage
   \endgroup
-  
   \typeout{}
   \typeout{--------------------------------------}
   \typeout{}
@@ -658,9 +634,8 @@
   \pagenumbering{arabic}
   \setcounter{page}{1}
   \restoregeometry
-  \set@header
 }
 
-\AtEndDocument{
-\bibliographystyle{emory}
-}
+%\AtEndDocument{
+%\bibliographystyle{emory}
+%}
