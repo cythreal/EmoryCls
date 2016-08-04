@@ -55,7 +55,6 @@
 }
 
 % ------ Define key value pairs for bibliography control -----
-% ------ Steal from achemso ----- start hack ------
 \define@choicekey+[emory]{bib}{location}[\val\nr]{eof,eoc}[]{%
   \ifnum\nr=\z@
     \setboolean{If@bib@eof}{true}
@@ -93,6 +92,13 @@
 \define@key[emory]{bib}{maxauthor}[15]{%
   \newcommand*{\@bib@max@author}{#1}
 }
+
+% ------ define custome environments -------
+\newenvironment{schematic}{%
+\begin{figure}
+\renewcommand{\figurename}{Schematic}
+}{\end{figure}}
+
 
 % ------ Load packages shared by all majors -------
 \RequirePackage{amsmath}
