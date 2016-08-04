@@ -200,7 +200,7 @@
 % ------ Configure styles for individual page elements -------
 % --- chapter with arabic numbering and "Chapter"
 \newcommand*{\cfg@chapter@chptname@arabic}{%
-  \titleformat{\chapter}[block]{\bfseries\LARGE}{Chapter \thechapter}{2ex}{}
+  \titleformat{\chapter}[block]{\bfseries\LARGE}{\chaptername\ \thechapter}{2ex}{}
   \titlespacing{\chapter}{0pt}{0pt}{4ex}
 }
 % --- chapter with arabic numbering, without "Chapter"
@@ -210,7 +210,7 @@
 }
 % --- chapter with roman numbering and "Chapter"
 \newcommand*{\cfg@chapter@chptname@roman}{%
-  \titleformat{\chapter}[block]{\bfseries\LARGE}{Chapter \@Roman{\thechapter}}{2ex}{}
+  \titleformat{\chapter}[block]{\bfseries\LARGE}{\chaptername\ \@Roman{\thechapter}}{2ex}{}
   \titlespacing{\chapter}{0pt}{3ex}{4ex}
 }
 % --- chapter with arabic numbering, without "Chapter"
