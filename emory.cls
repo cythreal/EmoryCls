@@ -95,10 +95,9 @@
 
 % ------ define custome environments -------
 \newenvironment{schematic}{%
-\begin{figure}
+\begin{figure}[htp!]
 \renewcommand{\figurename}{Schematic}
 }{\end{figure}}
-
 
 % ------ Load packages shared by all majors -------
 \RequirePackage{amsmath}
@@ -187,9 +186,15 @@
   \RequirePackage{fancyvrb}
 }
 
+% ------ Define chapter and appendix names ------
+\AtBeginDocument{%
+  \chaptertitlename{Chapter}
+  \appendixname{Appendix}
+}
+
 % ------ Define major specific style sequences ------
 \newcommand*{\set@chem@style}{%
-  \cfg@chapter@chptname@arabic
+  \cfg@chapter@arabic
   \cfg@section@arabic
   \cfg@itemize@bullet
   \cfg@itemize@sep
@@ -199,22 +204,12 @@
 
 % ------ Configure styles for individual page elements -------
 % --- chapter with arabic numbering and "Chapter"
-\newcommand*{\cfg@chapter@chptname@arabic}{%
-  \titleformat{\chapter}[block]{\bfseries\LARGE}{Chapter \thechapter}{2ex}{}
-  \titlespacing{\chapter}{0pt}{0pt}{4ex}
-}
-% --- chapter with arabic numbering, without "Chapter"
-\newcommand*{\cfg@chapter@nochptname@arabic}{%
+\newcommand*{\cfg@chapter@arabic}{%
   \titleformat{\chapter}[block]{\bfseries\LARGE}{\thechapter}{2ex}{}
-  \titlespacing{\chapter}{0pt}{3ex}{4ex}
+  \titlespacing{\chapter}{0pt}{3pt}{4ex}
 }
 % --- chapter with roman numbering and "Chapter"
-\newcommand*{\cfg@chapter@chptname@roman}{%
-  \titleformat{\chapter}[block]{\bfseries\LARGE}{Chapter \@Roman{\thechapter}}{2ex}{}
-  \titlespacing{\chapter}{0pt}{3ex}{4ex}
-}
-% --- chapter with arabic numbering, without "Chapter"
-\newcommand*{\cfg@chapter@nochptname@roman}{%
+\newcommand*{\cfg@chapter@roman}{%
   \titleformat{\chapter}[block]{\bfseries\LARGE}{\@Roman{\thechapter}}{2ex}{}
   \titlespacing{\chapter}{0pt}{3ex}{4ex}
 }

@@ -281,6 +281,21 @@ Sample outputs of these enviroments are listed here.
   \caption{This is a figure enviroment.\label{fig}}
 \end{figure}
 
+\subsection{Schematics}
+
+\Verb|schematic| is a customized environment inherieted from the \Verb|figure|
+environment. It changes the caption head from ``Figure'' to ``Schematic'', and 
+automatically centering the element. Do not include float position option
+\Verb|[htp!]|, as it is already set up in the environment. It will still show
+up in the list of figures, and will have consistent numbering with the \Verb|figure|
+floats.
+
+\begin{schematic}
+  \includegraphics[width=\textwidth]{LaTeXLogo.png}
+  \caption{This is actually not a schematic.\label{schematic}}
+\end{schematic}
+
+
 \subsection{Tables}
 
 \begin{table}[htp!]
@@ -446,6 +461,15 @@ numbering of the citation markers.
 \end{enumerate}
 Do not include the extension \Verb|.tex| in the command line.
 
+
+\appendix
+\renewcommand{\chaptername}{Appendix}
+
+\chapter{Appendix1}
+This is an appendix.
+
+\chapter{Appendix2}
+This is an another appendix.
 
 % choose your own bibliography style 
 \bibliographystyle{plain}
