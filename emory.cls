@@ -186,15 +186,9 @@
   \RequirePackage{fancyvrb}
 }
 
-% ------ Define chapter and appendix names ------
-\AtBeginDocument{%
-  \chaptertitlename{Chapter}
-  \appendixname{Appendix}
-}
-
 % ------ Define major specific style sequences ------
 \newcommand*{\set@chem@style}{%
-  \cfg@chapter@arabic
+  \cfg@chapter@chptname@arabic
   \cfg@section@arabic
   \cfg@itemize@bullet
   \cfg@itemize@sep
@@ -204,12 +198,22 @@
 
 % ------ Configure styles for individual page elements -------
 % --- chapter with arabic numbering and "Chapter"
-\newcommand*{\cfg@chapter@arabic}{%
+\newcommand*{\cfg@chapter@chptname@arabic}{%
+  \titleformat{\chapter}[block]{\bfseries\LARGE}{\chaptername\ \thechapter}{2ex}{}
+  \titlespacing{\chapter}{0pt}{0pt}{4ex}
+}
+% --- chapter with arabic numbering, without "Chapter"
+\newcommand*{\cfg@chapter@nochptname@arabic}{%
   \titleformat{\chapter}[block]{\bfseries\LARGE}{\thechapter}{2ex}{}
   \titlespacing{\chapter}{0pt}{3pt}{4ex}
 }
 % --- chapter with roman numbering and "Chapter"
-\newcommand*{\cfg@chapter@roman}{%
+\newcommand*{\cfg@chapter@chptname@roman}{%
+  \titleformat{\chapter}[block]{\bfseries\LARGE}{\chaptername\ \@Roman{\thechapter}}{2ex}{}
+  \titlespacing{\chapter}{0pt}{3ex}{4ex}
+}
+% --- chapter with arabic numbering, without "Chapter"
+\newcommand*{\cfg@chapter@nochptname@roman}{%
   \titleformat{\chapter}[block]{\bfseries\LARGE}{\@Roman{\thechapter}}{2ex}{}
   \titlespacing{\chapter}{0pt}{3ex}{4ex}
 }
