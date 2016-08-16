@@ -10,14 +10,17 @@
 % The dissertation style instructions can be found at
 % ------ documentclass declaration ---------------------------------------------
 % --- \documentclass[options]{emory}
-% --- Only [draft], [final], and [twoside] are allowed.
+% --- Only [draft] and [final] are allowed.
 % --- Other properties can be set by keys.
-\documentclass[draft, twoside]{emory}
+\documentclass[draft]{emory}
 
 % --- Set up other document properties. Available keys and values:
 % --- style: select style by major=<major>
 %            supported majors: chem, phys, math, bio, and cs 
-% --- doc: dissertation = <boolean>
+%            select printing by twoside=<boolean>
+%            true: alternating left/right margins for odd/even pages.
+%            false: consistent margins throughout the document.
+% --- doc: dissertation=<boolean>
 %          true: document is a dissertation [default]
 %          false: document is a thesis
 % --- bib: select bibliography style 
@@ -25,6 +28,7 @@
 %          
 \typeout{I'm loading keys}
 \setkeys[emory]{style}{major=chem}
+\setkeys[emory]{style}{twoside=false}
 \setkeys[emory]{doc}{dissertation=true}
 \setkeys[emory]{bib}{location=eof}
 \setkeys[emory]{bib}{format=numeric}
@@ -149,18 +153,13 @@ The options of this class can be set in the \LaTeX{} preamble. They are
 self-explanotary in the \Verb|sample.tex| file. 
 
 \subsection{Document style options}
-The first set of options is the document class option and keys. Only \Verb|[draft]|,
-\Verb|[final]|, and \Verb|[twoside]| are allowed in the \Verb|\documentclass[options]{emory}| 
-command. \Verb|[draft]| only draws the boarder of graphs without actually loading the images,
-and prints solid black rectangles on any places that are outside the defined
-text area. This mode is useful for checking any element that exceeds the boarder,
+The first set of options is the document class option and keys.
+Only \Verb|[draft]| and \Verb|[final]| are allowed in the \Verb|\documentclass[options]{emory}|command.
+\Verb|[draft]| only draws the boarder of graphs without actually loading the images,
+and prints solid black rectangles on any places that are outside the defined text area. 
+This mode is useful for checking any element that exceeds the boarder,
 which is fatal to the submission of the thesis/dissertation.
-\Verb|[final]| produces the final document. \Verb|[twoside]| turns on double sided
-printing. The default in the sample file is \Verb|[twoside]| in order to save trees. To turn
-off double sided printing, simply remove the \Verb|[twoside]| option.
-Please note that the special pages are \emph{ALWAYS} single side printing. 
-Therefore, if you have a double side printing document, \emph{remember to print out
-the special pages separately}.
+\Verb|[final]| produces the final document. 
 
 Several keys--value pairs are available right after \Verb|\documentclass| statement.
 Use \Verb|setkeys[emory]{family}{key=value}| to assign values.
@@ -172,6 +171,17 @@ The majors can be set by \Verb|major=value|.
 Currently, chemistry style \Verb|chem| is supported. More major specific styles
 settings will be added in the future after sufficient commminication with 
 the scholars in these particular specialties. 
+
+\Verb|\setkeys[emory]{style}{twoside=true/false}| controlls the double side printing.
+The default value is \Verb|twoside=false| as the preference of the Laney Graduate School for easily read electronic files. 
+However, if you prefer double side printing for your paper copy and do no want 
+to mess up your binding,
+you can set this key value to \Verb|true| so that the left and right margins will alternate for odd and even pages. 
+
+Please note that the special pages are \emph{ALWAYS} single side printing. 
+Therefore, if you have a double side printing document, \emph{remember to print out
+the special pages separately}.
+
 
 \Verb|\setkeys[emory]{doc}{dissertation=true/false}| configures the type of the 
 document. It only does one thing: print out either ``dissertation'' or ``theis''
@@ -221,7 +231,7 @@ program here at Emory, by repeating this command.
 Note that you can only list a master's degree from your
 Emory program if you actually applied for and received it; even if master's 
 degrees are given on the basis of candidacy, they are not automatic.''\cite{emory-style} 
-\item \Verb|\field{Field of Expertise}| sets up your field of study. ``Generally, 
+\item \Verb|\field{Field}| sets up your field of study. ``Generally, 
 your field is the subject-matter name of your program: English, Chemistry, 
 Health Services Research and Health Policy, Educational Studies, Business, etc.  
 The field does not include the word `program,' and does not include any sub-field

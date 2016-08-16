@@ -12,7 +12,6 @@
 % ----- Declare options can be passed on to report.cls -----
 \DeclareOption{draft}{\PassOptionsToClass{draft}{report}}
 \DeclareOption{final}{\PassOptionsToClass{final}{report}}
-\DeclareOption{twoside}{\PassOptionsToClass{twoside}{report}}
 \DeclareOption*{\OptionNotUsed \ClassWarning{emory}{'\CurrentOption' not allowed.}}
 
 % ----- Process options -----
@@ -23,6 +22,8 @@
 % document type. [true]: dissertation, false: thesis 
 \newboolean{If@doc@dissertation}
 \setboolean{If@doc@dissertation}{true}
+\newboolean{If@style@twoside}
+\setboolean{If@style@twoside}{false}
 % bibliography style. Set by user defined keys.
 \newboolean{If@bib@eof}
 \newboolean{If@bib@article@title}
@@ -35,6 +36,10 @@
 \RequirePackage{xkeyval}
 \define@boolkey[emory]{doc}{dissertation}[true]{%
   \setboolean{If@doc@dissertation}{#1}
+}
+
+\define@boolkey[emory]{style}{twoside}[false]{%
+  \setboolean{If@style@twoside}{#1}
 }
 
 \define@choicekey+[emory]{style}{major}[\val\nr]{chem,phys,math,bio,cs}[]{%
@@ -109,7 +114,7 @@
 
 % double space for 12pt font
 \renewcommand*{\baselinestretch}{1.655}
-\renewcommand{\arraystretch}{1}
+\renewcommand*{\arraystretch}{1}
 
 %% ------ Configure bibtex options ------
 %\newcommand*\@activate@biblabel{}
@@ -586,15 +591,21 @@
 %% ------ set up page geometry and header ------
 
 \newcommand*{\set@geometry}{%
-  \RequirePackage[onecolumn,paper=letterpaper,total={6in,9in},left=1.5in,right=1in,vmargin=1in,vcentering=true,landscape=false]{geometry}
+  \ifthenelse{\boolean{If@style@twoside}}{%
+    \RequirePackage[onecolumn,twoside,paper=letterpaper,total={6in,9in},left=1.5in,right=1in,vmargin=1in,vcentering=true,landscape=false]{geometry}
+  }{
+    \RequirePackage[onecolumn,paper=letterpaper,total={6.5in,9in},hmargin={1.5in,1in},vmargin=1in,vcentering=true,landscape=false]{geometry}}
 }
 
 \newcommand*{\set@header}{%
   \RequirePackage{fancyhdr}
   % set page numbering on the right top
   \pagestyle{myheadings}
-  \addtolength{\headheight}{3pt}
-  \rhead{\thepage}
+  \ifthenelse{\boolean{If@style@twoside}}{%
+    \fancyhead[RO, RE]{\thepage}
+  }{%
+    \rhead{\thepage}
+  }
   % get rid of page number footer on chapter pages
   \fancypagestyle{plain}{%
     \fancyfoot{}
