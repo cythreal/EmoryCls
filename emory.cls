@@ -172,32 +172,27 @@
 % ------ Biblatex Style Handling ------- %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% bibliography style. Set by user defined keys.
-\newboolean{If@bib@preset}
-\setboolean{If@bib@preset}{true}
-
-% ------ Define key value pairs for bibliography control -----
-
-\define@boolkey[emory]{bib}{preset}[true]{%
-  \setboolean{If@bib@preset}{#1}
-}
-
 % ------ Load biblatex (last thing to do) -------
-\newcommand*{\presetbibchem}[1]{%
+\newcommand*{\presetbib}[1]{%
   \RequirePackage[%
     backend=biber,
-    style=chem-acs,
+    bibstyle=science,
     citestyle=numeric-comp,
-    bibstyle=chem-acs,
-    autocite=superscript,
+    autocite=inline,
+    autopunct=true,
     sorting=none,
-    maxnames=15,
+    date=short,
+    doi=true,
     url=false,
-    doi=false,
     eprint=false,
   ]{biblatex}
   \addbibresource{#1}
+  \AtEndDocument{%
+    \nocite{*}
+    \printbibliography
+  }
 }
+
 
 % --------------  The dean! --------------------%
 \def\th@Dean{Lisa A.\ Tedesco, Ph.D}  %
@@ -589,8 +584,5 @@
   \restoregeometry
 }
 
-%\AtEndDocument{
-%\bibliographystyle{emory}
-%}
 
 \newcommand*{\BibTeX}{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em\TeX}

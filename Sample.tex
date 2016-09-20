@@ -23,15 +23,18 @@
 % --- doc: dissertation=<boolean>
 %          true: document is a dissertation [default]
 %          false: document is a thesis
-% --- bib: select bibliography style 
-%          bracket: round, square, and none
 %          
 \typeout{I'm loading keys}
 \setkeys[emory]{style}{major=chem}
 \setkeys[emory]{style}{twoside=false}
 \setkeys[emory]{doc}{dissertation=true}
 
-\presetbibchem{SampleBib.bib}
+% ------ set up bibliography style ---------------------------------------------
+% --- Preset style, driven by BibLaTeX, are available for each major.
+% --- need to use \autocite instead of \cite
+% --- use command \presetbib{bibsource.bib} to set up the bibliography file
+\presetbib{SampleBib.bib}
+% --- Or, you can load your own bibtex packages and set up your own styles.
 
 
 % ------ include your own packages ---------------------------------------------
@@ -476,9 +479,5 @@ This is an appendix.
 
 \chapter{Appendix2}
 This is an another appendix.
-
-% choose your own bibliography style 
-%\bibliographystyle{plain}
-\printbibliography
 
 \end{document}
