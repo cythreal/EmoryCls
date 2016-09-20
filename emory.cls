@@ -14,23 +14,20 @@
 \DeclareOption{final}{\PassOptionsToClass{final}{report}}
 \DeclareOption*{\OptionNotUsed \ClassWarning{emory}{'\CurrentOption' not allowed.}}
 
-% ----- Process options -----
+% ----- Process options & load class -----%
 \ProcessOptions
 \LoadClass[12pt]{report}
+% ----------------------------------------%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ------ Page Style Control ------- %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % ----- Declare boolean switches
-% document type. [true]: dissertation, false: thesis 
 \newboolean{If@doc@dissertation}
 \setboolean{If@doc@dissertation}{true}
 \newboolean{If@style@twoside}
 \setboolean{If@style@twoside}{false}
-% bibliography style. Set by user defined keys.
-\newboolean{If@bib@eof}
-\newboolean{If@bib@article@title}
-\newboolean{If@bib@doi}
-\newboolean{If@bib@superscript}
-\newcount\@bib@bracket@num
-\newcount\@bib@format@num
 
 % ----- Define key value pairs -----
 \RequirePackage{xkeyval}
@@ -46,56 +43,23 @@
   \ifcase\nr\relax
     \load@chem@package
     \set@chem@style
+    \newcommand*{\@th@bibstyle@major}{chem}
   \or
     \load@phys@package
+    \newcommand*{\@th@bibstyle@major}{phys}    
   \or
     \load@math@package
+    \newcommand*{\@th@bibstyle@major}{math}    
   \or
     \load@bio@package
+    \newcommand*{\@th@bibstyle@major}{bio}    
   \or
     \load@cs@package
+    \newcommand*{\@th@bibstyle@major}{cs}    
   \fi
 }{%
-  \ClassWarning{emory}{Style corrently not supported}%
-}
-
-% ------ Define key value pairs for bibliography control -----
-\define@choicekey+[emory]{bib}{location}[\val\nr]{eof,eoc}[]{%
-  \ifnum\nr=\z@
-    \setboolean{If@bib@eof}{true}
-  \else
-    \setboolean{If@bib@eof}{false}
-  \fi
-}{%
-  \ClassWarning{emory}{Undefined location code}%
-}
-
-\define@choicekey+[emory]{bib}{format}[\val\nr]{numeric,authoryear}[]{%
-  \@bib@format@num=\nr
-}{%
-  \ClassWarning{emory}{Undefined citation format}%
-}
-
-\define@choicekey+[emory]{bib}{bracket}[\val\nr]{round,square,none}[]{%
-  \@bib@bracket@num=\nr
-}{%
-  \ClassWarning{emory}{Undefined biblabel}%
-}
-
-\define@key[emory]{bib}{articletitle}[true]{%
-  \newcommand*{\@bib@article@title}{#1}
-}
-
-\define@key[emory]{bib}{doi}[false]{%
-  \newcommand*{\@bib@doi}{#1}
-}
-
-\define@boolkey[emory]{bib}{superscript}[true]{%
-  \setboolean{If@bib@superscript}{#1}
-}
-
-\define@key[emory]{bib}{maxauthor}[15]{%
-  \newcommand*{\@bib@max@author}{#1}
+  \newcommand*{\@th@bibstyle@major}{default}
+  \ClassWarning{emory}{Use default style}%
 }
 
 % ------ define custome environments -------
@@ -110,69 +74,10 @@
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
 \RequirePackage{color}
-\RequirePackage[sort&compress]{natbib}
 
 % double space for 12pt font
 \renewcommand*{\baselinestretch}{1.655}
 \renewcommand*{\arraystretch}{1}
-
-%% ------ Configure bibtex options ------
-%\newcommand*\@activate@biblabel{}
-%\let\@activate@biblabel\AtEndOfClass
-%\AtEndOfClass{\let\@activate@biblabel\@firstofone}
-
-\AtBeginDocument{
-\ifcase\@bib@format@num
-  \setcitestyle{numbers}
-\or
-  \setcitestyle{authoryear}
-\fi
-
-\ifcase\@bib@bracket@num
-  \setcitestyle{round}
-\or
-  \setcitestyle{square}
-\or
-  \setcitestyle{open={}}
-  \setcitestyle{close={}}
-\fi
-
-\ifthenelse{\boolean{If@bib@superscript}}{%
-  \setcitestyle{super}
-}{}
-}
-
-% ----- write bib control file ------
-\newcommand*{\@bib@ctrl@name}{\jobname-blx.bib}
-\newwrite\@bib@ctrl@file
-\AtBeginDocument{%
-  \if@filesw
-    \expandafter\@bib@write@ctrl
-  \fi
-}
-\newcommand*\@bib@write@ctrl{%
-  \immediate\openout\@bib@ctrl@file=\@bib@ctrl@name\relax
-  \edef\@tempa##1##2{%
-    \space\space##1\space = "##2",^^J%
-  }%
-  \immediate\write\@bib@ctrl@file{%
-    @Control\string{%
-      emory-ctrl,^^J%
-      \@tempa{ctrl-article-title\space}{\@bib@article@title}
-      \@tempa{ctrl-maxauthor\space\space\space}{\@bib@max@author}%
-      \@tempa{ctrl-doi\space\space\space}{\@bib@doi}
-%      \@tempa{ctrl-etal-firstonly}{%
-%        \ifacs@etal@truncate no\else yes\fi
-%      }%
-    \string}^^J%
-  }%
-%  \immediate\write\@auxout{%
-%    \string\citation\string{achemso-control\string}%
-%  }%
-  \AtEndDocument{%
-    \immediate\closeout\@bib@ctrl@file\relax
-  }%
-}
 
 % ------ Load major specific package ------
 \newcommand*{\load@math@package}{%
@@ -262,8 +167,40 @@
   \setlength{\arrayrulewidth}{0.5pt}
 }
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ------ Biblatex Style Handling ------- %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% bibliography style. Set by user defined keys.
+\newboolean{If@bib@preset}
+\setboolean{If@bib@preset}{true}
+
+% ------ Define key value pairs for bibliography control -----
+
+\define@boolkey[emory]{bib}{preset}[true]{%
+  \setboolean{If@bib@preset}{#1}
+}
+
+% ------ Load biblatex (last thing to do) -------
+\newcommand*{\presetbibchem}[1]{%
+  \RequirePackage[%
+    backend=biber,
+    style=chem-acs,
+    citestyle=numeric-comp,
+    bibstyle=chem-acs,
+    autocite=superscript,
+    sorting=none,
+    maxnames=15,
+    url=false,
+    doi=false,
+    eprint=false,
+  ]{biblatex}
+  \addbibresource{#1}
+}
+
 % --------------  The dean! --------------------%
-\newcommand*{\th@Dean}{Lisa A.\ Tedesco, Ph.D}  %
+\def\th@Dean{Lisa A.\ Tedesco, Ph.D}  %
 % ----------------------------------------------%
 
 

@@ -30,13 +30,9 @@
 \setkeys[emory]{style}{major=chem}
 \setkeys[emory]{style}{twoside=false}
 \setkeys[emory]{doc}{dissertation=true}
-\setkeys[emory]{bib}{location=eof}
-\setkeys[emory]{bib}{format=numeric}
-\setkeys[emory]{bib}{bracket=square}
-\setkeys[emory]{bib}{articletitle=true}
-\setkeys[emory]{bib}{doi=false}
-\setkeys[emory]{bib}{superscript=false}
-\setkeys[emory]{bib}{maxauthor=3}
+
+\presetbibchem{SampleBib.bib}
+
 
 % ------ include your own packages ---------------------------------------------
 \usepackage{url}
@@ -122,7 +118,7 @@ for the general advice of the style.
 %all.
 
 This is a \LaTeX{} class designed for dissertation writing under the style and
-format policy of the Laney Graduate School at Emory University.\cite{emory-style}
+format policy of the Laney Graduate School at Emory University.\autocite{emory-style}
 This class is
 intended to reduce the effort in formating for Emory graduate students, thus 
 to focus more on the writing. 
@@ -222,7 +218,7 @@ several times in the special pages.
 \item \Verb|\degree{Ph.D./Master}| sets up the degree you apply. ``It is either Doctor
 of Philosophy or Master of Arts/Science/or another area.  There are a number of 
 possible Master's degree in some programs, particularly Music and Education.  
-If you are unsure, consult with your Director of Graduate Studies.''\cite{emory-style}
+If you are unsure, consult with your Director of Graduate Studies.''\autocite{emory-style}
 \item \Verb|\prevdegree{B.S.}| sets up your previous academic degree. ``List your 
 degree, the name of the university, and the year you received the degree.  
 For example, `B.A., Yale University, 2004' or `M.Sc., University of Pennsylvania, 2003'.
@@ -230,17 +226,17 @@ You can list several degrees, including master's degrees from your current
 program here at Emory, by repeating this command.
 Note that you can only list a master's degree from your
 Emory program if you actually applied for and received it; even if master's 
-degrees are given on the basis of candidacy, they are not automatic.''\cite{emory-style} 
+degrees are given on the basis of candidacy, they are not automatic.''\autocite{emory-style} 
 \item \Verb|\field{Field}| sets up your field of study. ``Generally, 
 your field is the subject-matter name of your program: English, Chemistry, 
 Health Services Research and Health Policy, Educational Studies, Business, etc.  
 The field does not include the word `program,' and does not include any sub-field
 you specialize in.  For example, your field is not `19th Century American Literature,'
 `Finance Program,' `Neurology Department,' `African Studies' or any other
-sub-field or entity.''\cite{emory-style}
+sub-field or entity.''\autocite{emory-style}
 \item \Verb|\advisor{Advisor Name}{Advisor Degree}| sets up the name and degree of your 
 adivsor. ``If your committee had co-chairs, refer to each of them as Advisor,
-repeat this command, and list them in alphabetical order.''\cite{emory-style} 
+repeat this command, and list them in alphabetical order.''\autocite{emory-style} 
 \item \Verb|\committee{Committee Member Name}{Committee Member Degree}|  sets up
 the name and degree of your committee member. Repeat this command for multiple 
 members. If the number of committee members exceeds 4, the class will change
@@ -431,7 +427,7 @@ of the document using command \Verb|\bibliography{sample-bib}|, before \Verb|\en
 (Do not include the extension \Verb|.bib|).
 
 Each bibliography item has a ``bibkey''. Cite this ``bibkey'' in your text
-using \Verb|\cite{bibkey}| results in a correctly labeled citation.
+using \Verb|\autocite{bibkey}| results in a correctly labeled citation.
 
 %Two styles are available in this class: the name-date style, or the numeric-label 
 %style. The style can be specified in the preamble (see Section~\ref{sec:options}).
@@ -447,12 +443,12 @@ standard style files from CTAN.
 
 Here are some examples of the numeric-label style.
 \begin{itemize}
-\item Cite an article \cite{bib-article}
-\item Cite a book \cite{bib-book}
-\item Cite a book chapter \cite{bib-chapter}
-\item Cite a conference proceeding \cite{bib-conference}
-\item Cite an online resource (url) \cite{bib-url}
-\item Cite a unpublished document \cite{bib-unpublished}
+\item Cite an article \autocite{bib-article}
+\item Cite a book \autocite{bib-book}
+\item Cite a book chapter \autocite{bib-chapter}
+\item Cite a conference proceeding \autocite{bib-conference}
+\item Cite an online resource (url) \autocite{bib-url}
+\item Cite a unpublished document \autocite{bib-unpublished}
 \end{itemize}
 
 
@@ -482,7 +478,7 @@ This is an appendix.
 This is an another appendix.
 
 % choose your own bibliography style 
-\bibliographystyle{plain}
-\bibliography{SampleBib}
+%\bibliographystyle{plain}
+\printbibliography
 
 \end{document}
