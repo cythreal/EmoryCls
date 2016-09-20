@@ -24,43 +24,47 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % ----- Declare boolean switches
-\newboolean{If@doc@dissertation}
-\setboolean{If@doc@dissertation}{true}
-\newboolean{If@style@twoside}
-\setboolean{If@style@twoside}{false}
+\newboolean{If@option@dissertation}
+\setboolean{If@option@dissertation}{true}
+\newboolean{If@option@twoside}
+\setboolean{If@option@twoside}{false}
+\newboolean{If@preset@chapter}
+\setboolean{If@preset@chapter}{true}
+\newboolean{If@preset@fig}
+\setboolean{If@preset@fig}{true}
+\newboolean{If@preset@list}
+\setboolean{If@preset@list}{false}
+\newboolean{If@preset@table}
+\setboolean{If@preset@table}{true}
+\newboolean{If@preset@toc}
+\setboolean{If@preset@toc}{true}
 
 % ----- Define key value pairs -----
 \RequirePackage{xkeyval}
-\define@boolkey[emory]{doc}{dissertation}[true]{%
-  \setboolean{If@doc@dissertation}{#1}
+\define@boolkey[emory]{option}{dissertation}[true]{%
+  \setboolean{If@option@dissertation}{#1}
+}
+\define@boolkey[emory]{option}{twoside}[false]{%
+  \setboolean{If@option@twoside}{#1}
+}
+\define@boolkey[emory]{preset}{chapter}[true]{%
+  \setboolean{If@preset@chapter}{#1}
+}
+\define@boolkey[emory]{preset}{fig}[false]{%
+  \setboolean{If@preset@fig}{#1}
+}
+\define@boolkey[emory]{preset}{list}[false]{%
+  \setboolean{If@preset@list}{#1}
+}
+\define@boolkey[emory]{preset}{table}[false]{%
+  \setboolean{If@preset@table}{#1}
+}
+\define@boolkey[emory]{preset}{toc}[true]{%
+  \setboolean{If@preset@toc}{#1}
 }
 
-\define@boolkey[emory]{style}{twoside}[false]{%
-  \setboolean{If@style@twoside}{#1}
-}
-
-\define@choicekey+[emory]{style}{major}[\val\nr]{chem,phys,math,bio,cs}[]{%
-  \ifcase\nr\relax
-    \load@chem@package
-    \set@chem@style
-    \newcommand*{\@th@bibstyle@major}{chem}
-  \or
-    \load@phys@package
-    \newcommand*{\@th@bibstyle@major}{phys}    
-  \or
-    \load@math@package
-    \newcommand*{\@th@bibstyle@major}{math}    
-  \or
-    \load@bio@package
-    \newcommand*{\@th@bibstyle@major}{bio}    
-  \or
-    \load@cs@package
-    \newcommand*{\@th@bibstyle@major}{cs}    
-  \fi
-}{%
-  \newcommand*{\@th@bibstyle@major}{default}
-  \ClassWarning{emory}{Use default style}%
-}
+% ----- set double space for 12pt font -----
+\renewcommand*{\baselinestretch}{1.655}
 
 % ------ define custome environments -------
 \newenvironment{schematic}{%
@@ -68,76 +72,38 @@
 \renewcommand{\figurename}{Schematic}
 }{\end{figure}}
 
-% ------ Load packages shared by all majors -------
+% ------ Load packages -------
 \RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{color}
+\RequirePackage[version=3]{mhchem}
 \RequirePackage{graphicx}
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
-\RequirePackage{color}
 
-% double space for 12pt font
-\renewcommand*{\baselinestretch}{1.655}
-\renewcommand*{\arraystretch}{1}
-
-% ------ Load major specific package ------
-\newcommand*{\load@math@package}{%
-  \RequirePackage{amsfonts}
-  \RequirePackage{amssymb}
-}
-\newcommand*{\load@chem@package}{%
-  \RequirePackage[version=3]{mhchem}
-}
-\newcommand*{\load@phys@package}{%
-  \RequirePackage[version=3]{mhchem}
-}
-\newcommand*{\load@bio@package}{%
-}
-\newcommand*{\load@cs@package}{%
-  \RequirePackage{fancyvrb}
-}
-
-% ------ Define major specific style sequences ------
-\newcommand*{\set@chem@style}{%
-  \cfg@chapter@chptname@arabic
-  \cfg@section@arabic
-  \cfg@itemize@bullet
-  \cfg@itemize@sep
-  \cfg@toc
-  \cfg@table
-}
-
-% ------ Configure styles for individual page elements -------
-% --- chapter with arabic numbering and "Chapter"
-\newcommand*{\cfg@chapter@chptname@arabic}{%
+% ----- configure preset styles -----
+\ifthenelse{\boolean{If@preset@chapter}}{%
   \titleformat{\chapter}[block]{\bfseries\LARGE}{\chaptername\ \thechapter}{2ex}{}
   \titlespacing{\chapter}{0pt}{0pt}{4ex}
-}
-% --- chapter with arabic numbering, without "Chapter"
-\newcommand*{\cfg@chapter@nochptname@arabic}{%
-  \titleformat{\chapter}[block]{\bfseries\LARGE}{\thechapter}{2ex}{}
-  \titlespacing{\chapter}{0pt}{3pt}{4ex}
-}
-% --- chapter with roman numbering and "Chapter"
-\newcommand*{\cfg@chapter@chptname@roman}{%
-  \titleformat{\chapter}[block]{\bfseries\LARGE}{\chaptername\ \@Roman{\thechapter}}{2ex}{}
-  \titlespacing{\chapter}{0pt}{3ex}{4ex}
-}
-% --- chapter with arabic numbering, without "Chapter"
-\newcommand*{\cfg@chapter@nochptname@roman}{%
-  \titleformat{\chapter}[block]{\bfseries\LARGE}{\@Roman{\thechapter}}{2ex}{}
-  \titlespacing{\chapter}{0pt}{3ex}{4ex}
-}
-% --- section/subsections with arabic numbering
-\newcommand*{\cfg@section@arabic}{%
   \titleformat{\section}[block]{\bfseries\Large}{\thesection}{2ex}{}
   \titlespacing{\section}{0pt}{4ex}{3ex}
   \titleformat{\subsection}[block]{\bfseries\large}{\thesubsection}{2ex}{}
   \titlespacing{\section}{0pt}{3ex}{2ex}
   \titleformat{\subsubsection}[block]{\bfseries\normalsize}{}{2ex}{}
   \titlespacing{\subsubsection}{0pt}{2ex}{2ex}
-}
-% --- configure lists and enumerates 
-\newcommand*{\cfg@itemize@bullet}{%
+}{}
+
+% --- chapter with arabic numbering, without "Chapter"
+%  \titleformat{\chapter}[block]{\bfseries\LARGE}{\thechapter}{2ex}{}
+%  \titlespacing{\chapter}{0pt}{3pt}{4ex}
+% --- chapter with roman numbering and "Chapter"
+%  \titleformat{\chapter}[block]{\bfseries\LARGE}{\chaptername\ \@Roman{\thechapter}}{2ex}{}
+%  \titlespacing{\chapter}{0pt}{3ex}{4ex}
+% --- chapter with arabic numbering, without "Chapter"
+%  \titleformat{\chapter}[block]{\bfseries\LARGE}{\@Roman{\thechapter}}{2ex}{}
+%  \titlespacing{\chapter}{0pt}{3ex}{4ex}
+
+\ifthenelse{\boolean{If@preset@list}}{%
   \renewcommand{\labelitemi}{$\bullet$}
   \renewcommand{\labelitemii}{--}
   \renewcommand{\labelitemiii}{$\ast$}
@@ -149,23 +115,24 @@
   \renewcommand{\labelenumii}{(\theenumii).}
   \renewcommand{\labelenumiii}{(\theenumiii).}
   \renewcommand{\labelenumiv}{(\theenumiv).}
-}
-\newcommand*{\cfg@itemize@sep}{%
   \let\olditemize\itemize
   \renewcommand{\itemize}{\olditemize\setlength{\parsep}{0.2ex}}
   \let\oldenumerate\enumerate
   \renewcommand{\enumerate}{\oldenumerate\setlength{\parsep}{1ex}}
   \let\olditem\item
   \renewcommand{\item}{\setlength{\itemsep}{0.5ex}\olditem}
-}
-\newcommand*{\cfg@toc}{%
+}{}
+
+\ifthenelse{\boolean{If@preset@table}}{%
+  \renewcommand*{\arraystretch}{1}
+  \setlength{\arrayrulewidth}{0.5pt}
+}{}
+
+\ifthenelse{\boolean{If@preset@toc}}{%
   \dottedcontents{chapter}[1.5em]{\bfseries\large\addvspace{1ex}}{1em}{0.75pc}
   \dottedcontents{section}[3.5em]{\normalsize}{2em}{0.75pc}
   \dottedcontents{subsection}[6.5em]{\normalsize}{3em}{0.75pc}
-}
-\newcommand*{\cfg@table}{%
-  \setlength{\arrayrulewidth}{0.5pt}
-}
+}{}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -229,7 +196,7 @@
 %% ----- Define special pages ------
 
 % Distribution Agreement
-\newcommand*{\th@DistributionAgreement}{%
+\def\th@DistributionAgreement{%
   \thispagestyle{empty}
   \vspace*{\fill}
   \subsection*{Distribution Agreement}
@@ -262,7 +229,7 @@
 }
 
 % Approval Sheet
-\newcommand*{\th@ApprovalSheet}{%
+\def\th@ApprovalSheet{%
   \thispagestyle{empty}
   \vspace*{\fill}
   \noindent
@@ -372,7 +339,7 @@
   \clearpage
 } 
 
-\newcommand*{\th@AbstractCoverPage}{%
+\def\th@AbstractCoverPage{%
   \thispagestyle{empty}
   \vspace*{\fill}
   \begin{center}
@@ -416,7 +383,7 @@
     
     \vfill
     An abstract of \\
-    A \ifthenelse{\boolean{If@doc@dissertation}}{dissertation}{thesis} submitted to the Faculty of the \\
+    A \ifthenelse{\boolean{If@option@dissertation}}{dissertation}{thesis} submitted to the Faculty of the \\
     James T.\ Laney School of Graduate Studies of Emory University \\
     in partial fulfillment of the requirements for the degree of \\
     \th@degree \\
@@ -428,7 +395,7 @@
   \clearpage
 }
 
-\newcommand*{\th@CoverPage}{%
+\def\th@CoverPage{%
   \thispagestyle{empty}
   \vspace*{\fill}
 
@@ -471,7 +438,7 @@
     \fi
     
     \vfill
-    A \ifthenelse{\boolean{If@doc@dissertation}}{dissertation}{thesis} submitted to the Faculty of the \\
+    A \ifthenelse{\boolean{If@option@dissertation}}{dissertation}{thesis} submitted to the Faculty of the \\
     James T.\ Laney School of Graduate Studies of Emory University \\
     in partial fulfillment of the requirements for the degree of \\
     \th@degree \\
@@ -522,18 +489,32 @@
 
 %% ------ set up page geometry and header ------
 
-\newcommand*{\set@geometry}{%
-  \ifthenelse{\boolean{If@style@twoside}}{%
-    \RequirePackage[onecolumn,twoside,paper=letterpaper,total={6in,9in},left=1.5in,right=1in,vmargin=1in,vcentering=true,landscape=false]{geometry}
-  }{
-    \RequirePackage[onecolumn,paper=letterpaper,total={6.5in,9in},hmargin={1.5in,1in},vmargin=1in,vcentering=true,landscape=false]{geometry}}
+\def\set@geometry{%
+  \ifthenelse{\boolean{If@option@twoside}}{%
+    \RequirePackage[onecolumn,
+                    twoside,
+                    paper=letterpaper,
+                    total={6in,9in},
+                    left=1.5in,right=1in,
+                    vmargin=1in,
+                    vcentering=true,
+                    landscape=false]{geometry}
+  }{%
+    \RequirePackage[onecolumn,
+                    paper=letterpaper,
+                    total={6.5in,9in},
+                    hmargin={1.5in,1in},
+                    vmargin=1in,
+                    vcentering=true,
+                    landscape=false]{geometry}
+  }
 }
 
-\newcommand*{\set@header}{%
+\def\set@header{%
   \RequirePackage{fancyhdr}
   % set page numbering on the right top
   \pagestyle{myheadings}
-  \ifthenelse{\boolean{If@style@twoside}}{%
+  \ifthenelse{\boolean{If@option@twoside}}{%
     \fancyhead[RO, RE]{\thepage}
   }{%
     \rhead{\thepage}
@@ -555,8 +536,8 @@
   \th@special@page
 }
 
-\newcommand*\th@special@page{%
- \renewcommand{\baselinestretch}{1}
+\def\th@special@page{%
+  \renewcommand{\baselinestretch}{1}
   \typeout{>>> Make Distribution Agreement >>>}
   \th@DistributionAgreement
   \typeout{>>> Make Approval Sheet >>>}
@@ -564,7 +545,7 @@
 }
 
 \newcommand*{\maketoc}{\th@t@c}
-\newcommand*\th@t@c{%
+\def\th@t@c{%
   \begingroup
   \typeout{>>> Make Table of Contents >>>}
   \renewcommand{\contentsname}{Table of Contents}
