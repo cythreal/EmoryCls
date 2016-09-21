@@ -15,16 +15,16 @@
 \documentclass[draft]{emory}
 
 % --- Set up other document properties. Available keys and values:
-% --- style: select style by major=<major>
-%            supported majors: chem, phys, math, bio, and cs 
-%            select printing by twoside=<boolean>
-%            true: alternating left/right margins for odd/even pages.
-%            false: consistent margins throughout the document.
-% --- doc: dissertation=<boolean>
-%          true: document is a dissertation [default]
-%          false: document is a thesis
-%          
-\typeout{I'm loading keys}
+% --- option: document options
+%     --  dissertation=<boolean>
+%           true: document is a dissertation [default]
+%           false: document is a thesis
+%     --  twoside=<boolean>
+%           true: twoside printing. 
+%                 Alternates left and right margins on even/odd pages
+%           false: oneside printing. Uniform margin widths.
+% --- preset: preset styles
+
 \setkeys[emory]{option}{twoside=false}
 \setkeys[emory]{option}{dissertation=true}
 \setkeys[emory]{preset}{chapter=true}
@@ -54,7 +54,7 @@
 \prevdegree{B.S., Fudan University, 2012}        % replace with your previous degree, repeat if necessary
 \field{Your field of expertise}
 % \advisor{Name}{Degree}, same for committee.
-% Repeat command for multiple inputs. Please sort with alphabatical order
+% Repeat command for multiple inputs. Please manually sort with alphabatical order
 \advisor{Your dear advisor}{Ph.D}
 \advisor{Your co-advisor}{Ph.D}
 \committee{Dr.\ Alfalfa}{Ph.D}
@@ -71,9 +71,10 @@
 % ------ abstract --------------------------------------------------------------
 \begin{abstract}
 
-This is a \LaTeX{} class. It is supposed to follow the dissertation format
-requirement of Emory University, but nothing is guaranteed, and please tweak the
-code when necessary. 
+This is a \LaTeX{} class for dissertation/thesis of Laney Graduate School (LGS) of Emory University.
+It is designed to meet the minimum dissertation format
+requirement of LGS, but nothing is guaranteed. Please tweak the
+code when necessary. This class is licensed with GNU Generic Public License (GPL) v3.0.
 
 \end{abstract}
 
@@ -83,10 +84,10 @@ code when necessary.
 I would like to thank all the documentations and anonymous people online that
 helped me learn the \LaTeX{} skills to write this class. 
 
-An imcomplete list of references and code examples I consulted during the development
+A list of references and code examples I consulted during the development
 of this class:
 \begin{itemize}
-  \item The Amecican Chemical Society journal package \Verb|achemso|:
+  \item The American Chemical Society journal package \Verb|achemso|:
   
         \url{https://www.ctan.org/pkg/achemso?lang=en}
   \item \LaTeXe{} for class and package writers:
@@ -97,16 +98,13 @@ of this class:
         \url{https://tug.org/pracjourn/2006-4/flynn/}
   \item Jim Hefferon (2005), ``Minutes in Less Than Hours: Using \LaTeX{} Resources'', TPJ No.~04: 
         \url{https://tug.org/pracjourn/2005-4/hefferon/} 
-  \item Oren Patashnik (1988), ``Designing \BibTeX{} Styles'':
-        \url{http://www.pctex.com/files/managed/a/a3/btxhak.pdf}
   \item The thesis class originally written by Bruce Fast, and most recently updated by Hongcheng Ni, from University of Colorado, Boulder. 
         
         \url{http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files}
-  \item Kate L.\ Turabian, \textit{A Manual for Writers of Research Papers, Theses, and 
-  Dissertations}, 8\textsuperscript{th}ed, ed.\ Wayne C.\ Booth, Gregory G.\ Colomb, Joseph M.\ Williams, and the University of Chicago Press Editorial Staff,  Chicago IL: University of Chicago Press, 2007.
   \item \Verb|ifthen| package: \url{http://texdoc.net/texmf-dist/doc/latex/base/ifthen}
   \item \Verb|geometry| package: \url{https://www.ctan.org/pkg/geometry?lang=en}
   \item \Verb|xkeyval| package: \url{https://www.ctan.org/pkg/xkeyval?lang=en}
+  \item \Verb|biblatex| package: \url{https://www.ctan.org/pkg/biblatex?lang=en}
 \end{itemize}
 
 Special thank to Dr.~Ulf Nilsson at the Laney Graduate School of Emory University
@@ -148,70 +146,71 @@ creating an \Verb|emory| folder and putting the class file in it, run
 root permission to complete these operations. 
 
 Use \Verb|pdflatex| instead of \Verb|latex| as the compilation driver. This
-is because certain packages, such as \Verb|url|, relies on pdf driver. 
+is because certain packages, such as \Verb|url|, relies on pdf drivers.
+
+The preset bibliography manager is \Verb|biblatex| with \Verb|biber| back-end. 
+Users are encouraged to set-up their own \BibTeX{} driver for customized bibliography styles.
 
 
 \section{Set document options}\label{sec:options}
 The options of this class can be set in the \LaTeX{} preamble. They are 
-self-explanotary in the \Verb|sample.tex| file. 
+self-explanatory in the \Verb|Sample.tex| file.
+Compiling \Verb|Sample.tex| with \Verb|pdflatex| driver yields a pdf version of this documentation.
 
 \subsection{Document style options}
-The first set of options is the document class option and keys.
-Only \Verb|[draft]| and \Verb|[final]| are allowed in the \Verb|\documentclass[options]{emory}|command.
+The first set of options in the \Verb|Emory| class is the document class option.
+Only \Verb|[draft]| and \Verb|[final]| are allowed in the 
+\Verb|\documentclass[options]{emory}| command.
 \Verb|[draft]| only draws the boarder of graphs without actually loading the images,
 and prints solid black rectangles on any places that are outside the defined text area. 
 This mode is useful for checking any element that exceeds the boarder,
 which is fatal to the submission of the thesis/dissertation.
 \Verb|[final]| produces the final document. 
 
-Several keys--value pairs are available right after \Verb|\documentclass| statement.
+Following the \Verb|\documentclass| are several keys--value pairs.
 Use \Verb|setkeys[emory]{family}{key=value}| to assign values.
 
-\Verb|\setkeys[emory]{style}{major=}| configures the text, paragraph, and 
-bibliography style based on the conventions
-from specfic majors, and load up commonly used packages for that major.
-The majors can be set by \Verb|major=value|.
-Currently, chemistry style \Verb|chem| is supported. More major specific styles
-settings will be added in the future after sufficient commminication with 
-the scholars in these particular specialties. 
+\Verb|\setkeys[emory]{option}{boolkey=true/false}| configures the general document options.
+Two options are available: \Verb|dissertation| and \Verb|twoside|.
 
-\Verb|\setkeys[emory]{style}{twoside=true/false}| controlls the double side printing.
+\Verb|dissertation=true/false| configures the type of the document. 
+It only does one thing: print out either ``dissertation'' or ``theis'' on the Approval Pages.
+\Verb|twoside=true/false| controls the double side printing, which alternates the left and right margins on odd/even pages for correct binding.
 The default value is \Verb|twoside=false| as the preference of the Laney Graduate School for easily read electronic files. 
-However, if you prefer double side printing for your paper copy and do no want 
-to mess up your binding,
-you can set this key value to \Verb|true| so that the left and right margins will alternate for odd and even pages. 
-
 Please note that the special pages are \emph{ALWAYS} single side printing. 
-Therefore, if you have a double side printing document, \emph{remember to print out
-the special pages separately}.
+Therefore, if you have a double side printing document, \emph{remember to print out the special pages separately}.
 
+\Verb|\setkeys[emory]{preset}{boolkey=true/false}| controls the switches for preset styles.
+For users' convenience, a set of general dissertation styles has been configured in the class. 
+This style set includes configurations for the styles of chapter and section 
+titles, the figure environment, the table environment, the list environment, 
+and the table of content. Use boolkey \Verb|chapter|, \Verb|fig|, \Verb|table|, 
+\Verb|list|, and \Verb|toc| to access these options.
 
-\Verb|\setkeys[emory]{doc}{dissertation=true/false}| configures the type of the 
-document. It only does one thing: print out either ``dissertation'' or ``theis''
-in the Approval Pages.
+\subsection{\BibTeX{} treatment}
+Setting up the \BibTeX{} style is perhaps the most complicated task in \LaTeX{} 
+because there are countless ways of defining citation styles, which vary from 
+discipline to discipline and are highly personal.
+To minimize the size of this \LaTeX{} class, only one preset \BibTeX{} style
+is offered. It can be specified by \Verb|\presetbib{bibtex-source.bib}|.
+This style is a general scientific citation style with numeric numbering, 
+sorting by citation order, and the citation is wrapped by square brackets. 
+This style is driven by the \Verb|biblatex| package with \Verb|biber| as the 
+back-end. 
+The use of \Verb|biber| is a bit different from the legacy \Verb|bibtex| driver.
+One needs to run \Verb|biber Sample.bcf| to generate the correct \Verb|.aux| 
+file that will be then written into the \Verb|.pdf| in the next run of 
+\Verb|pdflatex| compilation. For more information of \Verb|biblatex|, check its 
+package page on the CTAN archive. 
 
-The \Verb|emory| class relies on several standard \LaTeX{} packages. Meanwhile, 
-packages commonly used in special areas are also loaded when selecting the 
-corresponding \Verb|major|. 
-Table~\ref{tbl:packages} lists packages loaded by \Verb|emory.cls|.
-\begin{table}[htp!]
-  \centering
-  \caption{Packages loaded by \protect\Verb|emory.cls|. \label{tbl:packages}}
-  \begin{tabular}{l l}
-    \hline
-    Major & Package \\
-    \hline
-    Shared & \protect\Verb|ifthen|, \protect\Verb|xkeyval|, \protect\Verb|amsmath|,
-             \protect\Verb|graphix|, \protect\Verb|titlesec|, 
-             \protect\Verb|titletoc|, \protect\Verb|color| \\
-    math & \protect\Verb|amsfonts|, \protect\Verb|amssymb| \\
-    phys & \protect\Verb|mhchem| \\
-    chem & \protect\Verb|mhchem| \\
-    bio & \\
-    cs & \protect\Verb|fancyvrb| \\
-    \hline
-  \end{tabular}
-\end{table}
+If citation styles other than the preset style is desired, the user is 
+encouraged to configure their own \BibTeX{} driver and style.
+It is because the countless ways of doing so that I decided not to 
+over-complicate the class preset.
+No \BibTeX{} package or configuration will be loaded in the class if the 
+command \Verb|\presetbib{}| is not specified. 
+Therefore, the class file should be compatible with all common \BibTeX{} 
+drivers and packages, such as \Verb|natbib|. 
 
 
 \subsection{Special page entries}
@@ -242,7 +241,7 @@ you specialize in.  For example, your field is not `19th Century American Litera
 `Finance Program,' `Neurology Department,' `African Studies' or any other
 sub-field or entity.''\autocite{emory-style}
 \item \Verb|\advisor{Advisor Name}{Advisor Degree}| sets up the name and degree of your 
-adivsor. ``If your committee had co-chairs, refer to each of them as Advisor,
+advisor. ``If your committee had co-chairs, refer to each of them as Advisor,
 repeat this command, and list them in alphabetical order.''\autocite{emory-style} 
 \item \Verb|\committee{Committee Member Name}{Committee Member Degree}|  sets up
 the name and degree of your committee member. Repeat this command for multiple 
@@ -254,49 +253,42 @@ the signing sheet into a two column style instead of one column style.
 
 
 \section{Recommended packages}
+The \LaTeX{} packages automatically loaded by the class are: \Verb|amsmath|, 
+\Verb|amssymb|, \Verb|color|, \Verb|mhchem|, \Verb|graphicx|, \Verb|titlesec|, 
+\Verb|titletoc|, \Verb|ifthen|, \Verb|xkeyval|, \Verb|geometry|, and 
+\Verb|fancyhdr|. All the packages listed here are standard \LaTeX{} packages 
+that should be shipped with any standard \LaTeX{} distribution. If you cannot 
+find a certain package in your local computer system, check out the CTAN 
+archive \url{https://www.ctan.org/}.
+
 More external packages can be loaded via \Verb|\usepackage[options]{package}|
-in the preamble. The use of packages is completely the choice of the author,
-and here are a few commonly used \LaTeX{} packages recommended to new \LaTeX{}
-users.
-
-All the packages listed here are standard \LaTeX{} packages that should come
-with any standard \LaTeX{} distribution. If you cannot find a certain package 
-in your local computer system, check out the CTAN archive \url{https://www.ctan.org/}.
-
-\begin{itemize}
-\item \Verb|amsmath| provides AMS standard mathematical enviroments for equations and symbols.
-\item \Verb|graphix| provides extended figure environment to treat various image formats.
-\item \Verb|mhchem| provides easy typesetting of chemical formulae.
-\item \Verb|longtable| provides extended table environment for extreme long tables
-across several pages.
-\item \Verb|multirow| ``creates tabular cells spanning multiple rows'' in the table environment.
-\item \Verb|subfigure| provides extended figure environment for subfigure captions. 
-\item \Verb|verbatim| provides extended verbatim environment that allows customized 
-frames, position, and layout.
-\item \Verb|url| generates hyperlinks for url in the final \Verb|pdf| output.
-\end{itemize}
+in the preamble. 
 
 
 \section{Use environments}\label{sec:env}
-The Emory class should be fully compatible with standard \LaTeX{} enviroments:
+The Emory class should be fully compatible with standard \LaTeX{} environments:
 \Verb|figure|, \Verb|table|, \Verb|quote|, \Verb|itemize|, \Verb|enumerate|,
 and \Verb|verbatim|.
 %In addition to these standard enviroments, \Verb|emory.cls| also defines two new
 %enviroments: \Verb|prose| and \Verb|poetry|, for bulk quotation of different literature genre.
 
-Sample outputs of these enviroments are listed here. 
+Sample outputs of these environments are listed here. 
 
 \subsection{Figures}
 
 \begin{figure}[htp!]
   \centering
   \includegraphics[width=\textwidth]{LaTeXLogo.png}
-  \caption{This is a figure enviroment.\label{fig}}
+  \caption{This is a figure environment.\label{fig} If the 
+  \protect\Verb|preset| option 
+  for \protect\Verb|fig| is turned on, the spacing between the graphics and the 
+  figure 
+  caption is adjusted as printed in this example for better visual effect.}
 \end{figure}
 
 \subsection{Schematics}
 
-\Verb|schematic| is a customized environment inherieted from the \Verb|figure|
+\Verb|schematic| is a customized environment inherited from the \Verb|figure|
 environment. It changes the caption head from ``Figure'' to ``Schematic'', and 
 automatically centering the element. Do not include float position option
 \Verb|[htp!]|, as it is already set up in the environment. It will still show
@@ -313,13 +305,21 @@ floats.
 
 \begin{table}[htp!]
   \centering
-  \caption{This is a simple table. \label{table}}
-  \begin{tabular}{l l}
+  \caption{This is a simple table. \label{table} If the \protect\Verb|preset| 
+  option 
+  	for \protect\Verb|table| is turned on, the spacing between the table and 
+  	the 
+  	caption is adjusted as printed in this example for better visual effect. 
+  	The width of the table line (0.5~pt) and the text line spacing (single 
+  	spacing) are also configured.}
+  \begin{tabular}{l p{0.6\textwidth}}
     \hline
     Sample & Table \\
     \hline 
     row & 1 \\
     row & 2 \\
+    row & 3 \\
+    row & 4 \\
     \hline
   \end{tabular}
 \end{table}
@@ -352,8 +352,9 @@ Are driven, like ghosts from an enchanter fleeing,
 \end{quote}
 
 \subsection{Lists and enumerates}
-List and enumerate environment. Use \Verb|\begin{itemize} \item bla \end{itemize}|
-and \Verb|\begin{enumerate} \item bla \end{enumerate}|. List and enumerate environments
+List and enumerate environment. Use \Verb|\begin{itemize} \item \end{itemize}|
+and \Verb|\begin{enumerate} \item \end{enumerate}|. List and enumerate 
+environments
 can be nested.
 
 A nested list structure:
@@ -404,16 +405,13 @@ def foo(bar):
 \end{Verbatim}
 
 
-Use \Verb|\usepackage[version=3]{mhchem}| for your chemicals, like this:
-\Verb|\ce{C2H5OH}| makes \ce{C2H5OH}.
-
-
 \section{Cross reference}
-One advantage of \LaTeX{} out of many is the convinience of cross reference in
+One advantage of \LaTeX{} out of many is the convenience of cross reference in
 the text. Use \Verb|\label{yourlabel}| to label the material, and \Verb|\ref{yourlabel}|
 to reference it in some other places in your text. And you do not need to worry
 about numbering: \LaTeX{} does it automatically for you. For example, here
-I will reference the sample enviroments in the previous section (Section \ref{sec:env}):
+I will reference the sample environments in the previous section (Section 
+\ref{sec:env}):
 \begin{itemize}
 \item The label for Table~\ref{table} is \Verb|\label{table}|.
 \item The label for Figure~\ref{fig} is \Verb|\label{fig}|.
@@ -425,54 +423,6 @@ I will reference the sample enviroments in the previous section (Section \ref{se
       respectively.
 \item The label for Quote~\ref{poet} is \Verb|\label{poet}|.
 \end{itemize}
-
-\section{Citation and bibliography}
-Another great advantage of \LaTeX{} is its bibliography manager: \BibTeX{}.
-
-Include all of you citations in a \Verb|.bib| file, and specify it at the end
-of the document using command \Verb|\bibliography{sample-bib}|, before \Verb|\end{document}|.
-(Do not include the extension \Verb|.bib|).
-
-Each bibliography item has a ``bibkey''. Cite this ``bibkey'' in your text
-using \Verb|\autocite{bibkey}| results in a correctly labeled citation.
-
-%Two styles are available in this class: the name-date style, or the numeric-label 
-%style. The style can be specified in the preamble (see Section~\ref{sec:options}).
-%The citation formats of different resource types are automatically set up by the 
-%class.
-
-The number of bibliography style combinations is almost infinite. A \BibTeX{} 
-style file \Verb|.bst| specially designed for the Emory class will be ideal, 
-but requires significant amount of effort. This specialized \BibTeX{}
-style file that understands the user input class options is still under development. 
-Currently, a work round is to include your own \BibTeX{} style files, mostly likely
-standard style files from CTAN. 
-
-Here are some examples of the numeric-label style.
-\begin{itemize}
-\item Cite an article \autocite{bib-article}
-\item Cite a book \autocite{bib-book}
-\item Cite a book chapter \autocite{bib-chapter}
-\item Cite a conference proceeding \autocite{bib-conference}
-\item Cite an online resource (url) \autocite{bib-url}
-\item Cite a unpublished document \autocite{bib-unpublished}
-\end{itemize}
-
-
-After update the bibliography file, you need to re-compile your document in the 
-following manner:
-\begin{enumerate}
-\item \Verb|pdflatex sample|  updates the tex body, and writes new citation labels
-into the \Verb|.aux| file
-\item \Verb|bibtex sample|  reads the information from the \Verb|.bib| file, 
-and writes it into the \Verb|.aux| file with the correct citation format.
-\item \Verb|pdflatex sample|  run this command again, which reads the bibliography
-items in the \Verb|.aux| file, and insert them into the correct location in the 
-output document.
-\item \Verb|pdflatex sample| run this command once again, which updates the 
-numbering of the citation markers. 
-\end{enumerate}
-Do not include the extension \Verb|.tex| in the command line.
 
 
 \appendix

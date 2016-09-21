@@ -33,7 +33,7 @@
 \newboolean{If@preset@fig}
 \setboolean{If@preset@fig}{true}
 \newboolean{If@preset@list}
-\setboolean{If@preset@list}{false}
+\setboolean{If@preset@list}{true}
 \newboolean{If@preset@table}
 \setboolean{If@preset@table}{true}
 \newboolean{If@preset@toc}
@@ -86,11 +86,15 @@
   \titleformat{\chapter}[block]{\bfseries\LARGE}{\chaptername\ \thechapter}{2ex}{}
   \titlespacing{\chapter}{0pt}{0pt}{4ex}
   \titleformat{\section}[block]{\bfseries\Large}{\thesection}{2ex}{}
-  \titlespacing{\section}{0pt}{4ex}{3ex}
+  \titlespacing{\section}{0pt}{4ex}{2ex}
   \titleformat{\subsection}[block]{\bfseries\large}{\thesubsection}{2ex}{}
-  \titlespacing{\section}{0pt}{3ex}{2ex}
+  \titlespacing{\subsection}{0pt}{3ex}{1ex}
   \titleformat{\subsubsection}[block]{\bfseries\normalsize}{}{2ex}{}
-  \titlespacing{\subsubsection}{0pt}{2ex}{2ex}
+  \titlespacing{\subsubsection}{0pt}{2ex}{0ex}
+}{}
+
+\ifthenelse{\boolean{If@preset@fig}}{%
+  \setlength{\abovecaptionskip}{1ex plus 3pt minus 2pt}
 }{}
 
 % --- chapter with arabic numbering, without "Chapter"
@@ -126,6 +130,7 @@
 \ifthenelse{\boolean{If@preset@table}}{%
   \renewcommand*{\arraystretch}{1}
   \setlength{\arrayrulewidth}{0.5pt}
+  \setlength{\belowcaptionskip}{1ex plus 3pt minus 2pt}
 }{}
 
 \ifthenelse{\boolean{If@preset@toc}}{%
