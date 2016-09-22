@@ -45,7 +45,13 @@
 \usepackage{url}
 \usepackage{fancyvrb}
 \definecolor{verbcolor}{rgb}{0.1,0.15,0.65}
-\fvset{formatcom=\color{verbcolor}}
+\fvset{%
+	formatcom=\color{verbcolor},
+	baselinestretch=1.0,
+	numbers=left,
+	numbersep=1ex,
+	gobble=-2
+}
 
 % ------ title and author and the boss -----------------------------------------
 \title{A \LaTeX{} Class for the Dissertation Style of Emory University}
@@ -167,14 +173,16 @@ This mode is useful for checking any element that exceeds the boarder,
 which is fatal to the submission of the thesis/dissertation.
 \Verb|[final]| produces the final document. 
 
-Following the \Verb|\documentclass| are several keys--value pairs.
+Following the \Verb|\documentclass| command are several keys--value pairs.\\
 Use \Verb|setkeys[emory]{family}{key=value}| to assign values.
 
 \Verb|\setkeys[emory]{option}{boolkey=true/false}| configures the general document options.
 Two options are available: \Verb|dissertation| and \Verb|twoside|.
 
 \Verb|dissertation=true/false| configures the type of the document. 
-It only does one thing: print out either ``dissertation'' or ``theis'' on the Approval Pages.
+It only does one thing: print out either ``dissertation'' or ``theis'' on the 
+Approval Pages.
+
 \Verb|twoside=true/false| controls the double side printing, which alternates the left and right margins on odd/even pages for correct binding.
 The default value is \Verb|twoside=false| as the preference of the Laney Graduate School for easily read electronic files. 
 Please note that the special pages are \emph{ALWAYS} single side printing. 
@@ -187,7 +195,10 @@ titles, the figure environment, the table environment, the list environment,
 and the table of content. Use boolkey \Verb|chapter|, \Verb|fig|, \Verb|table|, 
 \Verb|list|, and \Verb|toc| to access these options.
 
-\subsection{\BibTeX{} treatment}
+If you want to turn keys back on after they have been turned off, you may need 
+to recompile the document more than once to get the correct output.
+
+\subsection{{\BibTeX{}} treatment}
 Setting up the \BibTeX{} style is perhaps the most complicated task in \LaTeX{} 
 because there are countless ways of defining citation styles, which vary from 
 discipline to discipline and are highly personal.
@@ -243,7 +254,8 @@ sub-field or entity.''\autocite{emory-style}
 \item \Verb|\advisor{Advisor Name}{Advisor Degree}| sets up the name and degree of your 
 advisor. ``If your committee had co-chairs, refer to each of them as Advisor,
 repeat this command, and list them in alphabetical order.''\autocite{emory-style} 
-\item \Verb|\committee{Committee Member Name}{Committee Member Degree}|  sets up
+\item \Verb|\committee{Committee Member Name}{Committee Member Degree}| sets 
+up\\
 the name and degree of your committee member. Repeat this command for multiple 
 members. If the number of committee members exceeds 4, the class will change
 the signing sheet into a two column style instead of one column style.
@@ -278,25 +290,27 @@ Sample outputs of these environments are listed here.
 
 \begin{figure}[htp!]
   \centering
-  \includegraphics[width=\textwidth]{LaTeXLogo.png}
-  \caption{This is a figure environment.\label{fig} If the 
-  \protect\Verb|preset| option 
+  \includegraphics[width=0.5\textwidth]{LaTeXLogo.png}
+  \caption[This is a figure environment]{This is a figure 
+  environment.\label{fig} If the \protect\Verb|preset| option 
   for \protect\Verb|fig| is turned on, the spacing between the graphics and the 
-  figure 
-  caption is adjusted as printed in this example for better visual effect.}
+  figure caption is adjusted as printed in this example for better visual 
+  effect.}
 \end{figure}
 
 \subsection{Schematics}
 
 \Verb|schematic| is a customized environment inherited from the \Verb|figure|
-environment. It changes the caption head from ``Figure'' to ``Schematic'', and 
-automatically centering the element. Do not include float position option
-\Verb|[htp!]|, as it is already set up in the environment. It will still show
-up in the list of figures, and will have consistent numbering with the \Verb|figure|
-floats.
+environment. It changes the caption head from ``Figure'' to ``Schematic''. Do 
+not include float position option
+\Verb|[htp!]|, as it is already set up in the environment. The schematic will 
+remain its appearance in the list of figures, and will have numbering 
+consistent with the \Verb|figure| floats because it is a inherited 
+\Verb|figure| environment.
 
 \begin{schematic}
-  \includegraphics[width=\textwidth]{LaTeXLogo.png}
+	\centering
+  \includegraphics[width=0.5\textwidth]{LaTeXLogo.png}
   \caption{This is actually not a schematic.\label{schematic}}
 \end{schematic}
 
@@ -305,7 +319,8 @@ floats.
 
 \begin{table}[htp!]
   \centering
-  \caption{This is a simple table. \label{table} If the \protect\Verb|preset| 
+  \caption[This is a simple table]{This is a simple table. \label{table} If the 
+  \protect\Verb|preset| 
   option 
   	for \protect\Verb|table| is turned on, the spacing between the table and 
   	the 
@@ -398,10 +413,21 @@ Package \Verb|fancyvrb| offers inline \Verb|\Verb??| and \Verb|Verbatim| environ
 options (notice the ``V'' is capitalized).
 
 \begin{Verbatim}
-# a block of code
-print 'Hello world'
-def foo(bar):
-    renturn bar
+% The code to set up fancyvrb style shown in this sample:
+\usepackage{fancyvrb}
+\definecolor{verbcolor}{rgb}{0.1,0.15,0.65}
+\fvset{%
+  % set font color
+  formatcom=\color{verbcolor},	
+  % use single spacing
+  baselinestretch=1.0,
+  % set numbering of lines				  
+  numbers=left,									
+  % set the spacing between line number and code
+  numbersep=1ex,
+  % set left margin 							  
+  gobble=-2											
+}
 \end{Verbatim}
 
 
@@ -428,10 +454,11 @@ I will reference the sample environments in the previous section (Section
 \appendix
 \renewcommand{\chaptername}{Appendix}
 
-\chapter{Appendix1}
-This is an appendix.
+\chapter{Appendix}
+This is an appendix. The numbering of appendix changes from Arabic number to 
+alphabetical.
+The chapter and section titles will still print in the table of contents.
 
-\chapter{Appendix2}
-This is an another appendix.
+\section{Appendix section}
 
 \end{document}

@@ -82,9 +82,10 @@
 \RequirePackage{titletoc}
 
 % ----- configure preset styles -----
+\def\set@preset@chapter{%
 \ifthenelse{\boolean{If@preset@chapter}}{%
   \titleformat{\chapter}[block]{\bfseries\LARGE}{\chaptername\ \thechapter}{2ex}{}
-  \titlespacing{\chapter}{0pt}{0pt}{4ex}
+  \titlespacing{\chapter}{0pt}{0pt}{6ex}
   \titleformat{\section}[block]{\bfseries\Large}{\thesection}{2ex}{}
   \titlespacing{\section}{0pt}{4ex}{2ex}
   \titleformat{\subsection}[block]{\bfseries\large}{\thesubsection}{2ex}{}
@@ -92,10 +93,13 @@
   \titleformat{\subsubsection}[block]{\bfseries\normalsize}{}{2ex}{}
   \titlespacing{\subsubsection}{0pt}{2ex}{0ex}
 }{}
+}
 
+\def\set@preset@fig{%
 \ifthenelse{\boolean{If@preset@fig}}{%
-  \setlength{\abovecaptionskip}{1ex plus 3pt minus 2pt}
+  \setlength{\abovecaptionskip}{0pt plus 2pt minus 0pt}
 }{}
+}
 
 % --- chapter with arabic numbering, without "Chapter"
 %  \titleformat{\chapter}[block]{\bfseries\LARGE}{\thechapter}{2ex}{}
@@ -107,6 +111,7 @@
 %  \titleformat{\chapter}[block]{\bfseries\LARGE}{\@Roman{\thechapter}}{2ex}{}
 %  \titlespacing{\chapter}{0pt}{3ex}{4ex}
 
+\def\set@preset@list{%
 \ifthenelse{\boolean{If@preset@list}}{%
   \renewcommand{\labelitemi}{$\bullet$}
   \renewcommand{\labelitemii}{--}
@@ -119,32 +124,29 @@
   \renewcommand{\labelenumii}{(\theenumii).}
   \renewcommand{\labelenumiii}{(\theenumiii).}
   \renewcommand{\labelenumiv}{(\theenumiv).}
-  \let\olditemize\itemize
-  \renewcommand{\itemize}{\olditemize\setlength{\parsep}{0.2ex}}
-  \let\oldenumerate\enumerate
-  \renewcommand{\enumerate}{\oldenumerate\setlength{\parsep}{1ex}}
-  \let\olditem\item
-  \renewcommand{\item}{\setlength{\itemsep}{0.5ex}\olditem}
 }{}
+}
 
+\def\set@preset@table{%
 \ifthenelse{\boolean{If@preset@table}}{%
   \renewcommand*{\arraystretch}{1}
   \setlength{\arrayrulewidth}{0.5pt}
-  \setlength{\belowcaptionskip}{1ex plus 3pt minus 2pt}
+  \setlength{\belowcaptionskip}{1ex plus 2pt minus 2pt}
 }{}
+}
 
+\def\set@preset@toc{%
 \ifthenelse{\boolean{If@preset@toc}}{%
   \dottedcontents{chapter}[1.5em]{\bfseries\large\addvspace{1ex}}{1em}{0.75pc}
   \dottedcontents{section}[3.5em]{\normalsize}{2em}{0.75pc}
   \dottedcontents{subsection}[6.5em]{\normalsize}{3em}{0.75pc}
 }{}
-
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ------ Biblatex Style Handling ------- %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% ------ Load biblatex (last thing to do) -------
 \newcommand*{\presetbib}[1]{%
   \RequirePackage[%
     backend=biber,
@@ -161,7 +163,7 @@
   \addbibresource{#1}
   \AtEndDocument{%
     \nocite{*}
-    \printbibliography
+    \printbibliography[heading=bibintoc]
   }
 }
 
@@ -170,8 +172,7 @@
 \def\th@Dean{Lisa A.\ Tedesco, Ph.D}  %
 % ----------------------------------------------%
 
-
-%% Internal preamble commands -- provide warning messages
+%% Internal counters
 \newcommand*{\th@PassCmd}[2]{\gdef#1{#2}}
 \newcount\th@advisor@count
 \newcount\th@committee@count
@@ -503,6 +504,7 @@
                     left=1.5in,right=1in,
                     vmargin=1in,
                     vcentering=true,
+                    headheight=0.25in,
                     landscape=false]{geometry}
   }{%
     \RequirePackage[onecolumn,
@@ -511,6 +513,7 @@
                     hmargin={1.5in,1in},
                     vmargin=1in,
                     vcentering=true,
+                    headheight=0.25in,
                     landscape=false]{geometry}
   }
 }
@@ -518,16 +521,21 @@
 \def\set@header{%
   \RequirePackage{fancyhdr}
   % set page numbering on the right top
-  \pagestyle{myheadings}
-  \ifthenelse{\boolean{If@option@twoside}}{%
-    \fancyhead[RO, RE]{\thepage}
-  }{%
-    \rhead{\thepage}
-  }
-  % get rid of page number footer on chapter pages
+  \pagestyle{fancy}
+  \fancyhead[R]{\thepage}
+  \fancyhead[L]{}
+  \fancyhead[C]{}
+  \fancyfoot[F]{}
+  \renewcommand{\headrulewidth}{0pt}
+  \addtolength{\headheight}{6pt}
+  % redefine chapter style
   \fancypagestyle{plain}{%
-    \fancyfoot{}
+    \fancyhead[R]{\thepage}
+    \fancyhead[L]{}
+    \fancyhead[C]{}
+    \fancyfoot[F]{}
     \renewcommand{\headrulewidth}{0pt}
+    \addtolength{\headheight}{6pt}
   }
 }
 
@@ -535,13 +543,24 @@
 %% Make special pages
 \AtBeginDocument{%
   \set@geometry
-  \set@header
   \newgeometry{twoside=false,left=1.5in,right=1in,vmargin=1in}
   \pagenumbering{gobble}     % suppress page numbering 
-  \th@special@page
+  \set@header
+  \th@special@page@before@abstract
+  % special pages after abstract are set in the abstract & acknowledge environments
+  % because abstract has to go after \begin{document}
 }
 
-\def\th@special@page{%
+
+\AtBeginDocument{%
+  \set@preset@chapter
+  \set@preset@fig
+  \set@preset@list
+  \set@preset@table
+  \set@preset@toc
+}
+
+\def\th@special@page@before@abstract{%
   \renewcommand{\baselinestretch}{1}
   \typeout{>>> Make Distribution Agreement >>>}
   \th@DistributionAgreement
