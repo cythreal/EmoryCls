@@ -566,6 +566,8 @@
   \th@DistributionAgreement
   \typeout{>>> Make Approval Sheet >>>}
   \th@ApprovalSheet
+  \typeout{>>> Make Abstract Cover Page >>>}
+  \th@AbstractCoverPage
 }
 
 \newcommand*{\maketoc}{\th@t@c}

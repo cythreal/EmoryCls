@@ -12,7 +12,7 @@
 % --- \documentclass[options]{emory}
 % --- Only [draft] and [final] are allowed.
 % --- Other properties can be set by keys.
-\documentclass[draft]{emory}
+\documentclass[final]{emory}
 
 % --- Set up other document properties. Available keys and values:
 % --- option: document options
@@ -58,7 +58,7 @@
 \author{Luyao Zou}                      % replace with your legal name
 \degree{Doctor of Philosophy}           % replace with your degree, if necessary
 \prevdegree{B.S., Fudan University, 2012}        % replace with your previous degree, repeat if necessary
-\field{Your field of expertise}
+\field{Your field}
 % \advisor{Name}{Degree}, same for committee.
 % Repeat command for multiple inputs. Please manually sort with alphabatical order
 \advisor{Your dear advisor}{Ph.D}
@@ -184,9 +184,9 @@ It only does one thing: print out either ``dissertation'' or ``theis'' on the
 Approval Pages.
 
 \Verb|twoside=true/false| controls the double side printing, which alternates the left and right margins on odd/even pages for correct binding.
-The default value is \Verb|twoside=false| as the preference of the Laney Graduate School for easily read electronic files. 
+\textbf{The default value is \Verb|twoside=false| as the preference of the Laney Graduate School for electronic thesis and dissertation (ETD)}. 
 Please note that the special pages are \emph{ALWAYS} single side printing. 
-Therefore, if you have a double side printing document, \emph{remember to print out the special pages separately}.
+Therefore, if you choose \Verb|twoside=true|, \emph{remember to print out the special pages separately}.
 
 \Verb|\setkeys[emory]{preset}{boolkey=true/false}| controls the switches for preset styles.
 For users' convenience, a set of general dissertation styles has been configured in the class. 
@@ -452,7 +452,6 @@ I will reference the sample environments in the previous section (Section
 
 
 \appendix
-\renewcommand{\chaptername}{Appendix}
 
 \chapter{Appendix}
 This is an appendix. The numbering of appendix changes from Arabic number to 
