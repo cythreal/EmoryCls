@@ -150,6 +150,7 @@
 \newcommand*{\presetbib}[1]{%
   \RequirePackage[%
     backend=biber,
+    texencoding=utf8,
     bibstyle=science,
     citestyle=numeric-comp,
     autocite=inline,
@@ -188,15 +189,15 @@
 \newcommand*{\yr}[1]{\th@PassCmd{\th@year}{#1}}
 \newcommand*{\prevdegree}[1]{%
   \global\advance\th@prevdeg@count\@ne\relax
-  \expandafter\gdef\csname th@prevdegree\@roman\th@prevdeg@count \endcsname{#1}\relax
+  \expandafter\gdef\csname th@prevdegree\romannumeral\th@prevdeg@count \endcsname{#1}\relax
 }
 \newcommand*{\advisor}[2]{%
   \global\advance\th@advisor@count\@ne\relax
-  \expandafter\gdef\csname th@advisor\@roman\th@advisor@count \endcsname{#1, #2}\relax
+  \expandafter\gdef\csname th@advisor\romannumeral\th@advisor@count \endcsname{#1, #2}\relax
 }
 \newcommand*{\committee}[2]{%
   \global\advance\th@committee@count\@ne\relax
-  \expandafter\gdef\csname th@committee\@roman\th@committee@count \endcsname{#1, #2}\relax
+  \expandafter\gdef\csname th@committee\romannumeral\th@committee@count \endcsname{#1, #2}\relax
 }
 
 %% ----- Define special pages ------
@@ -260,7 +261,7 @@
       \advance\@tmp\@ne\relax
       \underline{\hspace{4in}}
     
-      \@nameuse{th@advisor\@roman\@tmp}
+      \@nameuse{th@advisor\romannumeral\@tmp}
       
       Advisor
       \vspace{3ex}
@@ -277,7 +278,7 @@
         \advance\@tmp\@ne\relax
         \underline{\hspace{4in}}
         
-        \@nameuse{th@committee\@roman\@tmp}
+        \@nameuse{th@committee\romannumeral\@tmp}
         
         Committee Member
         \vspace{3ex}
@@ -300,7 +301,7 @@
           \advance\@tmp\@ne\relax
           \underline{\hspace{2.4in}}
           
-          \@nameuse{th@committee\@roman\@tmp}
+          \@nameuse{th@committee\romannumeral\@tmp}
           
           Committee Member
           \vspace{3ex}
@@ -315,7 +316,7 @@
           \advance\@tmp\@ne\relax
           \underline{\hspace{2.4in}}
           
-          \@nameuse{th@committee\@roman\@tmp}
+          \@nameuse{th@committee\romannumeral\@tmp}
           
           Committee Member
           \vspace{3ex}
@@ -359,12 +360,12 @@
     
     \@tmp\z@\relax
     \ifnum\th@prevdeg@count=\@ne
-      \@nameuse{th@prevdegree\@roman\@ne}
+      \@nameuse{th@prevdegree\romannumeral\@ne}
     \else
       \@tmp\z@
       \loop
         \advance\@tmp\@ne\relax
-        \@nameuse{th@prevdegree\@roman\@tmp}
+        \@nameuse{th@prevdegree\romannumeral\@tmp}
         
         \ifnum\@tmp<\th@prevdeg@count
       \repeat
@@ -374,14 +375,14 @@
     
     \@tmp\z@\relax
     \ifnum\th@advisor@count=\@ne
-      Advisor: \@nameuse{th@advisor\@roman\@ne}
+      Advisor: \@nameuse{th@advisor\romannumeral\@ne}
     \else
       Advisor:
 
       \@tmp\z@
       \loop
         \advance\@tmp\@ne\relax
-        \@nameuse{th@advisor\@roman\@tmp}
+        \@nameuse{th@advisor\romannumeral\@tmp}
         
         \ifnum\@tmp<\th@advisor@count
       \repeat          
@@ -416,12 +417,12 @@
     
     \@tmp\z@\relax
     \ifnum\th@prevdeg@count=\@ne
-      \@nameuse{th@prevdegree\@roman\@ne}
+      \@nameuse{th@prevdegree\romannumeral\@ne}
     \else
       \@tmp\z@
       \loop
         \advance\@tmp\@ne\relax
-        \@nameuse{th@prevdegree\@roman\@tmp}
+        \@nameuse{th@prevdegree\romannumeral\@tmp}
         
         \ifnum\@tmp<\th@prevdeg@count
       \repeat
@@ -431,13 +432,13 @@
     
     \@tmp\z@\relax
     \ifnum\th@advisor@count=\@ne
-      Advisor: \@nameuse{th@advisor\@roman\@ne}
+      Advisor: \@nameuse{th@advisor\romannumeral\@ne}
     \else
       Advisor:
 
       \loop
         \advance\@tmp\@ne\relax
-        \@nameuse{th@advisor\@roman\@tmp}
+        \@nameuse{th@advisor\romannumeral\@tmp}
         
         \ifnum\@tmp<\th@advisor@count
       \repeat          
