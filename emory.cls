@@ -163,7 +163,6 @@
   ]{biblatex}
   \addbibresource{#1}
   \AtEndDocument{%
-    \nocite{*}
     \printbibliography[heading=bibintoc]
   }
 }

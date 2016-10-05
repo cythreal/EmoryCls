@@ -53,6 +53,10 @@
 	gobble=-2
 }
 
+\usepackage[colorlinks=true]{hyperref}
+% This line of code is to remove compatibility issue with hyperref
+\AtBeginDocument{\let\textlabel\label}
+
 % ------ title and author and the boss -----------------------------------------
 \title{A \LaTeX{} Class for the Dissertation Style of Emory University}
 \author{Luyao Zou}                      % replace with your legal name
@@ -129,7 +133,7 @@ for the general advice of the style.
 %all.
 
 This is a \LaTeX{} class designed for dissertation writing under the style and
-format policy of the Laney Graduate School at Emory University.\autocite{emory-style}
+format policy of \href{http://www.graduateschool.emory.edu/uploads/academics/completion/Submit%20Thesis%20or%20Dissertation.doc}{the Laney Graduate School at Emory University}.\autocite{emory-style}
 This class is
 intended to reduce the effort in formating for Emory graduate students, thus 
 to focus more on the writing. 
@@ -148,7 +152,7 @@ Alternatively, you may copy \Verb|emory.cls| into your local \TeX{} package
 directory, similar to \Verb|C:\MiKTeX\tex\latex\emory\| in Windows systems, or\\
 \Verb|/usr/share/texmf-texlive/tex/latex/emory/| in Mac and Linux systems. After
 creating an \Verb|emory| folder and putting the class file in it, run
-\Verb|texhash| to update the \TeX{} package registery. Remember, you may need
+\Verb|texhash| to update the \TeX{} package registry. Remember, you may need
 root permission to complete these operations. 
 
 Use \Verb|pdflatex| instead of \Verb|latex| as the compilation driver. This
@@ -274,7 +278,7 @@ find a certain package in your local computer system, check out the CTAN
 archive \url{https://www.ctan.org/}.
 
 More external packages can be loaded via \Verb|\usepackage[options]{package}|
-in the preamble. 
+in the preamble. Particularly, if you want to use \Verb|hyperref| to create hyperlinks, you need to also add \Verb|\AtBeginDocument{\let\textlabel\label}| in the preamble to fix compatibility issue. 
 
 
 \section{Use environments}\label{sec:env}
