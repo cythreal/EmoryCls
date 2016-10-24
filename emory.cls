@@ -148,6 +148,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand*{\presetbib}[1]{%
+  \RequirePackage[utf8]{inputenc}
   \RequirePackage[%
     backend=biber,
     texencoding=utf8,
