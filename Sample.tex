@@ -100,20 +100,14 @@ helped me learn the \LaTeX{} skills to write this class.
 A list of references and code examples I consulted during the development
 of this class:
 \begin{itemize}
-  \item The American Chemical Society journal package \Verb|achemso|:
-  
-        \url{https://www.ctan.org/pkg/achemso?lang=en}
-  \item \LaTeXe{} for class and package writers:
-        
-        \url{https://www.ctan.org/pkg/clsguide}
-  \item Peter Flynn (2007), ``Rolling your own Document Class: Using \LaTeX{} to keep away from the Dark Side'', Proceedings of the Practical \TeX{} 2006 Conference, TUGboad, Vol 28.
-        
+  \item The American Chemical Society journal package \Verb|achemso|: \url{https://www.ctan.org/pkg/achemso?lang=en}
+  \item \LaTeXe{} for class and package writers:  \url{https://www.ctan.org/pkg/clsguide}
+  \item Peter Flynn (2007), ``Rolling your own Document Class: Using \LaTeX{} to keep away from the Dark Side'', Proceedings of the Practical \TeX{} 2006 Conference, TUGboad, Vol 28.        
         \url{https://tug.org/pracjourn/2006-4/flynn/}
   \item Jim Hefferon (2005), ``Minutes in Less Than Hours: Using \LaTeX{} Resources'', TPJ No.~04: 
         \url{https://tug.org/pracjourn/2005-4/hefferon/} 
-  \item The thesis class originally written by Bruce Fast, and most recently updated by Hongcheng Ni, from the University of Colorado, Boulder. 
-        
-        \url{http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files}
+  \item The thesis class originally written by Bruce Fast, and most recently updated by Hongcheng Ni, from the University of Colorado, Boulder.\\ 
+          \url{http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files}
   \item \Verb|ifthen| package: \url{http://texdoc.net/texmf-dist/doc/latex/base/ifthen}
   \item \Verb|geometry| package: \url{https://www.ctan.org/pkg/geometry?lang=en}
   \item \Verb|xkeyval| package: \url{https://www.ctan.org/pkg/xkeyval?lang=en}
@@ -205,7 +199,7 @@ and the table of contents. Use boolkey \Verb|chapter|, \Verb|fig|, \Verb|table|,
 If you want to turn keys back on after they have been turned off, you may need 
 to recompile the document more than once to get the correct output.
 
-\subsection{{\BibTeX{}} treatment}
+\subsection{\BibTeX{} treatment}
 Setting up the \BibTeX{} style is perhaps the most complicated task in \LaTeX{} 
 because there are countless ways of defining citation styles, which vary from 
 discipline to discipline and are highly personal.
@@ -279,11 +273,12 @@ The following \LaTeX{} packages are automatically pre-loaded by the class: \Verb
 \Verb|fancyhdr|. All the packages listed here are standard \LaTeX{} packages 
 that should be shipped with any standard \LaTeX{} distribution. If you cannot 
 find a certain package in your local computer system, check out the CTAN 
-archive \url{https://www.ctan.org/}.
+archive at \url{https://www.ctan.org/}.
 
 More external packages can be loaded via \Verb|\usepackage[options]{package}|
 in the preamble. Particularly, if you want to use \Verb|hyperref| to create hyperlinks, 
 you need to also add \Verb|\AtBeginDocument{\let\textlabel\label}| in the preamble to fix the compatibility issue. 
+Note that \Verb|hyperref| has been known to create numerous compatibility warnings in this class.
 
 
 \section{Use environments}\label{sec:env}
