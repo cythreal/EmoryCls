@@ -46,11 +46,13 @@
 \usepackage{fancyvrb}
 \definecolor{verbcolor}{rgb}{0.1,0.15,0.65}
 \fvset{%
+  fontsize=\small,
 	formatcom=\color{verbcolor},
 	baselinestretch=1.0,
 	numbers=left,
 	numbersep=1ex,
-	gobble=-2
+	gobble=-2,
+	xleftmargin=4ex
 }
 
 \usepackage[colorlinks=true]{hyperref}
@@ -73,6 +75,7 @@
 \committee{Dr.\ Donut}{J.D}
 \committee{Mr.\ Eggplant}{M.S.}
 \yr{2016}                               % replace the year, if necessary
+\dean{Lisa A.\ Tedesco, Ph.D}     % The dean. Leave it as is
 
 
 % ------ start your awesome writing here ---------------------------------------
@@ -81,7 +84,7 @@
 % ------ abstract --------------------------------------------------------------
 \begin{abstract}
 
-This is a \LaTeX{} class for dissertation/thesis of Laney Graduate School (LGS) of Emory University.
+This is a \LaTeX{} class for the dissertation/thesis style of Laney Graduate School (LGS) of Emory University.
 It is designed to meet the minimum dissertation format
 requirement of LGS, but nothing is guaranteed. Please tweak the
 code when necessary. This class is licensed with GNU Generic Public License (GPL) v3.0.
@@ -108,7 +111,7 @@ of this class:
         \url{https://tug.org/pracjourn/2006-4/flynn/}
   \item Jim Hefferon (2005), ``Minutes in Less Than Hours: Using \LaTeX{} Resources'', TPJ No.~04: 
         \url{https://tug.org/pracjourn/2005-4/hefferon/} 
-  \item The thesis class originally written by Bruce Fast, and most recently updated by Hongcheng Ni, from University of Colorado, Boulder. 
+  \item The thesis class originally written by Bruce Fast, and most recently updated by Hongcheng Ni, from the University of Colorado, Boulder. 
         
         \url{http://www.colorado.edu/oit/software-hardware/tex-latex/thesis-class/documentation-sample-files}
   \item \Verb|ifthen| package: \url{http://texdoc.net/texmf-dist/doc/latex/base/ifthen}
@@ -117,8 +120,8 @@ of this class:
   \item \Verb|biblatex| package: \url{https://www.ctan.org/pkg/biblatex?lang=en}
 \end{itemize}
 
-Special thank to Dr.~Ulf Nilsson at the Laney Graduate School of Emory University
-for the general advice of the style.
+Special thanks to Dr.~Ulf Nilsson at the Laney Graduate School of Emory University
+for the general advice for the style.
 
 \end{acknowledgement}
 
@@ -133,10 +136,10 @@ for the general advice of the style.
 %all.
 
 This is a \LaTeX{} class designed for dissertation writing under the style and
-format policy of \href{http://www.graduateschool.emory.edu/uploads/academics/completion/Submit%20Thesis%20or%20Dissertation.doc}{the Laney Graduate School at Emory University}.\autocite{emory-style}
+format policy of \href{http://www.graduateschool.emory.edu/uploads/academics/completion/Submit%20Thesis%20or%20Dissertation.doc}{the Laney Graduate School at Emory University} \autocite{emory-style}.
 This class is
-intended to reduce the effort in formating for Emory graduate students, thus 
-to focus more on the writing. 
+intended to reduce the effort of formating for Emory graduate students, thus 
+allowing them to focus more on the writing. 
 
 To report bugs and suggestions, please contact me on GitHub. To contribute, 
 please fork my github repo at \url{https://github.com/luyaozou/EmoryCls.git}
@@ -156,7 +159,7 @@ creating an \Verb|emory| folder and putting the class file in it, run
 root permission to complete these operations. 
 
 Use \Verb|pdflatex| instead of \Verb|latex| as the compilation driver. This
-is because certain packages, such as \Verb|url|, relies on pdf drivers.
+is because certain packages, such as \Verb|url|, rely on pdf drivers.
 
 The preset bibliography manager is \Verb|biblatex| with \Verb|biber| back-end. 
 Users are encouraged to set-up their own \BibTeX{} driver for customized bibliography styles.
@@ -165,10 +168,10 @@ Users are encouraged to set-up their own \BibTeX{} driver for customized bibliog
 \section{Set document options}\label{sec:options}
 The options of this class can be set in the \LaTeX{} preamble. They are 
 self-explanatory in the \Verb|Sample.tex| file.
-Compiling \Verb|Sample.tex| with \Verb|pdflatex| driver yields a pdf version of this documentation.
+Compiling \Verb|Sample.tex| with the \Verb|pdflatex| driver yields a pdf version of this documentation.
 
 \subsection{Document style options}
-The first set of options in the \Verb|Emory| class is the document class option.
+The first set of options in the \Verb|Emory| class is the \Verb|\documentclass| option.
 Only \Verb|[draft]| and \Verb|[final]| are allowed in the 
 \Verb|\documentclass[options]{emory}| command.
 \Verb|[draft]| only draws the boarder of graphs without actually loading the images,
@@ -184,11 +187,11 @@ Use \Verb|setkeys[emory]{family}{key=value}| to assign values.
 Two options are available: \Verb|dissertation| and \Verb|twoside|.
 
 \Verb|dissertation=true/false| configures the type of the document. 
-It only does one thing: print out either ``dissertation'' or ``theis'' on the 
+It only does one thing: print out either ``dissertation'' or ``thesis'' on the 
 Approval Pages.
 
 \Verb|twoside=true/false| controls the double side printing, which alternates the left and right margins on odd/even pages for correct binding.
-\textbf{The default value is \Verb|twoside=false| as the preference of the Laney Graduate School for electronic thesis and dissertation (ETD)}. 
+\textbf{The default value is \Verb|twoside=false| as it is the preference of the Laney Graduate School for electronic thesis and dissertation (ETD)}. 
 Please note that the special pages are \emph{ALWAYS} single side printing. 
 Therefore, if you choose \Verb|twoside=true|, \emph{remember to print out the special pages separately}.
 
@@ -196,7 +199,7 @@ Therefore, if you choose \Verb|twoside=true|, \emph{remember to print out the sp
 For users' convenience, a set of general dissertation styles has been configured in the class. 
 This style set includes configurations for the styles of chapter and section 
 titles, the figure environment, the table environment, the list environment, 
-and the table of content. Use boolkey \Verb|chapter|, \Verb|fig|, \Verb|table|, 
+and the table of contents. Use boolkey \Verb|chapter|, \Verb|fig|, \Verb|table|, 
 \Verb|list|, and \Verb|toc| to access these options.
 
 If you want to turn keys back on after they have been turned off, you may need 
@@ -208,13 +211,13 @@ because there are countless ways of defining citation styles, which vary from
 discipline to discipline and are highly personal.
 To minimize the size of this \LaTeX{} class, only one preset \BibTeX{} style
 is offered. It can be specified by \Verb|\presetbib{bibtex-source.bib}|.
-This style is a general scientific citation style with numeric numbering, 
-sorting by citation order, and the citation is wrapped by square brackets. 
+This style is a numeric citation style with bibliography items sorted by their citation order,
+and the citation is wrapped by square brackets. 
 This style is driven by the \Verb|biblatex| package with \Verb|biber| as the 
 back-end. 
 The use of \Verb|biber| is a bit different from the legacy \Verb|bibtex| driver.
 One needs to run \Verb|biber Sample.bcf| to generate the correct \Verb|.aux| 
-file that will be then written into the \Verb|.pdf| in the next run of 
+file that will then be written into the \Verb|.pdf| in the next run of 
 \Verb|pdflatex| compilation. For more information of \Verb|biblatex|, check its 
 package page on the CTAN archive. 
 
@@ -229,7 +232,7 @@ drivers and packages, such as \Verb|natbib|.
 
 
 \subsection{Special page entries}
-The second set of preambles configures the information need for the special pages:
+The second set of options in the preamble configure the information needed for the special pages:
 
 \begin{itemize}
 \item \Verb|\title{Title}| sets up the title of the dissertation/thesis. The title 
@@ -239,15 +242,15 @@ several times in the special pages.
 \item \Verb|\degree{Ph.D./Master}| sets up the degree you apply. ``It is either Doctor
 of Philosophy or Master of Arts/Science/or another area.  There are a number of 
 possible Master's degree in some programs, particularly Music and Education.  
-If you are unsure, consult with your Director of Graduate Studies.''\autocite{emory-style}
+If you are unsure, consult with your Director of Graduate Studies.'' \autocite{emory-style}
 \item \Verb|\prevdegree{B.S.}| sets up your previous academic degree. ``List your 
 degree, the name of the university, and the year you received the degree.  
-For example, `B.A., Yale University, 2004' or `M.Sc., University of Pennsylvania, 2003'.
+For example, `B.A., Yale University, 2004' or `M.Sc., University of Pennsylvania, 2003'.''
 You can list several degrees, including master's degrees from your current 
 program here at Emory, by repeating this command.
-Note that you can only list a master's degree from your
+``Note that you can only list a master's degree from your
 Emory program if you actually applied for and received it; even if master's 
-degrees are given on the basis of candidacy, they are not automatic.''\autocite{emory-style} 
+degrees are given on the basis of candidacy, they are not automatic.'' \autocite{emory-style} 
 \item \Verb|\field{Field}| sets up your field of study. ``Generally, 
 your field is the subject-matter name of your program: English, Chemistry, 
 Health Services Research and Health Policy, Educational Studies, Business, etc.  
@@ -256,8 +259,8 @@ you specialize in.  For example, your field is not `19th Century American Litera
 `Finance Program,' `Neurology Department,' `African Studies' or any other
 sub-field or entity.''\autocite{emory-style}
 \item \Verb|\advisor{Advisor Name}{Advisor Degree}| sets up the name and degree of your 
-advisor. ``If your committee had co-chairs, refer to each of them as Advisor,
-repeat this command, and list them in alphabetical order.''\autocite{emory-style} 
+advisor. ``If your committee had co-chairs, refer to each of them as Advisor.'' \autocite{emory-style} 
+This can be done by repeating this command, and list the names of your advisors in alphabetical order.
 \item \Verb|\committee{Committee Member Name}{Committee Member Degree}| sets 
 up\\
 the name and degree of your committee member. Repeat this command for multiple 
@@ -265,11 +268,12 @@ members. If the number of committee members exceeds 4, the class will change
 the signing sheet into a two column style instead of one column style.
 \item \Verb|\yr{2016}| sets up the calendar year you receive your degree
 (not the academic year).
+\item \Verb|\dean{}| sets up the name of the current Dean of the LGS. There is no current need to modify this entry.
 \end{itemize}
 
 
 \section{Recommended packages}
-The \LaTeX{} packages automatically loaded by the class are: \Verb|amsmath|, 
+The following \LaTeX{} packages are automatically pre-loaded by the class: \Verb|amsmath|, 
 \Verb|amssymb|, \Verb|color|, \Verb|mhchem|, \Verb|graphicx|, \Verb|titlesec|, 
 \Verb|titletoc|, \Verb|ifthen|, \Verb|xkeyval|, \Verb|geometry|, and 
 \Verb|fancyhdr|. All the packages listed here are standard \LaTeX{} packages 
@@ -278,7 +282,8 @@ find a certain package in your local computer system, check out the CTAN
 archive \url{https://www.ctan.org/}.
 
 More external packages can be loaded via \Verb|\usepackage[options]{package}|
-in the preamble. Particularly, if you want to use \Verb|hyperref| to create hyperlinks, you need to also add \Verb|\AtBeginDocument{\let\textlabel\label}| in the preamble to fix compatibility issue. 
+in the preamble. Particularly, if you want to use \Verb|hyperref| to create hyperlinks, 
+you need to also add \Verb|\AtBeginDocument{\let\textlabel\label}| in the preamble to fix the compatibility issue. 
 
 
 \section{Use environments}\label{sec:env}
@@ -307,15 +312,14 @@ Sample outputs of these environments are listed here.
 \Verb|schematic| is a customized environment inherited from the \Verb|figure|
 environment. It changes the caption head from ``Figure'' to ``Schematic''. Do 
 not include float position option
-\Verb|[htp!]|, as it is already set up in the environment. The schematic will 
-remain its appearance in the list of figures, and will have numbering 
-consistent with the \Verb|figure| floats because it is a inherited 
-\Verb|figure| environment.
+\Verb|[htp!]|, as it is already set up in the environment. The schematic caption will 
+remain in the list of figures, and will have numbering 
+consistent with the \Verb|figure| floats because it is an environment inherited from the \Verb|figure| environment.
 
 \begin{schematic}
 	\centering
   \includegraphics[width=0.5\textwidth]{LaTeXLogo.png}
-  \caption{This is actually not a schematic.\label{schematic}}
+  \caption{This is not a actually schematic.\label{schematic}}
 \end{schematic}
 
 
@@ -344,12 +348,12 @@ consistent with the \Verb|figure| floats because it is a inherited
 \end{table}
 
 \subsection{Mathematical equations}
-Single mathematical equation (need \Verb|amsmath| package)
+Single mathematical equation (needs the \Verb|amsmath| package)
 \begin{equation}
   E = mc^2 \label{math:single}
 \end{equation}
 
-Multiple mathematical subequations (need \Verb|amsmath| package)
+Multiple mathematical subequations (need the \Verb|amsmath| package)
 \begin{subequations}\label{math:sub}
 \begin{align}
   \nabla\cdot\pmb{E}&=\frac{\rho}{\epsilon_0} \label{math:sub1}\\
@@ -360,7 +364,7 @@ Multiple mathematical subequations (need \Verb|amsmath| package)
 \end{subequations}
 
 \subsection{Block quotes}
-Quote enviroment. Use \Verb|\begin{quote} \end{quote}|
+Quote environment. Use \Verb|\begin{quote} \end{quote}|
 
 \begin{quote}\label{poet}
 O wild West Wind, thou breath of Autumn's being,
@@ -386,7 +390,7 @@ A nested list structure:
       \begin{itemize}
         \item This is a nested nested nested list item. 
         \item The bullets for 4 levels are defined in \Verb|emory.cls|.
-        \item I would strongly doubt you will need more than 4 levels of nested lists.
+        \item I would strongly doubt you need more than 4 levels of nested lists.
       \end{itemize}
     \end{itemize}
   \end{itemize}    
@@ -402,7 +406,7 @@ A nested enumerate structure:
       \begin{enumerate}
         \item This is a nested nested nested enumerate item. 
         \item The numbering for 4 levels are defined in \Verb|emory.cls|.
-        \item I would strongly doubt you will need more than 4 levels of nested lists.
+        \item I would strongly doubt you need more than 4 levels of nested lists.
       \end{enumerate}
     \end{enumerate}
   \end{enumerate}    
@@ -412,15 +416,21 @@ A nested enumerate structure:
 
 Use \Verb|\verb?<code>?| to typeset inline code  (\Verb|?| can be replaced by
 other paired special characters),
-or  \Verb|\begin{verbatim} <code> \end{verbatim}| to typeset block codes.
-Package \Verb|fancyvrb| offers inline \Verb|\Verb??| and \Verb|Verbatim| environment with more enhanced
-options (notice the ``V'' is capitalized).
+or  \Verb|\begin{verbatim} <code> \end{verbatim}| to typeset code blocks.
+The package \Verb|fancyvrb| offers inline \Verb|\Verb??| and \Verb|Verbatim| environment with more enhanced
+options (note that the ``V'' is capitalized). The customized verbatim environment is single spaced, and may
+apply a smaller font to fit the page size limit. This is acceptable.
+Please note that any codes, including frames and line numbers, shall not
+exceed the default margin. Therefore you need to tweak the indentation of your code blocks if necessary.
+Note that the \Verb|draft| mode does not print warning in \Verb|fancyvrb| environments.
 
 \begin{Verbatim}
 % The code to set up fancyvrb style shown in this sample:
 \usepackage{fancyvrb}
 \definecolor{verbcolor}{rgb}{0.1,0.15,0.65}
 \fvset{%
+  % set font size
+  fontsize=\small
   % set font color
   formatcom=\color{verbcolor},	
   % use single spacing
@@ -429,14 +439,16 @@ options (notice the ``V'' is capitalized).
   numbers=left,									
   % set the spacing between line number and code
   numbersep=1ex,
-  % set left margin 							  
-  gobble=-2											
+  % set number of characters to suppress at the beginning of each line
+  gobble=-2,
+  % set left margin
+  xleftmargin=4ex
 }
 \end{Verbatim}
 
 
 \section{Cross reference}
-One advantage of \LaTeX{} out of many is the convenience of cross reference in
+One advantage of \LaTeX{}, out of many, is the convenience of cross referencing in
 the text. Use \Verb|\label{yourlabel}| to label the material, and \Verb|\ref{yourlabel}|
 to reference it in some other places in your text. And you do not need to worry
 about numbering: \LaTeX{} does it automatically for you. For example, here
@@ -460,8 +472,9 @@ I will reference the sample environments in the previous section (Section
 \renewcommand{\chaptername}{Appendix}
 
 \chapter{Appendix}
-This is an appendix. The numbering of appendix changes from Arabic number to 
-alphabetical.
+This is an appendix. The numbering of appendix changes from Arabic numbering to 
+alphabetical. Use \Verb|\renewcommand{\chaptername}{Appendix}| to switch
+the name ``Chapter'' to ``Appendix'' before the numbering.
 The chapter and section titles will still print in the table of contents.
 
 \section{Appendix section}

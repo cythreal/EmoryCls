@@ -168,11 +168,6 @@
   }
 }
 
-
-% --------------  The dean! --------------------%
-\def\th@Dean{Lisa A.\ Tedesco, Ph.D}  %
-% ----------------------------------------------%
-
 %% Internal counters
 \newcommand*{\th@PassCmd}[2]{\gdef#1{#2}}
 \newcount\th@advisor@count
@@ -187,6 +182,7 @@
 \newcommand*{\degree}[1]{\th@PassCmd{\th@degree}{#1}}
 \newcommand*{\field}[1]{\th@PassCmd{\th@field}{#1}}
 \newcommand*{\yr}[1]{\th@PassCmd{\th@year}{#1}}
+\newcommand*{\dean}[1]{\th@PassCmd{\th@Dean}{#1}}
 \newcommand*{\prevdegree}[1]{%
   \global\advance\th@prevdeg@count\@ne\relax
   \expandafter\gdef\csname th@prevdegree\romannumeral\th@prevdeg@count \endcsname{#1}\relax
