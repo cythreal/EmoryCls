@@ -5,7 +5,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % ------------------------ Class declaration ----------------------
-\ProvidesClass{emory}[2016/08/01 LaTeX class for Emory dissertation]
+\ProvidesClass{emory}[2016/12/01 LaTeX class for Emory dissertation]
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{ifthen}
 
