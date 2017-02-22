@@ -137,6 +137,7 @@
 
 \def\set@preset@toc{%
 \ifthenelse{\boolean{If@preset@toc}}{%
+  \contentsmargin{0.4in}
   \dottedcontents{chapter}[1.5em]{\bfseries\large\addvspace{1ex}}{1em}{0.75pc}
   \dottedcontents{section}[3.5em]{\normalsize}{2em}{0.75pc}
   \dottedcontents{subsection}[6.5em]{\normalsize}{3em}{0.75pc}
