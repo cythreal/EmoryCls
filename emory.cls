@@ -153,7 +153,7 @@
   \RequirePackage[%
     backend=biber,
     texencoding=utf8,
-    bibstyle=science,
+    bibstyle=nature,
     citestyle=numeric-comp,
     autocite=inline,
     autopunct=true,
@@ -204,31 +204,31 @@
   \thispagestyle{empty}
   \vspace*{\fill}
   \subsection*{Distribution Agreement}
-  
+
   \noindent\normalsize
-  In presenting this thesis or dissertation as a partial fulfillment of the 
-  requirements for an advanced degree from Emory University, I hereby grant to 
-  Emory University and its agents the non-exclusive license to archive, make 
-  accessible, and display my thesis or dissertation in whole or in part in all 
-  forms of media, now or hereafter known, including display on the world wide 
-  web.  I understand that I may select some access restrictions as part of the 
-  online submission of this thesis or dissertation.  I retain all ownership 
-  rights to the copyright of the thesis or dissertation.  I also retain the 
-  right to use in future works (such as articles or books) all or part of this 
+  In presenting this thesis or dissertation as a partial fulfillment of the
+  requirements for an advanced degree from Emory University, I hereby grant to
+  Emory University and its agents the non-exclusive license to archive, make
+  accessible, and display my thesis or dissertation in whole or in part in all
+  forms of media, now or hereafter known, including display on the world wide
+  web.  I understand that I may select some access restrictions as part of the
+  online submission of this thesis or dissertation.  I retain all ownership
+  rights to the copyright of the thesis or dissertation.  I also retain the
+  right to use in future works (such as articles or books) all or part of this
   thesis or dissertation.
-  
-  
+
+
   \vspace{1in}
   \noindent Signature:
   \vspace{1em}
-  
+
   \noindent
   \begin{tabular}{c c c}
   \underline{\hspace{2.5in}} & \hspace{0.25in} & \underline{\hspace{1.5in}}\\
   \th@author & \hspace{0.25in} & Date\\
   \end{tabular}
   \vspace*{\fill}
-  
+
   \clearpage
 }
 
@@ -240,46 +240,46 @@
   \begin{center}
     \large \th@title \normalsize
     \vspace{3ex}
-    
+
     By
     \vspace{3ex}
-    
+
     \th@author
-    
+
     \th@degree
     \vspace{1ex}
-    
+
     \th@field
     \vspace{5ex}
-    
+
     \@tmp\z@\relax
-    
+
     \loop
       \advance\@tmp\@ne\relax
       \underline{\hspace{4in}}
-    
+
       \@nameuse{th@advisor\romannumeral\@tmp}
-      
+
       Advisor
       \vspace{3ex}
-      
+
       \ifnum\@tmp<\th@advisor@count\relax
     \repeat
-    
+
     \vspace{1ex}
-    
+
     \@tmp\z@\relax
     \ifnum\th@committee@count<4
       % less than 3 committee, one column layout
       \loop
         \advance\@tmp\@ne\relax
         \underline{\hspace{4in}}
-        
+
         \@nameuse{th@committee\romannumeral\@tmp}
-        
+
         Committee Member
         \vspace{3ex}
-        
+
         \ifnum\@tmp<\th@committee@count\relax
       \repeat
     \else
@@ -291,18 +291,18 @@
       \else
         \divide\@half by\tw@
       \fi
-      
+
       \parbox[t][][c]{2.5in}{%
         \centering
         \loop
           \advance\@tmp\@ne\relax
           \underline{\hspace{2.4in}}
-          
+
           \@nameuse{th@committee\romannumeral\@tmp}
-          
+
           Committee Member
           \vspace{3ex}
-          
+
           \ifnum\@tmp<\@half\relax
         \repeat
       }
@@ -312,36 +312,36 @@
         \loop
           \advance\@tmp\@ne\relax
           \underline{\hspace{2.4in}}
-          
+
           \@nameuse{th@committee\romannumeral\@tmp}
-          
+
           Committee Member
           \vspace{3ex}
-          
+
           \ifnum\@tmp<\th@committee@count\relax
         \repeat
       }
     \fi
-    
+
     \vspace*{\fill}
-    
+
     Accepted:
     \vspace{2ex}
-    
+
     \underline{\hspace{4in}}
-    
+
     \th@Dean
-    
+
     Dean of the James T.\ Laney School of Graduate Studies
-    
+
     \vspace{5ex}
     \underline{\hspace{2in}}
-    
+
     Date
   \end{center}
   \vspace*{\fill}
   \clearpage
-} 
+}
 
 \def\th@AbstractCoverPage{%
   \thispagestyle{empty}
@@ -349,12 +349,12 @@
   \begin{center}
     \large \th@title \normalsize
     \vspace{1in}
-    
+
     By
     \vspace{1in}
-    
+
     \th@author
-    
+
     \@tmp\z@\relax
     \ifnum\th@prevdeg@count=\@ne
       \@nameuse{th@prevdegree\romannumeral\@ne}
@@ -363,13 +363,13 @@
       \loop
         \advance\@tmp\@ne\relax
         \@nameuse{th@prevdegree\romannumeral\@tmp}
-        
+
         \ifnum\@tmp<\th@prevdeg@count
       \repeat
     \fi
-    
+
     \vspace{1in}
-    
+
     \@tmp\z@\relax
     \ifnum\th@advisor@count=\@ne
       Advisor: \@nameuse{th@advisor\romannumeral\@ne}
@@ -380,11 +380,11 @@
       \loop
         \advance\@tmp\@ne\relax
         \@nameuse{th@advisor\romannumeral\@tmp}
-        
+
         \ifnum\@tmp<\th@advisor@count
-      \repeat          
+      \repeat
     \fi
-    
+
     \vfill
     An abstract of \\
     A \ifthenelse{\boolean{If@option@dissertation}}{dissertation}{thesis} submitted to the Faculty of the \\
@@ -395,7 +395,7 @@
     \th@year
   \end{center}
   \vspace{1.5in}
-  
+
   \clearpage
 }
 
@@ -406,12 +406,12 @@
   \begin{center}
     \large \th@title \normalsize
     \vspace{1in}
-    
+
     By
     \vspace{1in}
-    
+
     \th@author
-    
+
     \@tmp\z@\relax
     \ifnum\th@prevdeg@count=\@ne
       \@nameuse{th@prevdegree\romannumeral\@ne}
@@ -420,13 +420,13 @@
       \loop
         \advance\@tmp\@ne\relax
         \@nameuse{th@prevdegree\romannumeral\@tmp}
-        
+
         \ifnum\@tmp<\th@prevdeg@count
       \repeat
     \fi
-    
+
     \vspace{1in}
-    
+
     \@tmp\z@\relax
     \ifnum\th@advisor@count=\@ne
       Advisor: \@nameuse{th@advisor\romannumeral\@ne}
@@ -436,11 +436,11 @@
       \loop
         \advance\@tmp\@ne\relax
         \@nameuse{th@advisor\romannumeral\@tmp}
-        
+
         \ifnum\@tmp<\th@advisor@count
-      \repeat          
+      \repeat
     \fi
-    
+
     \vfill
     A \ifthenelse{\boolean{If@option@dissertation}}{dissertation}{thesis} submitted to the Faculty of the \\
     James T.\ Laney School of Graduate Studies of Emory University \\
@@ -453,7 +453,7 @@
   \clearpage
 }
 
-\renewenvironment{abstract}{%
+\renewenvironment{abstract}[1][4.5in]{%
   \typeout{>>> Make Abstract Cover Page >>>}
   \thispagestyle{empty}
 
@@ -461,14 +461,18 @@
     \large
     \textbf{Abstract}
     \vspace{3ex}
-    
+
     \th@title\normalsize
-    
+
     \vspace{2ex}
     By \th@author
   \vspace{0.5in}
-  
-  \begin{minipage}[t]{4.5in}
+
+  \ifdim #1>6in%
+    \begin{minipage}[t]{6in}
+  \else
+    \begin{minipage}[t]{#1}
+  \fi
 }{%
   \end{minipage}
   \end{center}
@@ -479,9 +483,9 @@
 
 \newenvironment{acknowledgement}{%
   \typeout{>>> Make Acknowledgement Page >>>}
-  
+
   \thispagestyle{empty}
-  
+
   \begin{center}
     \large
     \textbf{Acknowledgement}
@@ -542,7 +546,7 @@
 \AtBeginDocument{%
   \set@geometry
   \newgeometry{twoside=false,left=1.5in,right=1in,vmargin=1in}
-  \pagenumbering{gobble}     % suppress page numbering 
+  \pagenumbering{gobble}     % suppress page numbering
   \set@header
   \th@special@page@before@abstract
   % special pages after abstract are set in the abstract & acknowledge environments
